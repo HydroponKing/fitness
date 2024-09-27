@@ -17,5 +17,5 @@ Pro-Fitness — это фитнес-приложение для управлен
 Склонируйте этот репозиторий на локальную машину:
 
 ```bash
-git clone https://github.com/username/pro-fitness.git
-cd pro-fitness
+git clone https://github.com/HydroponKing/fitness
+cd fitness

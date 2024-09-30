@@ -598,10 +598,6 @@ body {
   }
 }
 
-.mt-10{
-  margin-top: 2.5rem;
-}
-
 .mt-\[14px\]{
   margin-top: 14px;
 }
@@ -614,16 +610,8 @@ body {
   display: flex;
 }
 
-.h-10{
-  height: 2.5rem;
-}
-
 .h-\[52px\]{
   height: 52px;
-}
-
-.w-10{
-  width: 2.5rem;
 }
 
 .w-\[103px\]{
@@ -661,10 +649,6 @@ body {
 .hover\:bg-hover:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(198 255 0 / var(--tw-bg-opacity));
-}
-
-.hover\:fill-red-600:hover{
-  fill: #dc2626;
 }
 
 .active\:bg-active:active{

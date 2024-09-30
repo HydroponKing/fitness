@@ -1,13 +1,24 @@
 type Props = {
-	background: string
 	width: string
+	border?: string
+	background: string
+	hover: string
+	active: string
 	title: string
 }
 
-export default function Button({ background, width, title }: Props) {
+export default function Button({
+	width,
+	border,
+	background,
+	hover,
+	active,
+	title,
+}: Props) {
 	return (
 		<button
-			className={`${background} ${width} h-[52px] rounded-[46px] transition-colors hover:bg-hover active:bg-active active:text-white`}
+			className={`${width} ${border} ${background} h-[52px] rounded-[46px]
+			transition-colors hover:${hover} active:${active}`}
 		>
 			{title}
 		</button>

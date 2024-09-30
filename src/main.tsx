@@ -1,11 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-//import './index.css'; // Убедись, что путь правильный
-import App from './App';
-import "./output.css";
+import './output.css'
+import App from './App.tsx'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import ReduxProvider from './store/ReduxProvider.tsx'
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+createRoot(document.getElementById('root')!).render(
+	<StrictMode>
+		<BrowserRouter>
+			<ReduxProvider>
+				<App />
+			</ReduxProvider>
+		</BrowserRouter>
+	</StrictMode>,
+)

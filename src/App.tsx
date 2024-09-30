@@ -1,35 +1,19 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Login from './pages/Login';
-import Signin from './pages/Signin';
-import CourseList from './pages/CourseList';
+import { Route, Routes } from 'react-router-dom'
+import { AppRoutes } from './lib/appRoutes'
+import Main from './components/Main/Main'
 
-const App = () => {
-  return (
-    <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Login</Link>
-            </li>
-            <li>
-              <Link to="/signin">Signin</Link>
-            </li>
-            <li>
-              <Link to="/courses">Courses</Link>
-            </li>
-          </ul>
-        </nav>
-        
-        {/* Маршруты для страниц */}
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/courses" element={<CourseList />} />
-        </Routes>
-      </div>
-    </Router>
-  );
-};
+function App() {
+	return (
+		<Routes>
+			<Route path={AppRoutes.MAIN} element={<Main />} />
+			<Route path={AppRoutes.COURSE} element={''} />
+			<Route path={AppRoutes.WORKOUT_VIDEO} element={''} />
+			<Route path={AppRoutes.USER_PROFILE} element={''} />
+			<Route path={AppRoutes.LOGIN} element={''} />
+			<Route path={AppRoutes.REGISTER} element={''} />
+			<Route path={AppRoutes.NOT_FOUND} element={''} />
+		</Routes>
+	)
+}
 
-export default App;
+export default App

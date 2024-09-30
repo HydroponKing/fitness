@@ -1,4 +1,6 @@
-*, ::before, ::after {
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+*, ::before, ::after{
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
@@ -52,7 +54,7 @@
   --tw-contain-style:  ;
 }
 
-::backdrop {
+::backdrop{
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
@@ -124,7 +126,7 @@
   /* 2 */
   border-style: solid;
   /* 2 */
-  border-color: #e5e7eb;
+  border-color: currentColor;
   /* 2 */
 }
 
@@ -554,37 +556,123 @@ video {
   display: none;
 }
 
-.flex {
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.container{
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+@media (min-width: 640px){
+  .container{
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px){
+  .container{
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px){
+  .container{
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px){
+  .container{
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px){
+  .container{
+    max-width: 1536px;
+  }
+}
+
+.mt-10{
+  margin-top: 2.5rem;
+}
+
+.mt-\[14px\]{
+  margin-top: 14px;
+}
+
+.mt-\[50px\]{
+  margin-top: 50px;
+}
+
+.flex{
   display: flex;
 }
 
-.h-screen {
-  height: 100vh;
+.h-10{
+  height: 2.5rem;
 }
 
-.items-center {
+.h-\[52px\]{
+  height: 52px;
+}
+
+.w-10{
+  width: 2.5rem;
+}
+
+.w-\[103px\]{
+  width: 103px;
+}
+
+.items-center{
   align-items: center;
 }
 
-.justify-center {
-  justify-content: center;
+.justify-between{
+  justify-content: space-between;
 }
 
-.bg-blue-500 {
+.rounded-\[46px\]{
+  border-radius: 46px;
+}
+
+.bg-green_bg{
   --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+  background-color: rgb(188 236 48 / var(--tw-bg-opacity));
 }
 
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+.text-gray{
+  --tw-text-opacity: 1;
+  color: rgb(153 153 153 / var(--tw-text-opacity));
 }
 
-.font-bold {
-  font-weight: 700;
+.transition-colors{
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
-.text-white {
+.hover\:bg-hover:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(198 255 0 / var(--tw-bg-opacity));
+}
+
+.hover\:fill-red-600:hover{
+  fill: #dc2626;
+}
+
+.active\:bg-active:active{
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+
+.active\:text-white:active{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }

@@ -18,7 +18,7 @@ export default function Button({
 	return (
 		<button
 			className={`${width} ${border} ${background} h-[52px] rounded-[46px]
-			transition-colors hover:${hover} active:${active}`}
+			transition-colors ${hover} ${active}`}
 		>
 			{title}
 		</button>

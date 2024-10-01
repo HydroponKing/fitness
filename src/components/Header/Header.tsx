@@ -12,8 +12,8 @@ export default function Header() {
 			<Button
 				width='w-[103px]'
 				background='bg-green_bg'
-				hover='bg-hover'
-				active='bg-active active:text-white'
+				hover='hover:bg-hover'
+				active='active:bg-active active:text-white'
 				title='Войти'
 			/>
 		</header>

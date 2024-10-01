@@ -607,6 +607,10 @@ body {
   margin-top: 50px;
 }
 
+.mt-\[\]{
+  margin-top: ;
+}
+
 .flex{
   display: flex;
 }
@@ -640,9 +644,21 @@ body {
   background-color: rgb(188 236 48 / var(--tw-bg-opacity));
 }
 
+.text-\[40px\]{
+  font-size: 40px;
+}
+
+.font-semibold{
+  font-weight: 600;
+}
+
 .text-gray{
   --tw-text-opacity: 1;
   color: rgb(153 153 153 / var(--tw-text-opacity));
+}
+
+.text-\[\]{
+  color: ;
 }
 
 .transition-colors{

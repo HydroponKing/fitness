@@ -7,7 +7,7 @@ function App() {
 		<div className='container'>
 			<Routes>
 				<Route path={AppRoutes.MAIN} element={<Main />} />
-				<Route path={AppRoutes.COURSE} element={''} />
+				<Route path={AppRoutes.COURSE} element={<Course />} />
 				<Route path={AppRoutes.WORKOUT_VIDEO} element={''} />
 				<Route path={AppRoutes.USER_PROFILE} element={''} />
 				<Route path={AppRoutes.LOGIN} element={''} />

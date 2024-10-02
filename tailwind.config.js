@@ -37,8 +37,21 @@ export default {
 				//Gradient background for recommend blocks
 				black_bg: 'linear-gradient(115.81deg, #151720 34.98%, #1E212E 91.5%)',
 			},
+			boxShadow: { shadow_primary: '0 4px 67px -12px #00000021' },
 			fontFamily: {
 				Roboto: ['Roboto', 'sans-serif'],
+			},
+			screens: {
+				mobile: { max: '375px' },
+			},
+			keyframes: {
+				rotation: {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(180deg)' },
+				},
+			},
+			animation: {
+				rotation: 'rotation 150ms linear forwards',
 			},
 		},
 	},

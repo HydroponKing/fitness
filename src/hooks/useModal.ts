@@ -2,17 +2,17 @@ import { useEffect, useRef, useState } from 'react'
 
 export const useModal = (initValue: boolean) => {
 	const ref = useRef<HTMLDivElement>(null)
-	const [open, setOpen] = useState(initValue)
+	const [isOpen, setIsOpen] = useState(initValue)
 
 	const handleClickOutside = (event: Event) => {
 		const target = event.target as HTMLDivElement
 		if (ref.current && !ref.current.contains(target)) {
-			setOpen(false)
+			setIsOpen(false)
 		}
 	}
 
 	const toggleOpen = () => {
-		setOpen(prev => !prev)
+		setIsOpen(prev => !prev)
 	}
 
 	useEffect(() => {
@@ -22,5 +22,5 @@ export const useModal = (initValue: boolean) => {
 		}
 	}, [ref])
 
-	return { open, toggleOpen, ref }
+	return { isOpen, toggleOpen, ref }
 }

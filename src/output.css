@@ -599,20 +599,68 @@ body {
   }
 }
 
+.absolute{
+  position: absolute;
+}
+
+.relative{
+  position: relative;
+}
+
+.left-\[-62px\]{
+  left: -62px;
+}
+
+.top-\[75px\]{
+  top: 75px;
+}
+
+.z-\[1\]{
+  z-index: 1;
+}
+
+.mt-\[10px\]{
+  margin-top: 10px;
+}
+
 .mt-\[14px\]{
   margin-top: 14px;
+}
+
+.mt-\[2px\]{
+  margin-top: 2px;
+}
+
+.mt-\[34px\]{
+  margin-top: 34px;
+}
+
+.mt-\[40px\]{
+  margin-top: 40px;
 }
 
 .mt-\[50px\]{
   margin-top: 50px;
 }
 
-.mt-\[\]{
-  margin-top: ;
-}
-
 .flex{
   display: flex;
+}
+
+.grid{
+  display: grid;
+}
+
+.h-\[12px\]{
+  height: 12px;
+}
+
+.h-\[197px\]{
+  height: 197px;
+}
+
+.h-\[42px\]{
+  height: 42px;
 }
 
 .h-\[52px\]{
@@ -623,12 +671,74 @@ body {
   width: 103px;
 }
 
+.w-\[12px\]{
+  width: 12px;
+}
+
+.w-\[192px\]{
+  width: 192px;
+}
+
+.w-\[197px\]{
+  width: 197px;
+}
+
+.w-\[206px\]{
+  width: 206px;
+}
+
+.w-\[42px\]{
+  width: 42px;
+}
+
+@keyframes rotation{
+  0%{
+    transform: rotate(0deg);
+  }
+
+  100%{
+    transform: rotate(180deg);
+  }
+}
+
+.animate-rotation{
+  animation: rotation 150ms linear forwards;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
 .items-center{
   align-items: center;
 }
 
 .justify-between{
   justify-content: space-between;
+}
+
+.gap-\[10px\]{
+  gap: 10px;
+}
+
+.gap-\[12px\]{
+  gap: 12px;
+}
+
+.gap-\[16px\]{
+  gap: 16px;
+}
+
+.gap-\[30px\]{
+  gap: 30px;
+}
+
+.gap-\[33px\]{
+  gap: 33px;
+}
+
+.rounded-\[30px\]{
+  border-radius: 30px;
 }
 
 .rounded-\[46px\]{
@@ -644,12 +754,57 @@ body {
   background-color: rgb(188 236 48 / var(--tw-bg-opacity));
 }
 
+.bg-white{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.p-\[30px\]{
+  padding: 30px;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.text-\[18px\]{
+  font-size: 18px;
+}
+
+.text-\[24px\]{
+  font-size: 24px;
+}
+
+.text-\[32px\]{
+  font-size: 32px;
+}
+
 .text-\[40px\]{
   font-size: 40px;
 }
 
+.font-medium{
+  font-weight: 500;
+}
+
 .font-semibold{
   font-weight: 600;
+}
+
+.leading-\[20px\]{
+  line-height: 20px;
+}
+
+.leading-\[26px\]{
+  line-height: 26px;
+}
+
+.leading-\[35px\]{
+  line-height: 35px;
+}
+
+.leading-\[44px\]{
+  line-height: 44px;
 }
 
 .text-gray{
@@ -657,8 +812,10 @@ body {
   color: rgb(153 153 153 / var(--tw-text-opacity));
 }
 
-.text-\[\]{
-  color: ;
+.shadow-shadow_primary{
+  --tw-shadow: 0 4px 67px -12px #00000021;
+  --tw-shadow-colored: 0 4px 67px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .transition-colors{
@@ -667,9 +824,31 @@ body {
   transition-duration: 150ms;
 }
 
+.transition-opacity{
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition-transform{
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.hover\:bg-\[\#F7F7F7\]:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(247 247 247 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-hover:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(198 255 0 / var(--tw-bg-opacity));
+}
+
+.active\:bg-\[\#E9ECED\]:active{
+  --tw-bg-opacity: 1;
+  background-color: rgb(233 236 237 / var(--tw-bg-opacity));
 }
 
 .active\:bg-active:active{
@@ -683,7 +862,67 @@ body {
 }
 
 @media (max-width: 375px){
-  .max-\[375px\]\:hidden{
+  .mobile\:left-\[-15\.5rem\]{
+    left: -15.5rem;
+  }
+
+  .mobile\:mt-\[40px\]{
+    margin-top: 40px;
+  }
+
+  .mobile\:hidden{
     display: none;
+  }
+
+  .mobile\:h-\[141px\]{
+    height: 141px;
+  }
+
+  .mobile\:h-\[30px\]{
+    height: 30px;
+  }
+
+  .mobile\:w-\[141px\]{
+    width: 141px;
+  }
+
+  .mobile\:w-\[283px\]{
+    width: 283px;
+  }
+
+  .mobile\:w-\[30px\]{
+    width: 30px;
+  }
+
+  .mobile\:flex-col{
+    flex-direction: column;
+  }
+
+  .mobile\:items-center{
+    align-items: center;
+  }
+
+  .mobile\:gap-\[13px\]{
+    gap: 13px;
+  }
+
+  .mobile\:gap-\[20px\]{
+    gap: 20px;
+  }
+
+  .mobile\:text-\[16px\]{
+    font-size: 16px;
+  }
+
+  .mobile\:text-\[24px\]{
+    font-size: 24px;
+  }
+
+  .mobile\:font-medium{
+    font-weight: 500;
+  }
+
+  .mobile\:leading-\[26px\]{
+    line-height: 26px;
   }
 }

@@ -1,3 +1,8 @@
 export default function Login() {
-	return <div></div>
+	return (
+		<div>
+			<input type="text" name="login"/>
+			<input type="password" name="password"/>
+		</div>
+	)
 }

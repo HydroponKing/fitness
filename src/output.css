@@ -558,6 +558,7 @@ video {
 
 body {
   font-family: 'Roboto', sans-serif;
+  background-color: #fafafa;
 }
 
 .container{
@@ -630,6 +631,10 @@ body {
   border-radius: 46px;
 }
 
+.border{
+  border-width: 1px;
+}
+
 .bg-green_bg{
   --tw-bg-opacity: 1;
   background-color: rgb(188 236 48 / var(--tw-bg-opacity));
@@ -659,4 +664,10 @@ body {
 .active\:text-white:active{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+@media (max-width: 375px){
+  .max-\[375px\]\:hidden{
+    display: none;
+  }
 }

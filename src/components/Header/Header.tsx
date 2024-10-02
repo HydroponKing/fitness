@@ -5,11 +5,17 @@ export default function Header() {
 		<header className='flex justify-between items-center mt-[50px]'>
 			<div>
 				<img src='/src/assets/img/logo.png' />
-				<p className='text-gray mt-[14px]'>
+				<p className='text-gray mt-[14px] max-[375px]:hidden'>
 					Онлайн-тренировки для занятий дома
 				</p>
 			</div>
-			<Button background='bg-green_bg' width='w-[103px]' title='Войти' />
+			<Button
+				width='w-[103px]'
+				background='bg-green_bg'
+				hover='hover:bg-hover'
+				active='active:bg-active active:text-white'
+				title='Войти'
+			/>
 		</header>
 	)
 }

@@ -12,16 +12,19 @@ export default function Course() {
       <Header />
 
       {/* Yoga Section */}
-<div className="relative mt-8 overflow-hidden rounded-[15px] ">
-  <img
-    src={yogaImage}
-    alt="Йога"
-    className="w-full object-cover h-[310px]  scale-105 " // изменяем object-position
-  />
-  <div className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white">
+      <div className="relative mt-8 overflow-hidden rounded-[30px] h-[310px]">
+  <div className="absolute top-[40px] left-[40px] text-white">
     <h1 className="text-4xl font-bold">Йога</h1>
   </div>
+  <div className="h-[325px] bg-yellow_bg">
+    <img
+      src={yogaImage}
+      alt="Йога"
+      className="h-[260%] rounded-[30px] object-cover -translate-y-[305px] lg:object-[-1900%] scale-[0.85]" 
+    />
+  </div>
 </div>
+
 
 
 {/* Подойдет для вас блок */}

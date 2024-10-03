@@ -12,7 +12,7 @@ export default function UserBar() {
 				<p className='text-gray mt-[10px]'>user-email@mail.ru</p>
 			</div>
 
-			<div className='grid gap-[10px] mt-[34px]'>
+			<div className='flex flex-col gap-[10px] mt-[34px]'>
 				<Button
 					width='w-[206px]'
 					background='bg-green_bg'

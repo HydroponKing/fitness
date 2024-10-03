@@ -41,6 +41,9 @@ export default {
 			fontFamily: {
 				Roboto: ['Roboto', 'sans-serif'],
 			},
+			objectPosition: {
+				yoga: '53% -130px',
+			},
 			screens: {
 				mobile: { max: '375px' },
 			},

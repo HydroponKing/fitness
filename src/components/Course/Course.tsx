@@ -7,7 +7,7 @@ import lineImage from '/src/assets/img/line.png'
 
 export default function Course() {
   return (
-    <div className="bg-white_bg font-Roboto max-w-[1200px] mx-auto">
+    <div className="font-Roboto max-w-[1200px] mx-auto">
       {/* Header */}
       <Header />
 
@@ -99,8 +99,8 @@ export default function Course() {
 
 
 {/* Призыв к действию */}
-<div className="relative py-10 bg-white w-[1160px] h-[486px]">
-  <div className="container mx-auto flex justify-between items-center">
+<div className="relative py-10  w-[1200px] h-[300px]">
+<div className="container mx-auto flex justify-between items-center bg-white shadow-2xl rounded-[20px] h-[490px]">
     <div>
       <h2 className="font-Roboto text-[60px] font-medium leading-[60px] text-left text-black w-[420px]">
         Начните путь к новому телу
@@ -134,13 +134,13 @@ export default function Course() {
       <img
         src={lineImage}
         alt="Line"
-        className="absolute top-0 left-[-50px] z-0 translate-x-[110px] translate-y-[110px] scale-[1.27]" 
+        className="absolute top-0 left-[-50px] z-0 translate-x-[0px] translate-y-[130px] scale-[1.27]" 
       />
       {/* Man Image */}
       <img
         src={manImage}
         alt="Man"
-        className="relative z-10 w-[500px] h-auto translate-x-[110px] translate-y-[-70px]"
+        className="relative z-10 w-[500px] h-auto translate-x-[-40px] translate-y-[-70px]"
       />
     </div>
   </div>

@@ -123,9 +123,9 @@ export default function Course() {
   </li>
 </ul>
 
-      <button className="mt-6 bg-green_bg hover:bg-hover active:bg-active text-black py-3 px-6 rounded-full w-[437px]">
-        Добавить курс
-      </button>
+<button className="mt-6 bg-regular hover:bg-hover active:bg-active text-black py-3 px-6 rounded-full w-[437px]">
+  Добавить курс
+</button>
     </div>
 
     {/* Контейнер для изображения мужчины и линии */}

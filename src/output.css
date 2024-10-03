@@ -728,6 +728,18 @@ body {
   height: 3px;
 }
 
+.h-\[270\%\]{
+  height: 270%;
+}
+
+.h-\[\%\]{
+  height: %;
+}
+
+.h-\[26\%\]{
+  height: 26%;
+}
+
 .w-\[103px\]{
   width: 103px;
 }
@@ -758,6 +770,34 @@ body {
 
 .w-\[500px\]{
   width: 500px;
+}
+
+.max-w-\[1300px\]{
+  max-width: 1300px;
+}
+
+.max-w-\[1100px\]{
+  max-width: 1100px;
+}
+
+.max-w-\[12px\]{
+  max-width: 12px;
+}
+
+.max-w-\[1279px\]{
+  max-width: 1279px;
+}
+
+.max-w-\[1179px\]{
+  max-width: 1179px;
+}
+
+.max-w-\[13px\]{
+  max-width: 13px;
+}
+
+.max-w-\[1200px\]{
+  max-width: 1200px;
 }
 
 .-translate-y-1\/2{
@@ -802,6 +842,46 @@ body {
 
 .-translate-y-\[30px\]{
   --tw-translate-y: -30px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-translate-y-\[305\]{
+  --tw-translate-y: -305;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-translate-y-\[305\%\]{
+  --tw-translate-y: -305%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-translate-y-\[05\%\]{
+  --tw-translate-y: -05%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-translate-y-\[5\%\]{
+  --tw-translate-y: -5%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-translate-y-\[50\%\]{
+  --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-translate-y-\[30\%\]{
+  --tw-translate-y: -30%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-translate-y-\[40\%\]{
+  --tw-translate-y: -40%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-translate-y-\[35\%\]{
+  --tw-translate-y: -35%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -869,6 +949,22 @@ body {
 
 .gap-\[30px\]{
   gap: 30px;
+}
+
+.gap-\[40px\]{
+  gap: 40px;
+}
+
+.gap-\[50px\]{
+  gap: 50px;
+}
+
+.gap-\[60px\]{
+  gap: 60px;
+}
+
+.gap-\[0px\]{
+  gap: 0px;
 }
 
 .space-y-2 > :not([hidden]) ~ :not([hidden]){
@@ -1127,5 +1223,100 @@ body {
   .lg\:object-\[-19000\%\]{
     -o-object-position: -19000%;
        object-position: -19000%;
+  }
+
+  .lg\:object-\[2\]{
+    -o-object-position: 2;
+       object-position: 2;
+  }
+
+  .lg\:object-\[200\]{
+    -o-object-position: 200;
+       object-position: 200;
+  }
+
+  .lg\:object-\[200\%\]{
+    -o-object-position: 200%;
+       object-position: 200%;
+  }
+
+  .lg\:object-\[20\%\]{
+    -o-object-position: 20%;
+       object-position: 20%;
+  }
+
+  .lg\:object-\[-200\%\]{
+    -o-object-position: -200%;
+       object-position: -200%;
+  }
+
+  .lg\:object-\[-2000\%\]{
+    -o-object-position: -2000%;
+       object-position: -2000%;
+  }
+
+  .lg\:object-\[-2\%\]{
+    -o-object-position: -2%;
+       object-position: -2%;
+  }
+
+  .lg\:object-\[200\417\427\%\]{
+    -o-object-position: 200ЗЧ%;
+       object-position: 200ЗЧ%;
+  }
+
+  .lg\:object-\[200px\%\]{
+    -o-object-position: 200px%;
+       object-position: 200px%;
+  }
+
+  .lg\:object-\[200\%\%\]{
+    -o-object-position: 200%%;
+       object-position: 200%%;
+  }
+
+  .lg\:object-\[200\%\\\%\]{
+    -o-object-position: 200%\%;
+       object-position: 200%\%;
+  }
+
+  .lg\:object-\[200px\]{
+    -o-object-position: 200px;
+       object-position: 200px;
+  }
+
+  .lg\:object-\[20px\]{
+    -o-object-position: 20px;
+       object-position: 20px;
+  }
+
+  .lg\:object-\[qpx\]{
+    -o-object-position: qpx;
+       object-position: qpx;
+  }
+
+  .lg\:object-\[190px\]{
+    -o-object-position: 190px;
+       object-position: 190px;
+  }
+
+  .lg\:object-\[180px\]{
+    -o-object-position: 180px;
+       object-position: 180px;
+  }
+
+  .lg\:object-\[170px\]{
+    -o-object-position: 170px;
+       object-position: 170px;
+  }
+
+  .lg\:object-\[160px\]{
+    -o-object-position: 160px;
+       object-position: 160px;
+  }
+
+  .lg\:object-\[150px\]{
+    -o-object-position: 150px;
+       object-position: 150px;
   }
 }

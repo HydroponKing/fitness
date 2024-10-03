@@ -7,7 +7,7 @@ import lineImage from '/src/assets/img/line.png'
 
 export default function Course() {
   return (
-    <div className="bg-white_bg font-Roboto">
+    <div className="bg-white_bg font-Roboto max-w-[1200px] mx-auto">
       {/* Header */}
       <Header />
 
@@ -20,7 +20,7 @@ export default function Course() {
     <img
       src={yogaImage}
       alt="Йога"
-      className="h-[260%] rounded-[30px] object-cover -translate-y-[305px] lg:object-[-1900%] scale-[0.85]" 
+      className="h-[260%] rounded-[30px] object-cover -translate-y-[35%] lg:object-[150px] scale-[0.85]" 
     />
   </div>
 </div>

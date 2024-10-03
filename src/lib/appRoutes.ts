@@ -6,4 +6,5 @@ export const AppRoutes = {
 	LOGIN: '/signin',
 	REGISTER: '/signup',
 	NOT_FOUND: '*',
+	COURSEPAGE: '/coursepage',  // Добавьте это свойство
 }

@@ -1,6 +1,9 @@
 import Header from '../Header/Header'
 import yogaImage from '/src/assets/img/yoga.jpg'
 import manImage from '/src/assets/img/man.png'
+import IconStar from '/src/assets/img/icon/star.svg';
+import lineImage from '/src/assets/img/line.png'
+
 
 export default function Course() {
   return (
@@ -21,65 +24,126 @@ export default function Course() {
 </div>
 
 
-      {/* Подойдет для вас блок */}
-      <div className="py-10">
-        <h2 className="text-3xl text-center mb-6">Подойдет для вас, если:</h2>
-        <div className="flex justify-center space-x-6">
-          <div className="flex flex-col items-center">
-            <div className="text-2xl font-bold text-number">1</div>
-            <p className="text-center mt-2">
-              Давно хотели попробовать йогу, но не решались начать
-            </p>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="text-2xl font-bold text-number">2</div>
-            <p className="text-center mt-2">
-              Хотите укрепить позвоночник, избавиться от болей
-            </p>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="text-2xl font-bold text-number">3</div>
-            <p className="text-center mt-2">
-              Ищете активность, полезную для тела и души
-            </p>
-          </div>
-        </div>
-      </div>
+{/* Подойдет для вас блок */}
+<div className="py-10">
+<h2 className="font-Roboto text-[40px] font-semibold leading-[44px] text-left mb-6">
+  Подойдет для вас, если:
+</h2>
 
-      {/* Направления */}
-      <div className="bg-green_bg py-8">
-        <h2 className="text-center text-xl mb-6">Направления</h2>
-        <div className="flex justify-center flex-wrap space-x-4">
-          <span className="bg-white px-4 py-2 rounded-full">Йога для новичков</span>
-          <span className="bg-white px-4 py-2 rounded-full">Классическая йога</span>
-          <span className="bg-white px-4 py-2 rounded-full">Кундалини-йога</span>
-          <span className="bg-white px-4 py-2 rounded-full">Йогатерапия</span>
-          <span className="bg-white px-4 py-2 rounded-full">Хатха-йога</span>
-          <span className="bg-white px-4 py-2 rounded-full">Аштанга-йога</span>
-        </div>
-      </div>
+  <div className="flex justify-center gap-[30px]">
+    {/* Первый блок */}
+    <div className="flex items-center bg-black_bg p-[20px] rounded-[28px] h-[141px] w-[368px]">
+      <div className="text-[75px] font-bold text-number mr-4 pr-[10px]">1</div>
+      <p className="text-white text-[24px]">
+        Давно хотели попробовать йогу, но не решались начать
+      </p>
+    </div>
 
-      {/* Призыв к действию */}
-      <div className="relative py-10 bg-gray_bg">
-        <div className="container mx-auto flex justify-between items-center">
-          <div>
-            <h2 className="text-3xl font-bold">Начните путь к новому телу</h2>
-            <ul className="mt-4 space-y-2">
-              <li>Пророботка всех групп мышц</li>
-              <li>Тренировка суставов</li>
-              <li>Улучшение циркуляции крови</li>
-              <li>Упражнения заряжают бодростью</li>
-              <li>Помогают противостоять стрессам</li>
-            </ul>
-            <button className="mt-6 bg-green_bg hover:bg-hover active:bg-active text-black py-3 px-6 rounded-full">
-              Войти, чтобы добавить курс
-            </button>
-          </div>
-          <div>
-            <img src={manImage} alt="Man" className="w-[300px] h-auto" />
-          </div>
-        </div>
-      </div>
+    {/* Второй блок */}
+    <div className="flex items-center bg-black_bg p-[20px] rounded-[28px] h-[141px] w-[431px]">
+      <div className="text-[75px] font-bold text-number mr-4 pr-[10px]">2</div>
+      <p className="text-white text-[24px]">
+        Хотите укрепить позвоночник, избавиться от болей
+      </p>
+    </div>
+
+    {/* Третий блок */}
+    <div className="flex items-center bg-black_bg p-[20px] rounded-[28px] h-[141px] w-[327px]">
+      <div className="text-[75px] font-bold text-number mr-4 pr-[10px]">3</div>
+      <p className="text-white text-[24px]">
+        Ищете активность, полезную для тела и души
+      </p>
+    </div>
+  </div>
+</div>
+
+{/* Направления */}
+<div className="py-8">
+  <h2 className="font-Roboto text-[40px] font-semibold leading-[44px] text-left mb-6">Направления</h2>
+  <div className="bg-green_bg rounded-[20px] p-4 grid grid-cols-3 gap-4">
+    {/* Ссылка 1 */}
+    <a href="#" className="flex items-center text-black text-[24px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
+      <img src={IconStar} alt="star icon" className="mr-2" />
+      Йога для новичков
+    </a>
+    {/* Ссылка 2 */}
+    <a href="#" className="flex items-center text-black text-[24px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
+      <img src={IconStar} alt="star icon" className="mr-2" />
+      Классическая йога
+    </a>
+    {/* Ссылка 3 */}
+    <a href="#" className="flex items-center text-black text-[24px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
+      <img src={IconStar} alt="star icon" className="mr-2" />
+      Кундалини-йога
+    </a>
+    {/* Ссылка 4 */}
+    <a href="#" className="flex items-center text-black text-[24px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
+      <img src={IconStar} alt="star icon" className="mr-2" />
+      Йогатерапия
+    </a>
+    {/* Ссылка 5 */}
+    <a href="#" className="flex items-center text-black text-[24px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
+      <img src={IconStar} alt="star icon" className="mr-2" />
+      Хатха-йога
+    </a>
+    {/* Ссылка 6 */}
+    <a href="#" className="flex items-center text-black text-[24px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
+      <img src={IconStar} alt="star icon" className="mr-2" />
+      Аштанга-йога
+    </a>
+  </div>
+</div>
+
+
+{/* Призыв к действию */}
+<div className="relative py-10 bg-white w-[1160px] h-[486px]">
+  <div className="container mx-auto flex justify-between items-center">
+    <div>
+      <h2 className="font-Roboto text-[60px] font-medium leading-[60px] text-left text-black w-[420px]">
+        Начните путь к новому телу
+      </h2>
+	  <ul className="mt-4 space-y-2 bg-gray-200 p-4 rounded list-disc list-inside">
+  <li className="font-Roboto text-[24px] font-normal leading-[26.4px] text-left text-gray">
+    пророботка всех групп мышц
+  </li>
+  <li className="font-Roboto text-[24px] font-normal leading-[26.4px] text-left text-gray">
+    тренировка суставов
+  </li>
+  <li className="font-Roboto text-[24px] font-normal leading-[26.4px] text-left text-gray">
+    улучшение циркуляции крови
+  </li>
+  <li className="font-Roboto text-[24px] font-normal leading-[26.4px] text-left text-gray">
+    упражнения заряжают бодростью
+  </li>
+  <li className="font-Roboto text-[24px] font-normal leading-[26.4px] text-left text-gray">
+    помогают противостоять стрессам
+  </li>
+</ul>
+
+      <button className="mt-6 bg-green_bg hover:bg-hover active:bg-active text-black py-3 px-6 rounded-full w-[437px]">
+        Добавить курс
+      </button>
+    </div>
+
+    {/* Контейнер для изображения мужчины и линии */}
+    <div className="relative">
+      {/* Line Image */}
+      <img
+        src={lineImage}
+        alt="Line"
+        className="absolute top-0 left-[-50px] z-0 translate-x-[110px] translate-y-[110px] scale-[1.27]" 
+      />
+      {/* Man Image */}
+      <img
+        src={manImage}
+        alt="Man"
+        className="relative z-10 w-[500px] h-auto translate-x-[110px] translate-y-[-70px]"
+      />
+    </div>
+  </div>
+</div>
+
+
     </div>
   )
 }

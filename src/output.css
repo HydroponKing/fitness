@@ -599,8 +599,40 @@ body {
   }
 }
 
+.fixed{
+  position: fixed;
+}
+
+.top-0{
+  top: 0px;
+}
+
+.left-0{
+  left: 0px;
+}
+
+.right-0{
+  right: 0px;
+}
+
+.bottom-0{
+  bottom: 0px;
+}
+
+.-z-50{
+  z-index: -50;
+}
+
+.z-50{
+  z-index: 50;
+}
+
 .mt-\[14px\]{
   margin-top: 14px;
+}
+
+.mt-\[48px\]{
+  margin-top: 48px;
 }
 
 .mt-\[50px\]{
@@ -611,33 +643,113 @@ body {
   display: flex;
 }
 
+.h-\[100\%\]{
+  height: 100%;
+}
+
+.h-\[35px\]{
+  height: 35px;
+}
+
 .h-\[52px\]{
   height: 52px;
+}
+
+.w-\[100\%\]{
+  width: 100%;
 }
 
 .w-\[103px\]{
   width: 103px;
 }
 
+.w-\[220px\]{
+  width: 220px;
+}
+
+.w-\[280px\]{
+  width: 280px;
+}
+
+.w-\[360px\]{
+  width: 360px;
+}
+
+.flex-col{
+  flex-direction: column;
+}
+
 .items-center{
   align-items: center;
+}
+
+.justify-end{
+  justify-content: flex-end;
+}
+
+.justify-center{
+  justify-content: center;
 }
 
 .justify-between{
   justify-content: space-between;
 }
 
+.gap-\[10px\]{
+  gap: 10px;
+}
+
+.gap-\[34px\]{
+  gap: 34px;
+}
+
+.rounded-\[30px\]{
+  border-radius: 30px;
+}
+
 .rounded-\[46px\]{
   border-radius: 46px;
+}
+
+.rounded-\[8px\]{
+  border-radius: 8px;
 }
 
 .border{
   border-width: 1px;
 }
 
+.border-\[\#D0CECE\]{
+  --tw-border-opacity: 1;
+  border-color: rgb(208 206 206 / var(--tw-border-opacity));
+}
+
 .bg-green_bg{
   --tw-bg-opacity: 1;
   background-color: rgb(188 236 48 / var(--tw-bg-opacity));
+}
+
+.bg-modal_active_bg{
+  --tw-bg-opacity: 1;
+  background-color: rgb(250 250 250 / var(--tw-bg-opacity));
+}
+
+.bg-white{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-red-600{
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
+}
+
+.p-10{
+  padding: 2.5rem;
+}
+
+.p-\[16px\]{
+  padding: 16px;
 }
 
 .text-gray{
@@ -651,9 +763,19 @@ body {
   transition-duration: 150ms;
 }
 
+.hover\:bg-\[\#F7F7F7\]:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(247 247 247 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-hover:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(198 255 0 / var(--tw-bg-opacity));
+}
+
+.active\:bg-\[\#E9ECED\]:active{
+  --tw-bg-opacity: 1;
+  background-color: rgb(233 236 237 / var(--tw-bg-opacity));
 }
 
 .active\:bg-active:active{

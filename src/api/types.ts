@@ -1,8 +1,13 @@
 export type courseType = {
 	id: number,
-	name: string,
+	nameRU: string,
 	src: string,
+    srcSmall: string,
 	duration: string,
+    description: string,
+    directions: string,
+    fitting: string,
 	timeaday: string,
 	level: string,
+    order: number,
 }

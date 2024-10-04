@@ -1,7 +1,7 @@
 import Course from '../Course/Course'
 import Header from '../Header/Header'
 // import yoga from '/src/assets/img/yoga2.png'
-import stretching from '/src/assets/img/stretching.png'
+// import stretching from '/src/assets/img/stretching2.png'
 // import zumba from '/src/assets/img/zumba2.png'
 // import bodyflex from '/src/assets/img/bodyflex2.png'
 // import step from '/src/assets/img/step.png'
@@ -20,6 +20,7 @@ export default function Main() {
 		getData()
 	},[])
 	console.log(courses);
+	const sortedCourses = [...courses].sort((a, b) => a.order - b.order)
 	
 	// const courses = [
 	// 	{
@@ -77,9 +78,9 @@ export default function Main() {
 
 					</div>
 					<div className="grid-cols-1 sm:grid md:grid-cols-3 -mr-[10] gap-[10]">
-						{courses.map(course =>
+					{sortedCourses.map((course) => (
 							<Course course={course} key={course.id} />
-						)}
+						))}
 					</div>
 					<div className="flex justify-center ">
 						<Button

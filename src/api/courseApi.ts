@@ -9,7 +9,6 @@ export const getCourses = async ():Promise<courseType[]> =>{
         if (snapshot.exists()){
             courses = Object.values(snapshot.val())
         }
-        // return courses
     }
     catch(error){
         if(error instanceof Error){

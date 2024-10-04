@@ -1,55 +1,68 @@
 import Course from '../Course/Course'
 import Header from '../Header/Header'
-import yoga from '/src/assets/img/yoga2.png'
-import stretching from '/src/assets/img/stretching2.png'
-import zumba from '/src/assets/img/zumba2.png'
-import bodyflex from '/src/assets/img/bodyflex2.png'
-import step from '/src/assets/img/step.png'
+// import yoga from '/src/assets/img/yoga2.png'
+import stretching from '/src/assets/img/stretching.png'
+// import zumba from '/src/assets/img/zumba2.png'
+// import bodyflex from '/src/assets/img/bodyflex2.png'
+// import step from '/src/assets/img/step.png'
 import Button from '../Button/Button'
+import { useEffect, useState } from 'react'
+import { getCourses } from '../../api/courseApi'
+import { courseType } from '../../api/types'
 
 export default function Main() {
-	const courses = [
-		{
-			id: 1,
-			name: "Йога",
-			src: yoga,
-			duration: "25дней",
-			timeaday: "20-25минут/день",
-			level: "Сложность",
-		},
-		{
-			id: 2,
-			name: "Стретчинг",
-			src: stretching,
-			duration: "25дней",
-			timeaday: "20-25минут/день",
-			level: "Сложность",
-		},
-		{
-			id: 3,
-			name: "Зумба",
-			src: zumba,
-			duration: "25дней",
-			timeaday: "20-25минут/день",
-			level: "Сложность",
-		},
-		{
-			id: 4,
-			name: "Степ-аэробика",
-			src: step,
-			duration: "25дней",
-			timeaday: "20-25минут/день",
-			level: "Сложность",
-		},
-		{
-			id: 5,
-			name: "Бодифлекс",
-			src: bodyflex,
-			duration: "25дней",
-			timeaday: "20-25минут/день",
-			level: "Сложность",
+	const [courses, setCourses] = useState<courseType[]>([])
+	useEffect(()=>{
+		const getData = async() =>{
+			const res = await getCourses()
+			setCourses(res)
 		}
-	]
+		getData()
+	},[])
+	console.log(courses);
+	
+	// const courses = [
+	// 	{
+	// 		id: 1,
+	// 		name: "Йога",
+	// 		src: yoga,
+	// 		duration: "25дней",
+	// 		timeaday: "20-25минут/день",
+	// 		level: "Сложность",
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		name: "Стретчинг",
+	// 		src: stretching,
+	// 		duration: "25дней",
+	// 		timeaday: "20-25минут/день",
+	// 		level: "Сложность",
+	// 	},
+	// 	{
+	// 		id: 3,
+	// 		name: "Зумба",
+	// 		src: zumba,
+	// 		duration: "25дней",
+	// 		timeaday: "20-25минут/день",
+	// 		level: "Сложность",
+	// 	},
+	// 	{
+	// 		id: 4,
+	// 		name: "Степ-аэробика",
+	// 		src: step,
+	// 		duration: "25дней",
+	// 		timeaday: "20-25минут/день",
+	// 		level: "Сложность",
+	// 	},
+	// 	{
+	// 		id: 5,
+	// 		name: "Бодифлекс",
+	// 		src: bodyflex,
+	// 		duration: "25дней",
+	// 		timeaday: "20-25минут/день",
+	// 		level: "Сложность",
+	// 	}
+	// ]
 	return (
 		<main>
 			<Header />

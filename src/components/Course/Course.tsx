@@ -1,11 +1,5 @@
-export type courseType = {
-	id: number,
-	name: string,
-	src: string,
-	duration: string,
-	timeaday: string,
-	level: string,
-}
+import { courseType } from "../../api/types"
+
 export type CourseOneType = {
 	course: courseType,
 }

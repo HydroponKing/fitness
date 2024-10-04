@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react'
 import { getCourses } from '../../api/courseApi'
 import { courseType } from '../../api/types'
 
-// для получения курсов с бека
+
 export default function Main() {
-	const [courses, setCourses] = useState<courseType[]>([])
+	const [courses, setCourses] = useState<courseType[]>([])// для получения курсов с бека
 	useEffect(()=>{
 		const getData = async() =>{
 			const res = await getCourses()
@@ -16,8 +16,8 @@ export default function Main() {
 		getData()
 	},[])
 	console.log(courses);
-	const sortedCourses = [...courses].sort((a, b) => a.order - b.order)
-	// для сортировки курсов по порядку
+	const sortedCourses = [...courses].sort((a, b) => a.order - b.order)// для сортировки курсов по порядку
+	
 	return (
 		<main>
 			<Header />
@@ -25,7 +25,7 @@ export default function Main() {
 				<div className=" max-w-[1440px] mt-5">
 					<div className="flex justify-between my-[50px] relative">
 						<div className="text-[60px] h-[120px] text-pretty inline-block align-middle font-bold"> Начните заниматься спортом  и улучшите качество жизни</div>
-						<div className="mt-[8] pl-5 mt-4  text-[32px] min-w-[288px] max-h-[102px] rounded-md bg-[#BCEC30]">Измени своё <br/> тело за полгода!</div>
+						<div className="pl-5 mt-4  text-[32px] min-w-[288px] max-h-[102px] rounded-md bg-[#BCEC30]">Измени своё <br/> тело за полгода!</div>
 						<div className="absolute top-[106px] right-[150px]">
 							<img src="/src/assets/img/polygon.png" alt="polygon" />
 						</div>

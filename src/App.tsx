@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import { AppRoutes } from './lib/appRoutes'
 import Main from './components/Main/Main'
 
+
 function App() {
 	return (
 		<div className='container'>

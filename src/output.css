@@ -671,6 +671,18 @@ body {
   top: 90px;
 }
 
+.top-\[80px\]{
+  top: 80px;
+}
+
+.top-\[11px\]{
+  top: 11px;
+}
+
+.top-\[106px\]{
+  top: 106px;
+}
+
 .my-\[50px\]{
   margin-top: 50px;
   margin-bottom: 50px;
@@ -726,6 +738,18 @@ body {
 
 .mt-5{
   margin-top: 1.25rem;
+}
+
+.mt-\[8\]{
+  margin-top: 8;
+}
+
+.ml-\[5\]{
+  margin-left: 5;
+}
+
+.mt-4{
+  margin-top: 1rem;
 }
 
 .inline-block{
@@ -929,6 +953,10 @@ body {
 
 .pl-\[2\]{
   padding-left: 2;
+}
+
+.pl-5{
+  padding-left: 1.25rem;
 }
 
 .align-middle{

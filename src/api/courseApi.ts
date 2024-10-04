@@ -4,10 +4,10 @@ import { courseType } from "./types"
 export const getCourses = async ():Promise<courseType[]> =>{
     let courses:courseType[] = []
     try {
-        const dbRef = ref(db,"courses")
+        const dbRef = ref(db,"courses") // ссылк на коллекцию "courses" в Firebase
         const snapshot = await get(dbRef)
-        if (snapshot.exists()){
-            courses = Object.values(snapshot.val())
+        if (snapshot.exists()){ // для проверки, существуют ли данные
+            courses = Object.values(snapshot.val())// для получения значений данных
         }
     }
     catch(error){
@@ -18,5 +18,5 @@ export const getCourses = async ():Promise<courseType[]> =>{
     }
     return courses
 }
-
+// для получения данных о курсах из базы данных и возврата этих данных в виде массива объектов
 

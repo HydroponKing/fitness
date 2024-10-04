@@ -11,3 +11,4 @@ export type courseType = {
 	level: string,
     order: number,
 }
+// Типы для запросов, ключи курсов

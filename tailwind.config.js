@@ -3,14 +3,37 @@ export default {
 	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
 	theme: {
 		container: {
+			//Container set for all pages
 			center: true,
 			padding: '1rem',
+			screens: {
+				sm: '640px',
+				md: '768px',
+				lg: '1024px',
+				xl: '1200px',
+				'2xl': '1200px',
+			},
 		},
 		extend: {
+			screens: {
+				//Media query set for mobile screens
+				mobile: { min: '360px', max: '400px' },
+			},
+			boxShadow: {
+				//Box-shadow set for project
+				shadow_primary: '0 4px 67px -12px #00000021',
+			},
+			backgroundImage: {
+				//Gradient background set for recommend blocks
+				black_bg: 'linear-gradient(115.81deg, #151720 34.98%, #1E212E 91.5%)',
+			},
+			objectPosition: {
+				//Course card custom img positions
+				yoga: '53% -130px',
+			},
 			colors: {
 				//Backgrounds
 				green_bg: '#BCEC30',
-				white_bg: '#FFFFFF',
 				gray_bg: '#F7F7F7',
 				//Modal active background
 				modal_active_bg: '#FAFAFA',
@@ -33,27 +56,19 @@ export default {
 				progress: '#00C1FF',
 				no_progress: '#F7F7F7',
 			},
-			backgroundImage: {
-				//Gradient background for recommend blocks
-				black_bg: 'linear-gradient(115.81deg, #151720 34.98%, #1E212E 91.5%)',
-			},
-			boxShadow: { shadow_primary: '0 4px 67px -12px #00000021' },
 			fontFamily: {
+				//Custom use set for font-families
 				Roboto: ['Roboto', 'sans-serif'],
 			},
-			objectPosition: {
-				yoga: '53% -130px',
-			},
-			screens: {
-				mobile: { max: '375px' },
-			},
 			keyframes: {
+				//Custom keyframes for animations
 				rotation: {
 					'0%': { transform: 'rotate(0deg)' },
 					'100%': { transform: 'rotate(180deg)' },
 				},
 			},
 			animation: {
+				//Custom use set for animations
 				rotation: 'rotation 150ms linear forwards',
 			},
 		},

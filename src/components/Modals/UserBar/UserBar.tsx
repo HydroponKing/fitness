@@ -3,9 +3,9 @@ import Button from '../../Button/Button'
 export default function UserBar() {
 	return (
 		<div
-			className='absolute left-[-62px] top-[75px] p-[30px] 
+			className='absolute left-[-71px] top-[75px] p-[30px] 
 			rounded-[30px] z-[1] bg-white transition-opacity
-			shadow-shadow_primary mobile:left-[-15.5rem]'
+			shadow-shadow_primary mobile:left-[-13.2rem]'
 		>
 			<div className='text-[18px] text-center leading-[20px]'>
 				<p>UserName</p>
@@ -20,6 +20,7 @@ export default function UserBar() {
 					active='active:bg-active active:text-white'
 					title='Мой профиль'
 				/>
+
 				<Button
 					width='w-[206px]'
 					border='border'

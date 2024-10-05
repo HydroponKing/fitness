@@ -22,6 +22,7 @@ export default function Header() {
 			<nav className='flex justify-between items-center mt-[50px]' ref={ref}>
 				<div>
 					<img src='/src/assets/img/logo.png' />
+
 					<p
 						className='text-[18px] text-gray mt-[14px] 
 						leading-[20px] mobile:hidden'
@@ -43,6 +44,7 @@ export default function Header() {
 							<p className='text-[24px] leading-[26px] mobile:hidden'>
 								UserName
 							</p>
+
 							<svg
 								className={`w-[12px] h-[12px] mt-[2px] transition-transform 
 									${isOpen && 'animate-rotation'}`}

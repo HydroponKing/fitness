@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import Button from './Button'
 
+type Props = {
+	margin?: string
+	mobile?: string
+}
 
-
-export default function ScrollBtn() {
+export default function ScrollBtn({ margin, mobile }: Props) {
 	const [isShow, setIsShow] = useState(false)
-
-
 
 	const scrollCondition = () => {
 		if (window.scrollY > 400) {
@@ -14,14 +15,10 @@ export default function ScrollBtn() {
 		} else setIsShow(false)
 	}
 
-
-
 	useEffect(() => {
 		window.addEventListener('scroll', scrollCondition)
 		return () => window.removeEventListener('scroll', scrollCondition)
 	}, [])
-
-
 
 	const goToTop = () => {
 		window.scrollTo({
@@ -30,13 +27,8 @@ export default function ScrollBtn() {
 		})
 	}
 
-
-
 	return (
-		<div
-			className='mt-[34px] flex flex-col items-center 
-		mobile:mt-[24px] mobile:items-end'
-		>
+		<div className={`flex flex-col items-center ${margin} ${mobile}`}>
 			{isShow && (
 				<Button
 					width='w-[127px]'
@@ -50,7 +42,3 @@ export default function ScrollBtn() {
 		</div>
 	)
 }
-
-
-
-

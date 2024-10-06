@@ -12,6 +12,7 @@ export default {
 				green_bg: '#BCEC30',
 				white_bg: '#FFFFFF',
 				gray_bg: '#F7F7F7',
+				yellow_bg: '#ffc700',
 				//Modal active background
 				modal_active_bg: '#FAFAFA',
 				//Scroll background and thumb

@@ -3,7 +3,7 @@ import Button from '../../Button/Button'
 export default function Register() {
 	return (
 		<div className='fixed flex justify-center items-center top-0 left-0 bottom-0 w-[100%] z-50 right-0 bg-modal_active_bg'>
-			<div className='bg-white w-[360px] rounded-[30px] flex flex-col items-center p-10'>
+			<div className='bg-white md:w-[360px] w-[343px] rounded-[30px] flex flex-col items-center p-10'>
 				<img
 					className='w-[220px] h-[35px]'
 					src='/src/assets/img/logo.png'

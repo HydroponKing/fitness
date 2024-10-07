@@ -1,5 +1,4 @@
 import Header from '../Header/Header'
-import yogaImage from '/src/assets/img/yoga.jpg'
 import manImage from '/src/assets/img/man.png'
 import IconStar from '/src/assets/img/icon/star.svg';
 import lineImage from '/src/assets/img/line.png'
@@ -42,7 +41,7 @@ export default function CoursePage() {
         </div>
         <div className="h-[389px] bg-yellow_bg">
           <img
-            src={yogaImage}
+            src={course.src}
             alt="Йога"
             className="h-[160%] md:h-[260%] rounded-[30px] object-cover lg:-translate-y-[35%] lg:object-[150px] -translate-y-[13%] scale-[0.85]" 
           />
@@ -61,7 +60,7 @@ export default function CoursePage() {
           <div className="flex items-center bg-black_bg p-[20px] rounded-[28px] h-[141px] md:w-[368px] md:mb-0 mb-[17px]">
             <div className="text-[75px] font-bold text-number mr-4 pr-[10px]">1</div>
             <p className="text-white md:text-[24px] text-[18px]">
-              Давно хотели попробовать йогу, но не решались начать
+              {course.fitting[0]}
             </p>
           </div>
 
@@ -69,7 +68,7 @@ export default function CoursePage() {
           <div className="flex items-center bg-black_bg p-[20px] rounded-[28px] h-[141px] md:w-[431px] md:mb-0 mb-[17px]">
             <div className="text-[75px] font-bold text-number mr-4 pr-[10px]">2</div>
             <p className="text-white md:text-[24px] text-[18px]">
-              Хотите укрепить позвоночник, избавиться от болей
+            {course.fitting[1]}
             </p>
           </div>
 
@@ -77,7 +76,7 @@ export default function CoursePage() {
           <div className="flex items-center bg-black_bg p-[20px] rounded-[28px] h-[141px] md:w-[327px] md:mb-0 mb-[17px]">
             <div className="text-[75px] font-bold text-number mr-4 pr-[10px]">3</div>
             <p className="text-white md:text-[24px] text-[18px]">
-              Ищете активность, полезную для тела и души
+            {course.fitting[2]}
             </p>
           </div>
         </div>
@@ -90,32 +89,32 @@ export default function CoursePage() {
           {/* Ссылка 1 */}
           <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
             <img src={IconStar} alt="star icon" className="mr-2" />
-            Йога для новичков
+            {course.directions[0]}
           </a>
           {/* Ссылка 2 */}
           <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
             <img src={IconStar} alt="star icon" className="mr-2" />
-            Классическая йога
+            {course.directions[1]}
           </a>
           {/* Ссылка 3 */}
           <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
             <img src={IconStar} alt="star icon" className="mr-2" />
-            Кундалини-йога
+            {course.directions[2]}
           </a>
           {/* Ссылка 4 */}
           <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
             <img src={IconStar} alt="star icon" className="mr-2" />
-            Йогатерапия
+            {course.directions[3]}
           </a>
           {/* Ссылка 5 */}
           <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
             <img src={IconStar} alt="star icon" className="mr-2" />
-            Хатха-йога
+            {course.directions[4]}
           </a>
           {/* Ссылка 6 */}
           <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
             <img src={IconStar} alt="star icon" className="mr-2" />
-            Аштанга-йога
+            {course.directions[5]}
           </a>
         </div>
       </div>

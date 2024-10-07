@@ -57,6 +57,7 @@ export default function CoursePage() {
 
         <div className="md:flex flex-cool justify-center gap-[30px]">
           {/* Первый блок */}
+          
           <div className="flex items-center bg-black_bg p-[20px] rounded-[28px] h-[141px] md:w-[368px] md:mb-0 mb-[17px]">
             <div className="text-[75px] font-bold text-number mr-4 pr-[10px]">1</div>
             <p className="text-white md:text-[24px] text-[18px]">

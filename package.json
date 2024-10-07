@@ -4,7 +4,7 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "concurrently \"npm run watch\" \"npm run start\"",
+		"dev": "vite",
 		"start": "vite",
 		"watch": "npx tailwindcss -i ./src/index.css -o ./src/output.css --watch",
 		"build": "tsc -b && vite build",

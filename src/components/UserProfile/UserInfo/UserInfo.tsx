@@ -1,12 +1,17 @@
+import { useModal } from '../../../hooks/useModal'
 import Button from '../../Button/Button'
+import ModalWrapper from '../../Modals/ModalWrapper/ModalWrapper'
+import ResetPassword from '../../Modals/ResetPassword/ResetPassword'
 
 export default function UserInfo() {
+	const { dialogRef, toggleOpen } = useModal(false)
+
 	return (
 		<div>
 			<h2
 				className='mt-[60px] text-[40px] font-semibold leading-[44px] 
-				mobile:mt-[40px] mobile:text-[24px] mobile:font-medium 
-			mobile:leading-[26px]'
+				mobile:mt-[40px] mobile:text-[24px] mobile:font-medium
+				mobile:leading-[26px]'
 			>
 				Профиль
 			</h2>
@@ -22,8 +27,8 @@ export default function UserInfo() {
 
 				<div className='flex flex-col gap-[30px] mobile:gap-[20px]'>
 					<h2
-						className='text-[32px] font-medium leading-[35px] 
-					mobile:text-[24px] mobile:leading-[26px]'
+						className='text-[32px] font-medium leading-[35px]
+						mobile:text-[24px] mobile:leading-[26px]'
 					>
 						UserName
 					</h2>
@@ -40,8 +45,18 @@ export default function UserInfo() {
 							hover='hover:bg-hover'
 							active='active:bg-active active:text-white'
 							media='mobile:w-[283px] mobile:text-[16px]'
+							onClick={toggleOpen}
 							title='Изменить пароль'
 						/>
+						{/* Password change modal */}
+						<ModalWrapper
+							ref={dialogRef}
+							onClick={toggleOpen}
+							media='mobile:px-8'
+						>
+							<ResetPassword />
+						</ModalWrapper>
+
 						<Button
 							width='w-[192px]'
 							border='border'

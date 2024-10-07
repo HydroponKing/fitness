@@ -3,10 +3,34 @@ import yogaImage from '/src/assets/img/yoga.jpg'
 import manImage from '/src/assets/img/man.png'
 import IconStar from '/src/assets/img/icon/star.svg';
 import lineImage from '/src/assets/img/line.png'
-
+import { getCourses } from '../../api/courseApi'; 
+import { courseType } from '../../api/types'; 
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 export default function CoursePage() {
-  return (
+    const { id } = useParams(); // Получаем id курса из URL
+    const [course, setCourse] = useState<courseType | null>(null); // Состояние для хранения данных курса
+  
+    useEffect(() => {
+      const fetchCourse = async () => {
+        try {
+          const courses = await getCourses(); // Получаем все курсы с сервера
+          const selectedCourse = courses.find(course => course._id === id); // Ищем курс по id
+          setCourse(selectedCourse || null); // Устанавливаем состояние
+        } catch (error) {
+          console.error("Ошибка получения данных о курсе:", error);
+        }
+      };
+  
+      fetchCourse(); // Вызываем функцию для получения данных
+    }, [id]); // Добавляем id в зависимости, чтобы вызывать этот эффект при изменении id
+  
+    if (!course) {
+      return <div>Загрузка...</div>; // Показать "Загрузка", пока данные не будут получены
+    }
+  
+    return (
     <div className="font-Roboto max-w-[1200px] mx-auto">
       {/* Header */}
       <Header />
@@ -14,7 +38,7 @@ export default function CoursePage() {
       {/* Yoga блок */}
       <div className="relative mt-8 overflow-hidden rounded-[30px] h-[389px] md:h-[310px]">
         <div className="absolute top-[40px] left-[40px md:top-[40px] md:left-[40px] text-white hidden lg:block">
-          <h1 className="text-4xl font-bold">Йога</h1>
+          <h1 className="text-4xl font-bold">{course.nameRU}</h1>
         </div>
         <div className="h-[389px] bg-yellow_bg">
           <img

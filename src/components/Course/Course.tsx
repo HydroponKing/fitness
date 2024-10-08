@@ -16,7 +16,7 @@ export default function Course({ course }: CourseOneType) {
 						<use xlinkHref="/src/assets/img/icon/sprite.svg#add_course_circle" />
 					</svg>
 				</div>
-				<div className="h-[137px] text-base grid md:gap-[3] ml-12 mb-12;}">
+				<div className=" text-base grid md:gap-[3] ml-12 mb-12;} gap-[6px]">
 					<h6 className="text-[32px] font-medium leading-[35px]">{nameRU}</h6>
 					<div className="flex flex-wrap gap-[6px]">
 						<div className=" flex items-center p-[10px] gap-[6px] rounded-[50px] bg-gray_bg">
@@ -32,8 +32,8 @@ export default function Course({ course }: CourseOneType) {
 							<div className="pl-[2]">20-50 мин/день</div>
 						</div>
 					</div>
-					<div className="flex items-center p-[10px] gap-[6px]
-							bg-gray_bg rounded-[50px]">
+					<div className="flex items-center w-[129px] p-[10px] gap-[6px]
+							bg-gray_bg rounded-[50px] mb-[15px]">
 						<svg className="w-[18px] h-[18px]">
 							<use xlinkHref="/src/assets/img/icon/sprite.svg#difficulty_signal" />
 						</svg>

@@ -33,7 +33,7 @@ export default function Main() {
 					</div>
 					<div className="grid-cols-1 sm:grid md:grid-cols-3 -mr-[10] gap-[10]">
 					{sortedCourses.map((course) => (
-							<Course course={course} key={course.id} />
+							<Course course={course} key={course._id} />
 						))}
 					</div>
 					<div className="flex justify-center ">

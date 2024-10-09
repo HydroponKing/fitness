@@ -1,10 +1,10 @@
 import { useModal } from '../../../hooks/useModal'
 import Button from '../../Button/Button'
-import ModalWrapper from '../../Modals/ModalWrapper/ModalWrapper'
+import ModalWrapper from '../../ModalWrapper/ModalWrapper'
 import ResetPassword from '../../Modals/ResetPassword/ResetPassword'
 
 export default function UserInfo() {
-	const { dialogRef, toggleOpen } = useModal(false)
+	const { dialogRef, openModal, closeModal } = useModal()
 
 	return (
 		<div>
@@ -45,13 +45,13 @@ export default function UserInfo() {
 							hover='hover:bg-hover'
 							active='active:bg-active active:text-white'
 							media='mobile:w-[283px] mobile:text-[16px]'
-							onClick={toggleOpen}
+							onClick={openModal}
 							title='Изменить пароль'
 						/>
 						{/* Password change modal */}
 						<ModalWrapper
 							ref={dialogRef}
-							onClick={toggleOpen}
+							onClick={closeModal}
 							media='mobile:px-8'
 						>
 							<ResetPassword />

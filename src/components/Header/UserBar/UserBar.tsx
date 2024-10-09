@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom'
 import Button from '../../Button/Button'
+import { AppRoutes } from '../../../lib/appRoutes'
 
 export default function UserBar() {
 	return (
@@ -13,13 +15,15 @@ export default function UserBar() {
 			</div>
 
 			<div className='flex flex-col gap-[10px] mt-[34px]'>
-				<Button
-					width='w-[206px]'
-					background='bg-green_bg'
-					hover='hover:bg-hover'
-					active='active:bg-active active:text-white'
-					title='Мой профиль'
-				/>
+				<Link to={AppRoutes.USER_PROFILE}>
+					<Button
+						width='w-[206px]'
+						background='bg-green_bg'
+						hover='hover:bg-hover'
+						active='active:bg-active active:text-white'
+						title='Мой профиль'
+					/>
+				</Link>
 
 				<Button
 					width='w-[206px]'

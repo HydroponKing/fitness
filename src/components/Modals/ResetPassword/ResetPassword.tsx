@@ -14,7 +14,11 @@ export default function ResetPassword() {
 
 	return (
 		<div className='flex flex-col items-center'>
-			<img className='w-[220px] h-[35px]' src='/src/assets/img/logo.png' />
+			<img
+				className='w-[220px] h-[35px]'
+				src='/src/assets/img/logo.png'
+				alt='logo'
+			/>
 
 			<form className='flex flex-col gap-[10px] mt-12 mb-[34px]' action='#'>
 				<input

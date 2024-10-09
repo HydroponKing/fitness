@@ -1,22 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 type UserStateType = {
-	test: string
+	isUser: boolean
 }
 
 const initialState: UserStateType = {
-	test: '',
+	isUser: false,
 }
 
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
-		setTest: (state, action) => {
-			state.test = action.payload
+		setIsUser: (state, action) => {
+			state.isUser = action.payload
 		},
 	},
 })
 
-export const { setTest } = userSlice.actions
+export const { setIsUser } = userSlice.actions
 export const userReducer = userSlice.reducer

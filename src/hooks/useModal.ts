@@ -1,26 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 
-export const useModal = (initValue: boolean) => {
-	const ref = useRef<HTMLDivElement>(null)
-	const [open, setOpen] = useState(initValue)
+export const useModal = () => {
+	const dialogRef = useRef<HTMLDialogElement>(null)
 
-	const handleClickOutside = (event: Event) => {
-		const target = event.target as HTMLDivElement
-		if (ref.current && !ref.current.contains(target)) {
-			setOpen(false)
-		}
-	}
+	//modal open handler
+	const openModal = () => dialogRef.current?.showModal()
 
-	const toggleOpen = () => {
-		setOpen(prev => !prev)
-	}
+	//modal close handler
+	const closeModal = () => dialogRef.current?.close()
 
-	useEffect(() => {
-		document.addEventListener('click', handleClickOutside)
-		return () => {
-			document.removeEventListener('click', handleClickOutside)
-		}
-	}, [ref])
-
-	return { open, toggleOpen, ref }
+	return { dialogRef, openModal, closeModal }
 }

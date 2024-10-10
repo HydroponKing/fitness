@@ -12,3 +12,23 @@ export type courseType = {
     order: number,
 }
 // Типы для запросов, ключи курсов
+
+export type WorkoutType = {
+	name: string;
+	_id: string;
+	exercises: ExerciseType[];
+	video: string;
+  }
+  
+  export type ProgressWorkoutType = {
+	name: string;
+	progress: number;
+	_id: string;
+  };
+  
+  export interface ExerciseType {
+	name: string;
+	_id: string;
+	progress: number;
+	quantity: number;
+  }

@@ -2,10 +2,11 @@ import Header from '../Header/Header'
 import manImage from '/src/assets/img/man.png'
 import IconStar from '/src/assets/img/icon/star.svg';
 import lineImage from '/src/assets/img/line.png'
-import { getCourses } from '../../api/courseApi'; 
+ 
 import { courseType } from '../../api/types'; 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { getCourses } from '../../api/api';
 
 export default function CoursePage() {
     const { id } = useParams(); // Получаем id курса из URL

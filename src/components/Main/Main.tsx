@@ -1,9 +1,10 @@
-import Course from '../Course/Course'
 import Header from '../Header/Header'
-import Button from '../Button/Button'
 import { useEffect, useState } from 'react'
 import { getCourses } from '../../api/courseApi'
 import { courseType } from '../../api/types'
+import ScrollBtn from '../Button/ScrollBtn'
+import CourseItem from './CourseItem'
+
 
 
 export default function Main() {
@@ -20,31 +21,49 @@ export default function Main() {
 
 	return (
 		<main>
-			<div className="font-Roboto max-w-[1200px] mx-auto">
-				<Header />
-				<div className="flex justify-between my-[50px] relative">
-					<div className="text-[60px] h-[120px] mw-[850px] leading-[1] inline-block align-middle font-bold text-balance"> Начните заниматься спортом и улучшите качество жизни</div>
-					<div className="pl-5 mt-4  text-[32px] min-w-[288px] max-h-[102px] rounded-md bg-[#BCEC30] text-balance">Измени своё тело за полгода!</div>
-					<div className="absolute top-[106px] right-[150px]">
-						<img src="/src/assets/img/polygon.png" alt="polygon" />
-					</div>
+			<Header />
+			<div
+				className='flex mt-[60px] mb-[50px]
+				mobile:mt-10 mobile:mb-[34px]'
+			>
+				<div>
+					<h1
+						className='text-[60px] font-medium leading-[60px]
+						mobile:text-[32px] mobile:leading-[35px]'
+					>
+						Начните заниматься спортом и улучшите качество жизни
+					</h1>
+				</div>
 
-				</div>
-				<div className="grid-cols-1 sm:grid md:grid-cols-3 -mr-[10] gap-[10]">
-					{sortedCourses.map((course) => (
-						<Course course={course} key={course._id} />
-					))}
-				</div>
-				<div className="flex justify-center mt-[34px] mb-[81px]">
-					<Button
-						width='w-[127px]'
-						background='bg-green_bg'
-						hover='hover:bg-hover'
-						active='active:bg-active active:text-white'
-						title='Наверх ↑'
+				<div
+					className='relative bg-green_bg min-w-[288px] max-h-[102px]  
+					px-5 py-4 rounded-[5px] mobile:hidden'
+				>
+					<h2 className='text-[32px] leading-[35px]'>
+						Измени своё тело за полгода!
+					</h2>
+					<img
+						className='absolute top-[85%] left-[41%]'
+						src='/src/assets/img/polygon.png'
+						alt='polygon'
 					/>
 				</div>
 			</div>
+
+			<div
+				className='flex flex-wrap gap-11
+				mobile:flex-col mobile:items-center mobile:gap-6'
+			>
+				{sortedCourses.map(course => (
+					<CourseItem course={course} key={course._id} />
+				))}
+			</div>
+
+			<ScrollBtn
+				margin='mt-[34px] mb-[81px]'
+				mobile='mobile:mt-[24px] mobile:mb-[29px] mobile:items-end'
+			/>
 		</main>
 	)
+	
 }

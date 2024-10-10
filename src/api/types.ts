@@ -26,7 +26,7 @@ export type WorkoutType = {
 	_id: string;
   };
   
-  export interface ExerciseType {
+  export type ExerciseType = {
 	name: string;
 	_id: string;
 	progress: number;

@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react'
 import { getCourses } from '../../api/courseApi'
 import { courseType } from '../../api/types'
 import ScrollBtn from '../Button/ScrollBtn'
-import CourseItem from '../Course/CourseItem'
+import CourseItem from './CourseItem'
+
 
 
 export default function Main() {

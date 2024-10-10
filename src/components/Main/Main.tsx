@@ -43,6 +43,7 @@ export default function Main() {
 						active='active:bg-active active:text-white'
 						title='Наверх ↑'
 					/>
+					<div></div>
 				</div>
 			</div>
 		</main>

@@ -17,4 +17,4 @@ SkyFitnessPro — это фитнес-приложение для управле
 Склонируйте этот репозиторий на локальную машину:
 
 ```bash
-git clone https://github.com/HydroponKing/fitness
+git clone https://github.com/HydroponKing/fitness.

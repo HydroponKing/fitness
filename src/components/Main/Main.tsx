@@ -4,11 +4,10 @@ import { courseType } from '../../api/types'
 import ScrollBtn from '../Button/ScrollBtn'
 import CourseItem from './CourseItem'
 import { getCourses } from '../../api/api'
-
-
+import { Outlet } from 'react-router-dom'
 
 export default function Main() {
-	const [courses, setCourses] = useState<courseType[]>([])// для получения курсов с бека
+	const [courses, setCourses] = useState<courseType[]>([]) // для получения курсов с бека
 	useEffect(() => {
 		const getData = async () => {
 			const res = await getCourses()
@@ -16,11 +15,12 @@ export default function Main() {
 		}
 		getData()
 	}, [])
-	console.log(courses);
-	const sortedCourses = [...courses].sort((a, b) => a.order - b.order)// для сортировки курсов по порядку
+	console.log(courses)
+	const sortedCourses = [...courses].sort((a, b) => a.order - b.order) // для сортировки курсов по порядку
 
 	return (
 		<main>
+			<Outlet />
 			<Header />
 			<div
 				className='flex mt-[60px] mb-[50px]
@@ -65,5 +65,4 @@ export default function Main() {
 			/>
 		</main>
 	)
-	
 }

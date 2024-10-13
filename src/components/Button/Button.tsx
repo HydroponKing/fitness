@@ -7,6 +7,8 @@ type Props = {
 	media?: string
 	onClick?: () => void
 	title: string
+	type?: string
+	disabled?: boolean
 }
 
 export default function Button({
@@ -18,11 +20,15 @@ export default function Button({
 	media,
 	onClick,
 	title,
+	type,
+	disabled,
 }: Props) {
 	return (
 		<button
-			className={`${width} ${border} ${background} h-[52px] text-[18px]  rounded-[46px] transition-colors ${hover} ${active} ${media}`}
+			type={type}
+			className={`${width} ${border} ${background} h-[52px] text-[18px]  rounded-[46px] transition-colors ${hover} ${active} ${media} disabled:bg-[#F7F7F7] disabled:outline-gray`}
 			onClick={onClick}
+			disabled={disabled}
 		>
 			{title}
 		</button>

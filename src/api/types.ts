@@ -45,3 +45,14 @@ export type SignUpType = {
 	}>
 	navigate: (url: string) => void
 }
+
+// Типы для авторизации пользователя
+export type SignInType = {
+	login: string
+	password: string
+	setError: UseFormSetError<{
+		login: string
+		password: string
+	}>
+	navigate: (url: string) => void
+}

@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom'
-import { signUpSchema, TSignUpSchema } from '../../../lib/validateSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { AppRoutes } from '../../../lib/appRoutes'
+import { useNavigate } from 'react-router-dom'
 import { signUp } from '../../../api/authApi'
+import { AppRoutes } from '../../../lib/appRoutes'
+import { signUpSchema, TSignUpSchema } from '../../../lib/validateSchemes'
 import Button from '../../Button/Button'
 import ErrorMsg from '../../ErrorMsg/ErrorMsg'
 
@@ -88,8 +88,8 @@ export default function Register() {
 							hover='hover:bg-hover'
 							active='active:bg-active active:text-white'
 							inactive='disabled:bg-gray_bg disabled:border-0'
-							title='Зарегистрироваться'
 							disabled={isSubmitting}
+							title='Зарегистрироваться'
 						/>
 						<Button
 							width='w-[280px]'
@@ -99,8 +99,8 @@ export default function Register() {
 							active='active:bg-[#E9ECED]'
 							inactive='disabled:bg-transparent disabled:border-gray'
 							onClick={() => navigate(AppRoutes.LOGIN)}
-							title='Войти'
 							disabled={isSubmitting}
+							title='Войти'
 						/>
 					</div>
 				</form>

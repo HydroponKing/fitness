@@ -1,17 +1,17 @@
 import { useEffect } from 'react'
-import ModalWrapper from '../../components/ModalWrapper/ModalWrapper'
 import Register from '../../components/Modals/Register/Register'
+import ModalWrapper from '../../components/ModalWrapper/ModalWrapper'
 import { useModal } from '../../hooks/useModal'
 
 export default function SignUp() {
-	const { dialogRef, closeModal, openModal } = useModal()
+	const { dialogRef, openModal, closeModal } = useModal()
 
 	useEffect(() => {
 		openModal()
 	}, [openModal])
 
 	return (
-		<ModalWrapper ref={dialogRef} onClick={closeModal}>
+		<ModalWrapper ref={dialogRef} onClick={closeModal} media='mobile:px-8'>
 			<Register />
 		</ModalWrapper>
 	)

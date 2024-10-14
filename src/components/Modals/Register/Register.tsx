@@ -1,15 +1,15 @@
-import { useForm } from 'react-hook-form'
-import Button from '../../Button/Button'
-import { signUpSchema, TSignUpSchema } from '../../../lib/validateSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { signUp } from '../../../api/authApi'
 import { AppRoutes } from '../../../lib/appRoutes'
-import { useUpdateProfile } from 'react-firebase-hooks/auth'
-import { signUp } from '../../../api/userApi'
-import { auth } from '../../../../firebaseConfig'
+import { signUpSchema, TSignUpSchema } from '../../../lib/validateSchemes'
+import Button from '../../Button/Button'
+import ErrorMsg from '../../ErrorMsg/ErrorMsg'
 
 export default function Register() {
-	const [updateProfile] = useUpdateProfile(auth)
+	const navigate = useNavigate()
+
 	const {
 		register,
 		handleSubmit,
@@ -18,20 +18,13 @@ export default function Register() {
 	} = useForm<TSignUpSchema>({ resolver: zodResolver(signUpSchema) })
 
 	const onSubmit = async (data: TSignUpSchema) => {
-		console.log(data)
 		await signUp({
 			username: data.username,
 			email: data.email,
 			password: data.password,
+			setError,
+			navigate,
 		})
-			.then(() => updateProfile({ displayName: data.username }))
-			.catch(error => {
-				console.error(error.message)
-				setError('email', {
-					type: 'server',
-					message: 'Данная почта уже используется. Попробуйте войти.',
-				})
-			})
 	}
 
 	return (
@@ -41,72 +34,76 @@ export default function Register() {
 				src='/src/assets/img/logo.png'
 				alt='logo'
 			/>
-			<div className='flex flex-col items-center gap-[34px] mt-[48px]'>
-				<div className='flex flex-col gap-[10px]'>
-					<form onSubmit={handleSubmit(onSubmit)}>
-						<input
-							{...register('username')}
-							className={`w-[280px] h-[52px] border rounded-[8px] border-[#D0CECE] p-[16px] ${errors.username && 'border-error'}`}
-							type='text'
-							placeholder='Имя пользователя'
-						/>
-						{errors.username && (
-							<p className='text-error'>{errors.username.message}</p>
-						)}
 
-						<input
-							{...register('email')}
-							className={`w-[280px] h-[52px] border rounded-[8px] border-[#D0CECE] p-[16px] ${errors.email && 'border-error'}`}
-							type='email'
-							placeholder='Эл. почта'
-						/>
-						{errors.email && (
-							<p className='text-error'>{errors.email.message}</p>
-						)}
+			<div className='flex flex-col items-center mt-[48px]'>
+				<form
+					className='flex flex-col gap-[10px]'
+					onSubmit={handleSubmit(onSubmit)}
+				>
+					<input
+						className={`w-[280px] h-[52px] p-4 border rounded-lg
+							${errors.username ? 'border-error' : 'border-placeholder'}`}
+						{...register('username')}
+						type='text'
+						placeholder='Имя пользователя'
+					/>
+					{/* username input error message */}
+					{errors.username && <ErrorMsg error={errors.username.message} />}
+					<input
+						className={`w-[280px] h-[52px] p-4 border rounded-lg
+							${errors.email ? 'border-error' : 'border-placeholder'}`}
+						{...register('email')}
+						type='email'
+						placeholder='Эл. почта'
+					/>
+					{/* email input error message */}
+					{errors.email && <ErrorMsg error={errors.email.message} />}
+					<input
+						className={`w-[280px] h-[52px] p-4 border rounded-lg
+							${errors.password ? 'border-error' : 'border-placeholder'}`}
+						{...register('password')}
+						type='password'
+						placeholder='Пароль'
+						autoComplete='off'
+					/>
+					{/* password input error message */}
+					{errors.password && <ErrorMsg error={errors.password.message} />}
+					<input
+						className={`w-[280px] h-[52px] p-4 border rounded-lg
+						${errors.confirmPassword ? 'border-error' : 'border-placeholder'}`}
+						{...register('confirmPassword')}
+						type='password'
+						placeholder='Повторите пароль'
+						autoComplete='off'
+					/>
+					{/* confirm input  password error message */}
+					{errors.confirmPassword && (
+						<ErrorMsg error={errors.confirmPassword.message} />
+					)}
 
-						<input
-							{...register('password')}
-							className={`w-[280px] h-[52px] border rounded-[8px] border-[#D0CECE] p-[16px] ${errors.password && 'border-error'}`}
-							type='password'
-							placeholder='Пароль'
+					<div className='flex flex-col gap-[10px] mt-[34px]'>
+						<Button
+							width='w-[280px]'
+							background='bg-green_bg'
+							hover='hover:bg-hover'
+							active='active:bg-active active:text-white'
+							inactive='disabled:bg-gray_bg disabled:border-0'
+							disabled={isSubmitting}
+							title='Зарегистрироваться'
 						/>
-						{errors.password && (
-							<p className='text-error'>{errors.password.message}</p>
-						)}
-
-						<input
-							{...register('confirmPassword')}
-							className={`w-[280px] h-[52px] border rounded-[8px] border-[#D0CECE] p-[16px] ${errors.confirmPassword && 'border-error'}`}
-							type='password'
-							placeholder='Повторите пароль'
+						<Button
+							width='w-[280px]'
+							background='transparent'
+							border='border'
+							hover='hover:bg-gray_bg'
+							active='active:bg-[#E9ECED]'
+							inactive='disabled:bg-transparent disabled:border-gray'
+							onClick={() => navigate(AppRoutes.LOGIN)}
+							disabled={isSubmitting}
+							title='Войти'
 						/>
-						{errors.confirmPassword && (
-							<p className='text-error'>{errors.confirmPassword.message}</p>
-						)}
-						<div className='flex flex-col gap-[10px]'>
-							<Button
-								width='w-[280px]'
-								background='bg-green_bg'
-								border='border-red-500'
-								hover='hover:bg-hover'
-								active='active:bg-active active:text-white'
-								disabled={isSubmitting}
-								title='Зарегистрироваться'
-							/>
-							<Link to={AppRoutes.LOGIN}>
-								<Button
-									type='button'
-									width='w-[280px]'
-									background='transparent'
-									border='border'
-									hover='hover:bg-[#F7F7F7]'
-									active='active:bg-[#E9ECED]'
-									title='Войти'
-								/>
-							</Link>
-						</div>
-					</form>
-				</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	)

@@ -8,7 +8,7 @@ export const signUpSchema = z
 				message: 'Имя пользователя должно содержать не менее 3 символов',
 			})
 			.trim(),
-		email: z.string().email({ message: 'Некорректный email' }).trim(),
+		email: z.string().email({ message: 'Некорректный Email' }).trim(),
 		password: z
 			.string()
 			.min(6, { message: 'Пароль должен быть не менее 6 символов' })
@@ -22,4 +22,10 @@ export const signUpSchema = z
 		path: ['confirmPassword'],
 	})
 
+export const signInSchema = z.object({
+	login: z.string().min(1, { message: 'Введите логин' }).trim(),
+	password: z.string().min(1, { message: 'Введите пароль' }).trim(),
+})
+
 export type TSignUpSchema = z.infer<typeof signUpSchema>
+export type TSignInSchema = z.infer<typeof signInSchema>

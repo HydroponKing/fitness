@@ -11,7 +11,7 @@ export default function SignUp() {
 	}, [openModal])
 
 	return (
-		<ModalWrapper ref={dialogRef} onClick={closeModal}>
+		<ModalWrapper ref={dialogRef} onClick={closeModal} media='mobile:px-8'>
 			<Register />
 		</ModalWrapper>
 	)

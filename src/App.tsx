@@ -4,14 +4,14 @@ import Main from './components/Main/Main'
 import UserProfile from './components/UserProfile/UserProfile'
 import CoursePage from './components/CoursePage/CoursePage'
 import Login from './components/Modals/Login/Login'
-import SignIn from './pages/SignUp/SignUp'
+import SignUp from './pages/SignUp/SignUp'
 
 function App() {
 	return (
 		<div className='container'>
 			<Routes>
 				<Route path={AppRoutes.MAIN} element={<Main />}>
-					<Route path={AppRoutes.REGISTER} element={<SignIn />} />
+					<Route path={AppRoutes.REGISTER} element={<SignUp />} />
 				</Route>
 				<Route path={AppRoutes.COURSE} element={''} />
 				<Route path={AppRoutes.COURSEPAGE} element={<CoursePage />} />

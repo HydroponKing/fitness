@@ -20,7 +20,7 @@ export default function UserBar({ user }: Props) {
 
 	return (
 		<div
-			className='absolute left-[56.5rem] top-[75px] p-[30px]
+			className='absolute left-[56.4rem] top-[75px] p-[30px]
 			rounded-[30px] z-[2] bg-white transition-opacity
 			shadow-shadow_primary mobile:left-[4.8rem]'
 		>
@@ -41,7 +41,7 @@ export default function UserBar({ user }: Props) {
 				<Button
 					width='w-[206px]'
 					border='border'
-					hover='hover:bg-[#F7F7F7]'
+					hover='hover:bg-gray_bg'
 					active='active:bg-[#E9ECED]'
 					onClick={handleLogout}
 					title='Выйти'

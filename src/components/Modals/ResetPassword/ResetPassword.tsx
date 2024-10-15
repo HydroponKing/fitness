@@ -1,15 +1,39 @@
-import { ChangeEvent, useState } from 'react'
+import {
+	resetPasswordSchema,
+	TResetPasswordSchema,
+} from '../../../lib/validateSchemes'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { resetPassword } from '../../../api/authApi'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../../../../firebaseConfig'
 import Button from '../../Button/Button'
+import ErrorMsg from '../../ErrorMsg/ErrorMsg'
 
-export default function ResetPassword() {
-	const [resetPassData, setResetPassData] = useState({
-		newPassword: '',
-		repeatPassword: '',
+type Props = {
+	logout: () => void
+}
+
+export default function ResetPassword({ logout }: Props) {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors, isSubmitting },
+		setError,
+	} = useForm<TResetPasswordSchema>({
+		resolver: zodResolver(resetPasswordSchema),
 	})
 
-	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target
-		setResetPassData({ ...resetPassData, [name]: value })
+	const [user] = useAuthState(auth)
+
+	const onSubmit = async (data: TResetPasswordSchema) => {
+		await resetPassword({
+			oldPassword: data.oldPassword,
+			newPassword: data.newPassword,
+			user: user!,
+			setError,
+			logout,
+		})
 	}
 
 	return (
@@ -20,38 +44,41 @@ export default function ResetPassword() {
 				alt='logo'
 			/>
 
-			<form className='flex flex-col gap-[10px] mt-12 mb-[34px]' action='#'>
+			<form
+				className='flex flex-col gap-[10px] mt-12 mb-[34px]'
+				onSubmit={handleSubmit(onSubmit)}
+			>
 				<input
-					className='w-[280px] h-[52px] p-4 border 
-					border-placeholder rounded-lg'
+					className={`w-[280px] h-[52px] p-4 border rounded-lg
+						${errors.oldPassword ? 'border-error' : 'border-placeholder'}`}
+					{...register('oldPassword')}
 					type='password'
-					name='newPassword'
-					placeholder='Новый пароль'
-					value={resetPassData.newPassword}
-					onChange={onChange}
-					required
+					placeholder='Текущий пароль'
 					autoComplete='off'
 				/>
+				{/* old password input error message */}
+				{errors.oldPassword && <ErrorMsg error={errors.oldPassword.message} />}
 				<input
-					className='w-[280px] h-[52px] p-4 border 
-					border-placeholder rounded-lg'
+					className={`w-[280px] h-[52px] p-4 border rounded-lg
+						${errors.newPassword ? 'border-error' : 'border-placeholder'}`}
+					{...register('newPassword')}
 					type='password'
-					name='repeatPassword'
-					placeholder='Повторите пароль'
-					value={resetPassData.repeatPassword}
-					onChange={onChange}
-					required
+					placeholder='Новый пароль'
 					autoComplete='off'
+				/>
+				{/* new password input error message */}
+				{errors.newPassword && <ErrorMsg error={errors.newPassword.message} />}
+
+				<Button
+					width='w-full'
+					background='bg-green_bg'
+					hover='hover:bg-hover'
+					active='active:bg-active active:text-white'
+					inactive='disabled:bg-transparent disabled:border-gray'
+					disabled={isSubmitting}
+					title='Подтвердить'
 				/>
 			</form>
-
-			<Button
-				width='w-full'
-				background='bg-green_bg'
-				hover='hover:bg-hover'
-				active='active:bg-active active:text-white'
-				title='Подтвердить'
-			/>
 		</div>
 	)
 }

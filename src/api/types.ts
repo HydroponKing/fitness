@@ -1,3 +1,4 @@
+import { User } from 'firebase/auth'
 import { UseFormSetError } from 'react-hook-form'
 
 export type courseType = {
@@ -55,4 +56,16 @@ export type SignInType = {
 		password: string
 	}>
 	navigate: (url: string) => void
+}
+
+// Типы для обновления пароля пользователя
+export type ResetPassType = {
+	oldPassword: string
+	newPassword: string
+	user: User
+	setError: UseFormSetError<{
+		oldPassword: string
+		newPassword: string
+	}>
+	logout: () => void
 }

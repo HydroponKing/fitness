@@ -86,36 +86,12 @@ export default function CoursePage() {
       <div className="py-8 relative">
         <h2 className="md:text-[40px] text-[24px] font-semibold leading-[44px] text-left mb-6">Направления</h2>
         <div className="bg-green_bg rounded-[20px] p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Ссылка 1 */}
-          <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
-            <img src={IconStar} alt="star icon" className="mr-2" />
-            {course.directions[0]}
-          </a>
-          {/* Ссылка 2 */}
-          <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
-            <img src={IconStar} alt="star icon" className="mr-2" />
-            {course.directions[1]}
-          </a>
-          {/* Ссылка 3 */}
-          <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
-            <img src={IconStar} alt="star icon" className="mr-2" />
-            {course.directions[2]}
-          </a>
-          {/* Ссылка 4 */}
-          <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
-            <img src={IconStar} alt="star icon" className="mr-2" />
-            {course.directions[3]}
-          </a>
-          {/* Ссылка 5 */}
-          <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
-            <img src={IconStar} alt="star icon" className="mr-2" />
-            {course.directions[4]}
-          </a>
-          {/* Ссылка 6 */}
-          <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
-            <img src={IconStar} alt="star icon" className="mr-2" />
-            {course.directions[5]}
-          </a>
+        {course.directions && course.directions.slice(0, 6).map((direction, index) => (
+      <a key={index} href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
+        <img src={IconStar} alt="star icon" className="mr-2" />
+        {direction}
+      </a>
+    ))}
         </div>
       </div>
 

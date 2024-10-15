@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom'
 import { User } from 'firebase/auth'
+import { useSignOut } from 'react-firebase-hooks/auth'
+import { useNavigate } from 'react-router-dom'
+import { auth } from '../../../../firebaseConfig'
 import { AppRoutes } from '../../../lib/appRoutes'
 import Button from '../../Button/Button'
-import { useSignOut } from 'react-firebase-hooks/auth'
-import { auth } from '../../../../firebaseConfig'
 
 type Props = {
 	user: User
@@ -35,7 +35,7 @@ export default function UserBar({ user }: Props) {
 					background='bg-green_bg'
 					hover='hover:bg-hover'
 					active='active:bg-active active:text-white'
-					onClick={() => navigate(AppRoutes.USER_PROFILE)}
+					onClick={() => navigate(AppRoutes.PROFILE)}
 					title='Мой профиль'
 				/>
 				<Button

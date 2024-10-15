@@ -1,10 +1,13 @@
 import { Route, Routes } from 'react-router-dom'
+import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import { AppRoutes } from './lib/appRoutes'
 import Main from './components/Main/Main'
 import CoursePage from './components/CoursePage/CoursePage'
 import SignUp from './pages/SignUp/SignUp'
 import SignIn from './pages/SignIn/SignIn'
 import Profile from './pages/Profile/Profile'
+import Workout from './pages/Workout/Workout'
+import NotFound from './pages/NotFound/NotFound'
 
 function App() {
 	return (
@@ -14,10 +17,14 @@ function App() {
 					<Route path={AppRoutes.REGISTER} element={<SignUp />} />
 					<Route path={AppRoutes.LOGIN} element={<SignIn />} />
 				</Route>
-				<Route path={AppRoutes.USER_PROFILE} element={<Profile />} />
+				{/* if user auth, open children routes */}
+				<Route element={<PrivateRoute />}>
+					<Route path={AppRoutes.PROFILE} element={<Profile />} />
+					<Route path={AppRoutes.WORKOUT} element={<Workout />} />
+				</Route>
+				{/* // */}
 				<Route path={AppRoutes.COURSEPAGE} element={<CoursePage />} />
-				<Route path={AppRoutes.WORKOUT_VIDEO} element={''} />
-				<Route path={AppRoutes.NOT_FOUND} element={''} />
+				<Route path={AppRoutes.NOT_FOUND} element={<NotFound />} />
 			</Routes>
 		</div>
 	)

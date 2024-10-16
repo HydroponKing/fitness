@@ -1,10 +1,10 @@
-import Header from '../Header/Header'
 import { useEffect, useState } from 'react'
-import { courseType } from '../../api/types'
-import ScrollBtn from '../Button/ScrollBtn'
-import CourseItem from './CourseItem'
-import { getCourses } from '../../api/api'
 import { Outlet } from 'react-router-dom'
+import { getCourses } from '../../api/api'
+import { courseType } from '../../api/types'
+import Header from '../Header/Header'
+import CourseItem from './CourseItem/CourseItem'
+import ScrollBtn from '../Button/ScrollBtn'
 
 export default function Main() {
 	const [courses, setCourses] = useState<courseType[]>([]) // для получения курсов с бека

@@ -27,5 +27,19 @@ export const signInSchema = z.object({
 	password: z.string().min(1, { message: 'Введите пароль' }).trim(),
 })
 
+export const resetPasswordSchema = z
+	.object({
+		oldPassword: z.string().min(1, { message: 'Введите текущий пароль' }),
+		newPassword: z
+			.string()
+			.min(6, { message: 'Новый пароль должен быть не менее 6 символов' })
+			.trim(),
+	})
+	.refine(data => data.newPassword !== data.oldPassword, {
+		message: 'Новый пароль должен отличаться от текущего',
+		path: ['newPassword'],
+	})
+
 export type TSignUpSchema = z.infer<typeof signUpSchema>
 export type TSignInSchema = z.infer<typeof signInSchema>
+export type TResetPasswordSchema = z.infer<typeof resetPasswordSchema>

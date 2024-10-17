@@ -36,14 +36,16 @@ export default function CoursePage() {
 
       {/* Yoga блок */}
       <div className="relative mt-8 overflow-hidden rounded-[30px] h-[389px] md:h-[310px]">
-        <div className="absolute top-[40px] left-[40px md:top-[40px] md:left-[40px] text-white hidden lg:block">
-          <h1 className="text-4xl font-bold">{course.nameRU}</h1>
-        </div>
-        <div className="h-[389px] bg-yellow_bg">
+        <div>
+          <img
+            src={course.srcBig}
+            alt="Йога"
+            className="hidden md:block" 
+          />
           <img
             src={course.src}
             alt="Йога"
-            className="h-[160%] md:h-[260%] rounded-[30px] object-cover lg:-translate-y-[35%] lg:object-[150px] -translate-y-[13%] scale-[0.85]" 
+            className="block md:hidden rounded-[35px] object-cover lg:-translate-y-[35%] lg:object-[150px] -translate-y-[13%]" 
           />
         </div>
       </div>

@@ -3,6 +3,7 @@ export type courseType = {
 	nameRU: string,
 	src: string,
     srcSmall: string,
+	srcBig: string,
 	duration: string,
     description: string,
     directions: string[],

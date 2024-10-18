@@ -1,7 +1,11 @@
 import Button from '../../Button/Button'
 import Progress from '../../Progress/Progress'
 
-export default function CourseCard() {
+type Props = {
+	openModal: () => void
+}
+
+export default function CourseCard({ openModal }: Props) {
 	return (
 		<div
 			className='relative flex flex-col gap-[24px] w-[360px]
@@ -12,9 +16,10 @@ export default function CourseCard() {
 				<img
 					className='h-[175%] rounded-[30px] object-cover object-yoga'
 					src='/src/assets/img/yoga.jpg'
+					alt='yoga'
 				/>
 			</div>
-
+			{/* Delete user course button */}
 			<svg
 				className='absolute w-[27px] h-[27px]
 				top-[20px] right-[20px] cursor-pointer'
@@ -76,6 +81,7 @@ export default function CourseCard() {
 					hover='hover:bg-hover'
 					active='active:bg-active active:text-white'
 					media='mobile:text-[16px]'
+					onClick={openModal}
 					title='Продолжить'
 				/>
 			</div>

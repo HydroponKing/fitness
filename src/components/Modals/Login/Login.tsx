@@ -43,7 +43,7 @@ export default function Login() {
 						className={`w-[280px] h-[52px] p-4 border rounded-lg
 							${errors.login ? 'border-error' : 'border-placeholder'}`}
 						{...register('login')}
-						type='text'
+						type='email'
 						placeholder='Логин'
 					/>
 					{/* login input error message */}

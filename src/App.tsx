@@ -5,6 +5,7 @@ import UserProfile from './components/UserProfile/UserProfile'
 import CoursePage from './components/CoursePage/CoursePage'
 import Login from './components/Modals/Login/Login'
 import SignIn from './pages/SignUp/SignUp'
+import NotFound from './components/NotFound/NotFound'
 
 function App() {
 	return (
@@ -18,7 +19,7 @@ function App() {
 				<Route path={AppRoutes.WORKOUT_VIDEO} element={''} />
 				<Route path={AppRoutes.USER_PROFILE} element={<UserProfile />} />
 				<Route path={AppRoutes.LOGIN} element={<Login />} />
-				<Route path={AppRoutes.NOT_FOUND} element={''} />
+				<Route path={AppRoutes.NOT_FOUND} element={<NotFound />} />
 			</Routes>
 		</div>
 	)

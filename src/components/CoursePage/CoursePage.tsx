@@ -2,11 +2,10 @@ import Header from '../Header/Header'
 import manImage from '/src/assets/img/man.png'
 import IconStar from '/src/assets/img/icon/star.svg';
 import lineImage from '/src/assets/img/line.png'
- 
+import { getCourses } from '../../api/courseApi'; 
 import { courseType } from '../../api/types'; 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getCourses } from '../../api/api';
 
 export default function CoursePage() {
     const { id } = useParams(); // Получаем id курса из URL
@@ -37,14 +36,16 @@ export default function CoursePage() {
 
       {/* Yoga блок */}
       <div className="relative mt-8 overflow-hidden rounded-[30px] h-[389px] md:h-[310px]">
-        <div className="absolute top-[40px] left-[40px md:top-[40px] md:left-[40px] text-white hidden lg:block">
-          <h1 className="text-4xl font-bold">{course.nameRU}</h1>
-        </div>
-        <div className="h-[389px] bg-yellow_bg">
+        <div>
+          <img
+            src={course.srcBig}
+            alt="Йога"
+            className="hidden md:block" 
+          />
           <img
             src={course.src}
             alt="Йога"
-            className="h-[160%] md:h-[260%] rounded-[30px] object-cover lg:-translate-y-[35%] lg:object-[150px] -translate-y-[13%] scale-[0.85]" 
+            className="block md:hidden rounded-[35px] object-cover lg:-translate-y-[35%] lg:object-[150px] -translate-y-[13%]" 
           />
         </div>
       </div>
@@ -87,36 +88,12 @@ export default function CoursePage() {
       <div className="py-8 relative">
         <h2 className="md:text-[40px] text-[24px] font-semibold leading-[44px] text-left mb-6">Направления</h2>
         <div className="bg-green_bg rounded-[20px] p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Ссылка 1 */}
-          <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
-            <img src={IconStar} alt="star icon" className="mr-2" />
-            {course.directions[0]}
-          </a>
-          {/* Ссылка 2 */}
-          <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
-            <img src={IconStar} alt="star icon" className="mr-2" />
-            {course.directions[1]}
-          </a>
-          {/* Ссылка 3 */}
-          <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
-            <img src={IconStar} alt="star icon" className="mr-2" />
-            {course.directions[2]}
-          </a>
-          {/* Ссылка 4 */}
-          <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
-            <img src={IconStar} alt="star icon" className="mr-2" />
-            {course.directions[3]}
-          </a>
-          {/* Ссылка 5 */}
-          <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
-            <img src={IconStar} alt="star icon" className="mr-2" />
-            {course.directions[4]}
-          </a>
-          {/* Ссылка 6 */}
-          <a href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
-            <img src={IconStar} alt="star icon" className="mr-2" />
-            {course.directions[5]}
-          </a>
+        {course.directions && course.directions.slice(0, 6).map((direction, index) => (
+      <a key={index} href="#" className="flex items-center text-black md:text-[24px] text-[18px] font-normal leading-[26.4px] px-4 py-2 rounded-full bg-green_bg">
+        <img src={IconStar} alt="star icon" className="mr-2" />
+        {direction}
+      </a>
+    ))}
         </div>
       </div>
 

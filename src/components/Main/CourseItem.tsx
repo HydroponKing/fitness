@@ -1,11 +1,11 @@
-import { courseType } from "../../api/types"
+import { courseType } from '../../api/types'
 
 export type CourseOneType = {
-	course: courseType,
+	course: courseType
 }
 export default function CourseItem({ course }: CourseOneType) {
 	const { nameRU, srcSmall } = course
-	
+
 	return (
 		<>
 			<div

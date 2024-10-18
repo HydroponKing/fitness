@@ -27,7 +27,11 @@ export default function UserCourses() {
 				<CourseCard /> */}
 			</div>
 			{/* Select workout modal */}
-			<ModalWrapper ref={dialogRef} onClick={closeModal} media='mobile:px-8'>
+			<ModalWrapper
+				ref={dialogRef}
+				onClick={closeModal}
+				media='mobile:p-[30px]'
+			>
 				<SelectWorkout />
 			</ModalWrapper>
 

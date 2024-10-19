@@ -71,8 +71,12 @@ export default function CourseCard({ openModal }: Props) {
 				</div>
 
 				<div className='mb-[20px]'>
-					<p className='text-[18px] leading-5'>Прогресс 50%</p>
-					<Progress value='50' />
+					<Progress
+						width='w-full'
+						percentValue='50'
+						value='50'
+						title='Прогресс'
+					/>
 				</div>
 
 				<Button

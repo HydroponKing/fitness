@@ -1,6 +1,6 @@
-import { useRef } from 'react'
 import { useModal } from '../../hooks/useModal'
 import Header from '../Header/Header'
+import YoutubePlayer from './YoutubePlayer/YoutubePlayer'
 import Progress from '../Progress/Progress'
 import Button from '../Button/Button'
 import ModalWrapper from '../ModalWrapper/ModalWrapper'
@@ -8,17 +8,6 @@ import ProgressCount from '../Modals/ProgressCount/ProgressCount'
 
 export default function CourseWorkout() {
 	const { dialogRef, openModal, closeModal } = useModal()
-	const videoRef = useRef<HTMLVideoElement>(null)
-
-	// const videoHandler = (control: string) => {
-	// 	if (videoRef.current)
-	// 		if (control === 'play') {
-	// 			videoRef.current.play()
-	// 		} else if (control === 'pause') {
-	// 			videoRef.current.pause()
-	// 		}
-	// 	console.log('clicked')
-	// }
 
 	return (
 		<div>
@@ -42,25 +31,14 @@ export default function CourseWorkout() {
 				</h3>
 			</div>
 
+			{/* Video player */}
 			<div className='my-10 mobile:my-6'>
-				<video
-					className='rounded-[30px]'
-					ref={videoRef}
-					width={1168}
-					height={639}
-					controls
-					autoPlay
-					// muted
-					// loop
-					// playsInline
-				>
-					Sorry, your browser doesn't support videos.
-				</video>
+				<YoutubePlayer videoUrl='https://www.youtube.com/embed/oqe98Dxivns' />
 			</div>
 
 			<div
 				className='bg-white mb-[201px] p-10 rounded-[30px]
-				mobile:mb-[84px] mobile:p-[30px]'
+				shadow-shadow_primary mobile:mb-[84px] mobile:p-[30px]'
 			>
 				<h3 className='text-[32px] leading-9 font-medium'>
 					Упражнения тренировки 2

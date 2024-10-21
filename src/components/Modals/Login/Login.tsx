@@ -1,9 +1,9 @@
-import { signInSchema, TSignInSchema } from '../../../lib/validateSchemes'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { signIn } from '../../../api/auth'
 import { AppRoutes } from '../../../lib/appRoutes'
-import { signIn } from '../../../api/authApi'
+import { signInSchema, TSignInSchema } from '../../../lib/validateSchemes'
 import Button from '../../Button/Button'
 import ErrorMsg from '../../ErrorMsg/ErrorMsg'
 
@@ -43,7 +43,7 @@ export default function Login() {
 						className={`w-[280px] h-[52px] p-4 border rounded-lg
 							${errors.login ? 'border-error' : 'border-placeholder'}`}
 						{...register('login')}
-						type='text'
+						type='email'
 						placeholder='Логин'
 					/>
 					{/* login input error message */}

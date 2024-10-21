@@ -1,9 +1,8 @@
-import { UseFormSetError } from 'react-hook-form'
-
 export type courseType = {
 	_id: string
 	nameRU: string
 	src: string
+	srcBig: string
 	srcSmall: string
 	duration: string
 	description: string
@@ -33,26 +32,4 @@ export interface ExerciseType {
 	_id: string
 	progress: number
 	quantity: number
-}
-
-// Типы для регистрации пользователя
-export type SignUpType = {
-	username: string
-	email: string
-	password: string
-	setError: UseFormSetError<{
-		email: string
-	}>
-	navigate: (url: string) => void
-}
-
-// Типы для авторизации пользователя
-export type SignInType = {
-	login: string
-	password: string
-	setError: UseFormSetError<{
-		login: string
-		password: string
-	}>
-	navigate: (url: string) => void
 }

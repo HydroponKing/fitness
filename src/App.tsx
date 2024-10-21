@@ -1,30 +1,29 @@
 import { Route, Routes } from 'react-router-dom'
+import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import { AppRoutes } from './lib/appRoutes'
-import Main from './components/Main/Main'
-import UserProfile from './components/UserProfile/UserProfile'
+import Home from './pages/Home/Home'
 import CoursePage from './components/CoursePage/CoursePage'
-import Login from './components/Modals/Login/Login'
-import SignIn from './pages/SignUp/SignUp'
-import NotFound from './components/NotFound/NotFound'
-// import SignUp from './pages/SignUp/SignUp'
-// import SignIn from './pages/SignIn/SignIn'
-
+import SignUp from './pages/SignUp/SignUp'
+import SignIn from './pages/SignIn/SignIn'
+import Profile from './pages/Profile/Profile'
+import Workout from './pages/Workout/Workout'
+import NotFound from './pages/NotFound/NotFound'
 
 function App() {
 	return (
 		<div className='container'>
 			<Routes>
-				<Route path={AppRoutes.MAIN} element={<Main />}>
+				<Route path={AppRoutes.MAIN} element={<Home />}>
 					<Route path={AppRoutes.REGISTER} element={<SignUp />} />
 					<Route path={AppRoutes.LOGIN} element={<SignIn />} />
 				</Route>
-				<Route path={AppRoutes.USER_PROFILE} element={<UserProfile />} />
+				{/* if user auth, open children routes */}
+				<Route element={<PrivateRoute />}>
+					<Route path={AppRoutes.PROFILE} element={<Profile />} />
+					<Route path={AppRoutes.WORKOUT} element={<Workout />} />
+				</Route>
 				<Route path={AppRoutes.COURSEPAGE} element={<CoursePage />} />
-				<Route path={AppRoutes.WORKOUT_VIDEO} element={''} />
-				<Route path={AppRoutes.USER_PROFILE} element={<UserProfile />} />
-				<Route path={AppRoutes.LOGIN} element={<Login />} />
 				<Route path={AppRoutes.NOT_FOUND} element={<NotFound />} />
-				<Route path={AppRoutes.NOT_FOUND} element={''} />
 			</Routes>
 		</div>
 	)

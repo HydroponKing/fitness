@@ -26,6 +26,8 @@ export default {
 			backgroundImage: {
 				//Gradient background set for recommend blocks
 				black_bg: 'linear-gradient(115.81deg, #151720 34.98%, #1E212E 91.5%)',
+				//Check success background set for select workout modal
+				'check-success': "url('/src/assets/img/icon/check_success.svg')",
 			},
 			objectPosition: {
 				//Course card custom img positions
@@ -39,8 +41,8 @@ export default {
 				//Modal active background
 				modal: 'rgb(0 0 0 / 50%)',
 				//Scroll background and thumb
-				scroll_bg: '#F7F7F7',
-				scroll_thumb_bg: '#000000',
+				scroll: '#F7F7F7',
+				scroll_thumb: '#000000',
 				//Enter button status backgrounds
 				regular: '#BCEC30',
 				hover: '#C6FF00',

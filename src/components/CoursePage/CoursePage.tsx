@@ -35,13 +35,13 @@ export default function CoursePage() {
 			<Header />
 
 			{/* Yoga блок */}
-			<div className='relative mt-8 overflow-hidden rounded-[30px] h-[389px] md:h-[310px]'>
+			<div className='relative mt-8 overflow-hidden rounded-[30px] mh-[389px] md:h-[310px]'>
 				<div>
 					<img src={course.srcBig} alt='Йога' className='hidden md:block' />
 					<img
 						src={course.src}
 						alt='Йога'
-						className='block md:hidden rounded-[35px] object-cover lg:-translate-y-[35%] lg:object-[150px] -translate-y-[13%]'
+						className='block md:hidden rounded-[35px] object-cover lg:-translate-y-[355%] '
 					/>
 				</div>
 			</div>

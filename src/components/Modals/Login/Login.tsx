@@ -1,9 +1,9 @@
-import { signInSchema, TSignInSchema } from '../../../lib/validateSchemes'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { signIn } from '../../../api/auth'
 import { AppRoutes } from '../../../lib/appRoutes'
-import { signIn } from '../../../api/authApi'
+import { signInSchema, TSignInSchema } from '../../../lib/validateSchemes'
 import Button from '../../Button/Button'
 import ErrorMsg from '../../ErrorMsg/ErrorMsg'
 

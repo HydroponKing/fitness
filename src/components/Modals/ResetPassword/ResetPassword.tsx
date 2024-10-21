@@ -1,12 +1,12 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { useForm } from 'react-hook-form'
+import { auth } from '../../../../firebaseConfig'
+import { resetPassword } from '../../../api/auth'
 import {
 	resetPasswordSchema,
 	TResetPasswordSchema,
 } from '../../../lib/validateSchemes'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { resetPassword } from '../../../api/authApi'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from '../../../../firebaseConfig'
 import Button from '../../Button/Button'
 import ErrorMsg from '../../ErrorMsg/ErrorMsg'
 

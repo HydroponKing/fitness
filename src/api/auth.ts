@@ -8,7 +8,7 @@ import {
 } from 'firebase/auth'
 import { auth, db } from '../../firebaseConfig'
 import { ref, set } from 'firebase/database'
-import { ResetPassType, SignInType, SignUpType } from './types'
+import { SignUpType, SignInType, ResetPassType } from '../lib/authTypes'
 import { AppRoutes } from '../lib/appRoutes'
 
 // Регистрация пользователя

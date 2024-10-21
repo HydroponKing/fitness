@@ -23,12 +23,25 @@ export default function CourseWorkout() {
 				>
 					Йога
 				</h1>
-				<h3
-					className='text-[32px] leading-9
-					mobile:text-[18px] mobile:leading-5'
+
+				{/* Breadcrumbs */}
+				<ol
+					className='flex text-[32px] leading-9
+			    [&_.line-b]:border-b [&_.line-b]:mobile:border-0
+					[&>:not(:last-child)]:after:content-["_/"]
+					[&>:not(:last-child)]:after:pr-1
+					mobile:flex-wrap mobile:text-[18px] mobile:leading-5'
 				>
-					Красота и здоровье / Йога на каждый день / 2 день
-				</h3>
+					<li>
+						<span className='line-b'>Красота и здоровье</span>
+					</li>
+					<li>
+						<span className='line-b'>Йога на каждый день</span>
+					</li>
+					<li>
+						<span className='line-b'>2 день</span>
+					</li>
+				</ol>
 			</div>
 
 			{/* Video player */}
@@ -118,7 +131,7 @@ export default function CourseWorkout() {
 					background='bg-green_bg'
 					hover='hover:bg-hover'
 					active='active:bg-active active:text-white'
-					media='mobile:w-full mobile:text-[16px]'
+					media='mobile:w-full'
 					onClick={openModal}
 					title='Заполнить свой прогресс'
 				/>

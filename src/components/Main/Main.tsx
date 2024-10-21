@@ -5,6 +5,7 @@ import { courseType } from '../../api/types'
 import Header from '../Header/Header'
 import CourseItem from './CourseItem/CourseItem'
 import ScrollBtn from '../Button/ScrollBtn'
+import { Link } from 'react-router-dom'
 
 export default function Main() {
 	const [courses, setCourses] = useState<courseType[]>([]) // для получения курсов с бека
@@ -55,7 +56,9 @@ export default function Main() {
 				mobile:flex-col mobile:items-center mobile:gap-6'
 			>
 				{sortedCourses.map(course => (
+					<Link to={`/coursepage/${course._id}`} key={course._id}>
 					<CourseItem course={course} key={course._id} />
+					</Link>
 				))}
 			</div>
 

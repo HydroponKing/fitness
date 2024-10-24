@@ -3,10 +3,17 @@ import WorkoutQuantityTimes from './WorkoutQuantityTimes/WorkoutQuantityTimes'
 import Button from '../../Button/Button'
 import ModalWrapper from '../../ModalWrapper/ModalWrapper'
 import ProgressAccepted from '../ProgressAccepted/ProgressAccepted'
+import { ChangeEvent, useState } from 'react'
 
 export default function ProgressCount() {
 	const { dialogRef, openModal, closeModal } = useModal()
+	const [value, setValue] = useState({
+		question1 : ''
+	});
 
+	function handleInput (e: ChangeEvent<HTMLInputElement>) {
+		setValue({...value, [e.target.name]:e.target.value})
+	}
 	return (
 		<div>
 			<h3 className='text-[32px] font-medium leading-9'>Мой прогресс</h3>
@@ -19,12 +26,12 @@ export default function ProgressCount() {
 			  [&::-webkit-scrollbar-thumb]:rounded-[10px]
 				mobile:mt-[34px]'
 			>
+				<WorkoutQuantityTimes exercise='Сколько раз вы сделали наклоны вперед?' name={'question1'} value={value.question1} hadleInput={handleInput}/>
+				{/* <WorkoutQuantityTimes exercise='Сколько раз вы сделали наклоны вперед?' />
 				<WorkoutQuantityTimes exercise='Сколько раз вы сделали наклоны вперед?' />
 				<WorkoutQuantityTimes exercise='Сколько раз вы сделали наклоны вперед?' />
 				<WorkoutQuantityTimes exercise='Сколько раз вы сделали наклоны вперед?' />
-				<WorkoutQuantityTimes exercise='Сколько раз вы сделали наклоны вперед?' />
-				<WorkoutQuantityTimes exercise='Сколько раз вы сделали наклоны вперед?' />
-				<WorkoutQuantityTimes exercise='Сколько раз вы сделали наклоны вперед?' />
+				<WorkoutQuantityTimes exercise='Сколько раз вы сделали наклоны вперед?' /> */}
 			</div>
 
 			<Button

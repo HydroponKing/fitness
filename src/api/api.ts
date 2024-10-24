@@ -1,4 +1,4 @@
-import { child, get, ref } from 'firebase/database'
+import { child, get, ref, update } from 'firebase/database'
 import { db } from '../../firebaseConfig'
 import { courseType, WorkoutType } from './types'
 
@@ -91,3 +91,27 @@ export const getVideo = async (workoutId: string) => {
 
 	return result?.video
 }
+
+export const updateValue = async (
+	userId: string,
+	courseId: string,
+	workoutId: string,
+	quantity: string
+) => {
+	const quantityRef = ref(db, `users/${userId}/courses/${courseId}/workouts/${workoutId}`)
+	await update(quantityRef, {quantity})
+}
+
+
+
+/*
+import { updateQuantity } from '../../api/api';
+
+const updateQuantityInDatabase = async (newQuantity) => {
+  try {
+    await updateQuantity(userId, courseId, workoutId, newQuantity);
+  } catch (error) {
+    console.error('Ошибка при обновлении quantity:', error);
+  }
+};
+*/

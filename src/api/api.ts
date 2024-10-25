@@ -137,7 +137,6 @@ export const addCourseToUser = async ({
 	const userCoursesRef = ref(db, `users/${userId}/courses/${courseId}`)
 	//получаем данные курсов пользователя с сервера
 	const userCoursesData = await getUserCourses(userId)
-	console.log(userCoursesData)
 
 	//проверяем, есть ли курс у пользователя
 	const alreadyAdded = userCoursesData?.some(course => course.id === courseId)

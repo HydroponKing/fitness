@@ -1,15 +1,17 @@
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from '../../../../firebaseConfig'
+import { UserCoursesType } from '../../../lib/authTypes'
+import { User } from 'firebase/auth'
 import { deleteUserCourse } from '../../../api/api'
 import Button from '../../Button/Button'
 import Progress from '../../Progress/Progress'
 
 type Props = {
+	user: User
+	course: UserCoursesType
 	openModal: () => void
 }
 
-export default function CourseCard({ openModal }: Props) {
-	const [user] = useAuthState(auth)
+export default function CourseCard({ user, course, openModal }: Props) {
+	const { id } = course
 
 	return (
 		<div
@@ -28,9 +30,7 @@ export default function CourseCard({ openModal }: Props) {
 			<svg
 				className='absolute w-[27px] h-[27px]
 				top-[20px] right-[20px] cursor-pointer'
-				onClick={() =>
-					deleteUserCourse({ userId: user?.uid, courseId: 'q02a6i' })
-				}
+				onClick={() => deleteUserCourse({ userId: user?.uid, courseId: id })}
 			>
 				<use xlinkHref='/src/assets/img/icon/sprite.svg#delete_course_circle' />
 			</svg>

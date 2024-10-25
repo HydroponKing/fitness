@@ -1,10 +1,15 @@
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { addCourseToUser } from '../../../api/api'
 import { courseType } from '../../api/types'
+import { auth } from '../../../../firebaseConfig'
 
 export type CourseOneType = {
 	course: courseType
 }
+
 export default function CourseItem({ course }: CourseOneType) {
-	const { nameRU, srcSmall } = course
+	const { nameRU, srcSmall, _id } = course
+	const [user] = useAuthState(auth)
 
 	return (
 		<>
@@ -18,6 +23,9 @@ export default function CourseItem({ course }: CourseOneType) {
 					<svg
 						className='w-[27px] h-[27px] 
 						absolute top-[20px] right-[20px] cursor-pointer'
+						onClick={() =>
+							addCourseToUser({ auth: user!, userId: user?.uid, courseId: _id })
+						}
 					>
 						<use
 							xlinkHref='/src/assets/img/icon/

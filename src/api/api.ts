@@ -91,3 +91,9 @@ export const getVideo = async (workoutId: string) => {
 
 	return result?.video
 }
+
+// Добавление курса пользователю
+export const addCourseToUser = () => {}
+
+// Удаление курса пользователя
+export const deleteUserCourse = () => {}

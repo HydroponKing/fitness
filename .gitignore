@@ -1,5 +1,8 @@
 node_modules
 
+# testing
+/coverage
+
 # Logs
 logs
 *.log

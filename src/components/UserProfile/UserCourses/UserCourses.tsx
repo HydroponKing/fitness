@@ -12,9 +12,10 @@ import ScrollBtn from '../../Button/ScrollBtn'
 export default function UserCourses() {
 	const dispatch = useAppDispatch()
 	const { dialogRef, openModal, closeModal } = useModal()
-	const { userCourses } = useAppSelector(state => state.user)
+	const { courses, userCourses } = useAppSelector(state => state.user)
 	const [user] = useAuthState(auth)
 
+	console.log(courses)
 	console.log(userCourses)
 
 	useEffect(() => {

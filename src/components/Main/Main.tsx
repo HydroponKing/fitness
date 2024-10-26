@@ -1,23 +1,32 @@
+import { Outlet, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { useAppDispatch } from '../../store/store'
+import { getCoursesData } from '../../store/features/userSlice'
 import { getCourses } from '../../api/api'
 import { courseType } from '../../api/types'
 import Header from '../Header/Header'
 import CourseItem from './CourseItem/CourseItem'
 import ScrollBtn from '../Button/ScrollBtn'
-import { Link } from 'react-router-dom'
 
 export default function Main() {
-	const [courses, setCourses] = useState<courseType[]>([]) // для получения курсов с бека
+	const dispatch = useAppDispatch()
+	//для получения курсов с бека
+	const [courses, setCourses] = useState<courseType[]>([])
+
 	useEffect(() => {
+		//сохраняем данные курсов в Redux
+		dispatch(getCoursesData())
+
 		const getData = async () => {
 			const res = await getCourses()
 			setCourses(res)
 		}
 		getData()
-	}, [])
+	}, [dispatch])
+
 	console.log(courses)
-	const sortedCourses = [...courses].sort((a, b) => a.order - b.order) // для сортировки курсов по порядку
+	//для сортировки курсов по порядку
+	const sortedCourses = [...courses].sort((a, b) => a.order - b.order)
 
 	return (
 		<main>
@@ -57,7 +66,7 @@ export default function Main() {
 			>
 				{sortedCourses.map(course => (
 					<Link to={`/coursepage/${course._id}`} key={course._id}>
-					<CourseItem course={course} key={course._id} />
+						<CourseItem course={course} key={course._id} />
 					</Link>
 				))}
 			</div>

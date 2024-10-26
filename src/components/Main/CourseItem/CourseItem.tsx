@@ -1,13 +1,13 @@
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { addCourseToUser } from '../../../api/api'
-import { courseType } from '../../api/types'
 import { auth } from '../../../../firebaseConfig'
+import { addCourseToUser } from '../../../api/api'
+import { courseType } from '../../../api/types'
 
-export type CourseOneType = {
+type Props = {
 	course: courseType
 }
 
-export default function CourseItem({ course }: CourseOneType) {
+export default function CourseItem({ course }: Props) {
 	const { nameRU, srcSmall, _id } = course
 	const [user] = useAuthState(auth)
 

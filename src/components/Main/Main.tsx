@@ -1,5 +1,5 @@
+import { useEffect, useMemo, useState } from 'react'
 import { Outlet, Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 import { useAppDispatch } from '../../store/store'
 import { getCoursesData } from '../../store/features/userSlice'
 import { getCourses } from '../../api/api'
@@ -16,7 +16,7 @@ export default function Main() {
 	useEffect(() => {
 		//сохраняем данные курсов в Redux
 		dispatch(getCoursesData())
-
+		//сохраняем данные курсов в state
 		const getData = async () => {
 			const res = await getCourses()
 			setCourses(res)
@@ -26,7 +26,10 @@ export default function Main() {
 
 	console.log(courses)
 	//для сортировки курсов по порядку
-	const sortedCourses = [...courses].sort((a, b) => a.order - b.order)
+	const sortedCourses = useMemo(
+		() => [...courses].sort((a, b) => a.order - b.order),
+		[courses],
+	)
 
 	return (
 		<main>
@@ -64,11 +67,15 @@ export default function Main() {
 				className='flex flex-wrap gap-11
 				mobile:flex-col mobile:items-center mobile:gap-6'
 			>
-				{sortedCourses.map(course => (
-					<Link to={`/coursepage/${course._id}`} key={course._id}>
-						<CourseItem course={course} />
-					</Link>
-				))}
+				{useMemo(
+					() =>
+						sortedCourses.map(course => (
+							<Link to={`/coursepage/${course._id}`} key={course._id}>
+								<CourseItem course={course} />
+							</Link>
+						)),
+					[sortedCourses],
+				)}
 			</div>
 
 			<ScrollBtn

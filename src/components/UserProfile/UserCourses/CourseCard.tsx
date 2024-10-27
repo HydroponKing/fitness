@@ -1,4 +1,7 @@
+import { useCallback } from 'react'
+import { useAppDispatch } from '../../../store/store'
 import { User } from 'firebase/auth'
+import { getUserCoursesData } from '../../../store/features/userSlice'
 import { deleteUserCourse } from '../../../api/api'
 import { courseType } from '../../../api/types'
 import Button from '../../Button/Button'
@@ -11,7 +14,13 @@ type Props = {
 }
 
 export default function CourseCard({ user, course, openModal }: Props) {
+	const dispatch = useAppDispatch()
 	const { _id, nameRU, srcSmall } = course
+
+	const onDeleteCourse = useCallback(() => {
+		deleteUserCourse({ userId: user?.uid, courseId: _id })
+		dispatch(getUserCoursesData(user?.uid))
+	}, [_id, dispatch, user?.uid])
 
 	return (
 		<div
@@ -25,15 +34,21 @@ export default function CourseCard({ user, course, openModal }: Props) {
 					src={srcSmall}
 					alt='course-poster'
 				/>
+
+				{/* Delete user course button */}
+				<div title='Удалить курс'>
+					<svg
+						className='absolute w-[27px] h-[27px]
+						top-[20px] right-[20px] cursor-pointer'
+						onClick={onDeleteCourse}
+					>
+						<use
+							xlinkHref='/src/assets/img/icon/
+						sprite.svg#delete_course_circle'
+						/>
+					</svg>
+				</div>
 			</div>
-			{/* Delete user course button */}
-			<svg
-				className='absolute w-[27px] h-[27px]
-				top-[20px] right-[20px] cursor-pointer'
-				onClick={() => deleteUserCourse({ userId: user?.uid, courseId: _id })}
-			>
-				<use xlinkHref='/src/assets/img/icon/sprite.svg#delete_course_circle' />
-			</svg>
 
 			<div
 				className='flex flex-col gap-[20px] px-[30px]

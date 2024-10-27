@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../store/store'
 import { useModal } from '../../../hooks/useModal'
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -16,16 +16,18 @@ export default function UserCourses() {
 	const [user] = useAuthState(auth)
 
 	// Фильтр всех курсов и получение нового массива курсов пользователя
-	const userFilteredCourses = courses.filter(course => {
-		return userCourses.some(userCourse => course._id === userCourse.id)
-	})
+	const userFilteredCourses = useMemo(
+		() =>
+			courses.filter(course => {
+				return userCourses.some(userCourse => course._id === userCourse.id)
+			}),
+		[courses, userCourses],
+	)
 
 	useEffect(() => {
 		//получаем коллекцию пользователя и сохраняем в Redux
 		dispatch(getUserCoursesData(user?.uid))
 	}, [dispatch, user?.uid])
-
-	console.log(userCourses)
 
 	return (
 		<div>

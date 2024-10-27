@@ -1,17 +1,17 @@
-import { UserCoursesType } from '../../../lib/authTypes'
 import { User } from 'firebase/auth'
 import { deleteUserCourse } from '../../../api/api'
+import { courseType } from '../../../api/types'
 import Button from '../../Button/Button'
 import Progress from '../../Progress/Progress'
 
 type Props = {
 	user: User
-	course: UserCoursesType
+	course: courseType
 	openModal: () => void
 }
 
 export default function CourseCard({ user, course, openModal }: Props) {
-	const { id } = course
+	const { _id, nameRU, srcSmall } = course
 
 	return (
 		<div
@@ -21,16 +21,16 @@ export default function CourseCard({ user, course, openModal }: Props) {
 		>
 			<div className='h-[325px] overflow-hidden rounded-[30px]'>
 				<img
-					className='h-[175%] rounded-[30px] object-cover object-yoga'
-					src='/src/assets/img/yoga.jpg'
-					alt='yoga'
+					className='rounded-[30px] object-cover'
+					src={srcSmall}
+					alt='course-poster'
 				/>
 			</div>
 			{/* Delete user course button */}
 			<svg
 				className='absolute w-[27px] h-[27px]
 				top-[20px] right-[20px] cursor-pointer'
-				onClick={() => deleteUserCourse({ userId: user?.uid, courseId: id })}
+				onClick={() => deleteUserCourse({ userId: user?.uid, courseId: _id })}
 			>
 				<use xlinkHref='/src/assets/img/icon/sprite.svg#delete_course_circle' />
 			</svg>
@@ -43,7 +43,7 @@ export default function CourseCard({ user, course, openModal }: Props) {
 					className='text-[32px] font-medium leading-[35px]
 					mobile:text-[24px] mobile:leading-[26px]'
 				>
-					Йога
+					{nameRU}
 				</h2>
 
 				<div className='flex flex-wrap gap-[6px]'>

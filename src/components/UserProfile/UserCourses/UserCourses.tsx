@@ -15,12 +15,17 @@ export default function UserCourses() {
 	const { courses, userCourses } = useAppSelector(state => state.user)
 	const [user] = useAuthState(auth)
 
-	console.log(courses)
-	console.log(userCourses)
+	// Фильтр всех курсов и получение нового массива курсов пользователя
+	const userFilteredCourses = courses.filter(course => {
+		return userCourses.some(userCourse => course._id === userCourse.id)
+	})
 
 	useEffect(() => {
+		//получаем коллекцию пользователя и сохраняем в Redux
 		dispatch(getUserCoursesData(user?.uid))
 	}, [dispatch, user?.uid])
+
+	console.log(userCourses)
 
 	return (
 		<div>
@@ -36,9 +41,9 @@ export default function UserCourses() {
 				className='flex flex-wrap gap-11 mt-10
 				mobile:flex-col mobile:items-center mobile:gap-6 mobile:mt-6'
 			>
-				{userCourses.map(course => (
+				{userFilteredCourses.map(course => (
 					<CourseCard
-						key={course.id}
+						key={course._id}
 						course={course}
 						user={user!}
 						openModal={openModal}

@@ -19,13 +19,14 @@ export default function CourseItem({ course }: Props) {
 			mobile:flex-col mobile:items-center mobile:w-[343px]'
 			>
 				<div>
-					<img className='rounded-[30px]' src={srcSmall} />
+					<img className='rounded-[30px]' src={srcSmall} alt='course-poster' />
 					<svg
 						className='w-[27px] h-[27px] 
-						absolute top-[20px] right-[20px] cursor-pointer'
-						onClick={() =>
+						absolute top-[20px] right-[20px]'
+						onClick={event => {
+							event.preventDefault()
 							addCourseToUser({ auth: user!, userId: user?.uid, courseId: _id })
-						}
+						}}
 					>
 						<use
 							xlinkHref='/src/assets/img/icon/

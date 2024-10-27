@@ -66,7 +66,7 @@ export default function Main() {
 			>
 				{sortedCourses.map(course => (
 					<Link to={`/coursepage/${course._id}`} key={course._id}>
-						<CourseItem course={course} key={course._id} />
+						<CourseItem course={course} />
 					</Link>
 				))}
 			</div>

@@ -56,7 +56,7 @@ export default function Main() {
 				mobile:flex-col mobile:items-center mobile:gap-6'
 			>
 				{sortedCourses.map(course => (
-					<Link to={`/coursepage/${course._id}`} key={course._id}>
+					<Link to={`/courses/${course._id}`} key={course._id}>
 					<CourseItem course={course} key={course._id} />
 					</Link>
 				))}

@@ -1,6 +1,7 @@
 import { child, get, ref, update } from 'firebase/database'
 import { db } from '../../firebaseConfig'
 import { courseType, WorkoutType } from './types'
+import { shallowEqual } from 'react-redux'
 
 export const getCourses = async (): Promise<courseType[]> => {
 	let courses: courseType[] = []
@@ -96,13 +97,14 @@ export const updateValue = async (
 	userId: string,
 	courseId: string,
 	workoutId: string,
-	quantity: string
+	quantity: string,
 ) => {
-	const quantityRef = ref(db, `users/${userId}/courses/${courseId}/workouts/${workoutId}`)
-	await update(quantityRef, {quantity})
+	const quantityRef = ref(
+		db,
+		`users/${userId}/courses/${courseId}/workouts/${workoutId}`,
+	)
+	await update(quantityRef, { quantity })
 }
-
-
 
 /*
 import { updateQuantity } from '../../api/api';
@@ -115,3 +117,47 @@ const updateQuantityInDatabase = async (newQuantity) => {
   }
 };
 */
+
+// Функция для получения данных конкретной тренировки
+export const getWorkout = async (
+	workoutId: string,
+	userId: string,
+	courseId: string,
+): Promise<WorkoutType | null> => {
+	try {
+		const snapshot = await get(child(ref(db), `workouts/${workoutId}`))
+		if (snapshot.exists()) {
+			const data = snapshot.val()
+			{
+				const snapshot = await get(
+					ref(db,
+					`/users/${userId}/courses/${courseId}/workouts/${workoutId}`,
+				))
+				if (snapshot.exists()) {
+					const userData = snapshot.val()
+					userData.exercises.forEach(exercise => {
+						data.exercises[exercise.index].progress = exercise.progress
+					})
+				}
+			}
+			return data // Возвращаем данные тренировки
+		} else {
+			console.log('Workout not found')
+			return null
+		}
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error('Error fetching workout:', error.message)
+		}
+		return null
+	}
+}
+
+async function getData(path: string) {
+	const snapshot = await get(ref(db, path))
+
+	if (snapshot.exists())
+		return snapshot.val()
+	else
+		return "hren'"
+}

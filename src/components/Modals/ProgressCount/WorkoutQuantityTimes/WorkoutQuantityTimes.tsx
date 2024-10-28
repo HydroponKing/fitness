@@ -2,10 +2,12 @@ import { ChangeEventHandler } from "react"
 
 type Props = {
 	exercise: string,
-	value : string,
+	value : number,
 	name: string,
 	hadleInput: ChangeEventHandler<HTMLInputElement>,
 }
+
+
 
 export default function WorkoutQuantityTimes({ exercise, value, hadleInput, name }: Props) {
 	return (
@@ -17,8 +19,9 @@ export default function WorkoutQuantityTimes({ exercise, value, hadleInput, name
 			<input
 				className='h-[52px] p-4 border border-placeholder rounded-lg 
 				mobile:h-[47px]'
-				type='text'
-				placeholder='0'
+				type= 'number'
+				min='0'
+				max = 'quantity'
 				value = {value}
 				name={name}
 				onChange={hadleInput}

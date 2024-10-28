@@ -35,7 +35,7 @@ export default function CourseItem({ course }: Props) {
 				{/* Add course to user button */}
 				<div title='Добавить курс'>
 					<svg
-						className='w-[27px] h-[27px] 
+						className='w-[32px] h-[32px]
 						absolute top-[20px] right-[20px]'
 						onClick={onAddCourse}
 					>

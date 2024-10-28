@@ -38,7 +38,7 @@ export default function CourseCard({ user, course, openModal }: Props) {
 				{/* Delete user course button */}
 				<div title='Удалить курс'>
 					<svg
-						className='absolute w-[27px] h-[27px]
+						className='absolute w-[32px] h-[32px]
 						top-[20px] right-[20px] cursor-pointer'
 						onClick={onDeleteCourse}
 					>

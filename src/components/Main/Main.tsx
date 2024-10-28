@@ -1,35 +1,20 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { Outlet, Link } from 'react-router-dom'
-import { useAppDispatch } from '../../store/store'
+import { useAppDispatch, useAppSelector } from '../../store/store'
 import { getCoursesData } from '../../store/features/userSlice'
-import { getCourses } from '../../api/api'
-import { courseType } from '../../api/types'
 import Header from '../Header/Header'
 import CourseItem from './CourseItem/CourseItem'
+import SkeletonCourseCard from '../SkeletonLoader/SkeletonCourseCard'
 import ScrollBtn from '../Button/ScrollBtn'
 
 export default function Main() {
 	const dispatch = useAppDispatch()
-	//для получения курсов с бека
-	const [courses, setCourses] = useState<courseType[]>([])
+	const { courses, isLoading } = useAppSelector(state => state.user)
 
 	useEffect(() => {
 		//сохраняем данные курсов в Redux
 		dispatch(getCoursesData())
-		//сохраняем данные курсов в state
-		const getData = async () => {
-			const res = await getCourses()
-			setCourses(res)
-		}
-		getData()
 	}, [dispatch])
-
-	console.log(courses)
-	//для сортировки курсов по порядку
-	const sortedCourses = useMemo(
-		() => [...courses].sort((a, b) => a.order - b.order),
-		[courses],
-	)
 
 	return (
 		<main>
@@ -67,14 +52,25 @@ export default function Main() {
 				className='flex flex-wrap gap-11
 				mobile:flex-col mobile:items-center mobile:gap-6'
 			>
+				{/* Оптимизируем рендер */}
 				{useMemo(
 					() =>
-						sortedCourses.map(course => (
+						courses.map(course => (
 							<Link to={`/coursepage/${course._id}`} key={course._id}>
 								<CourseItem course={course} />
 							</Link>
 						)),
-					[sortedCourses],
+					[courses],
+				)}
+				{/* Пока идет загрузка с Api, показываем скелетоны карточки курса */}
+				{isLoading && (
+					<>
+						<SkeletonCourseCard />
+						<SkeletonCourseCard />
+						<SkeletonCourseCard />
+						<SkeletonCourseCard />
+						<SkeletonCourseCard />
+					</>
 				)}
 			</div>
 

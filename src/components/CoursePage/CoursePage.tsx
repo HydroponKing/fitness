@@ -1,15 +1,26 @@
-import Header from '../Header/Header'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../../../firebaseConfig'
+import { addCourseToUser, getCourses } from '../../api/api'
+import { courseType } from '../../api/types'
 import manImage from '/src/assets/img/man.png'
 import IconStar from '/src/assets/img/icon/star.svg'
 import lineImage from '/src/assets/img/line.png'
-import { getCourses } from '../../api/api'
-import { courseType } from '../../api/types'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import Header from '../Header/Header'
 
 export default function CoursePage() {
 	const { id } = useParams() // Получаем id курса из URL
 	const [course, setCourse] = useState<courseType | null>(null) // Состояние для хранения данных курса
+	const [user] = useAuthState(auth) // Получаем пользователя из хука
+
+	const onAddCourse = () => {
+		addCourseToUser({
+			auth: user!,
+			userId: user?.uid,
+			courseId: id!,
+		})
+	}
 
 	useEffect(() => {
 		const fetchCourse = async () => {
@@ -137,8 +148,11 @@ export default function CoursePage() {
 							</li>
 						</ul>
 
-						<button className='mt-6 bg-regular hover:bg-hover active:bg-active text-black py-3 px-6 rounded-full md:w-[437px] w-[280px]'>
-							Добавить курс
+						<button
+							className='mt-6 bg-regular hover:bg-hover active:bg-active text-black py-3 px-6 rounded-full md:w-[437px] w-[280px]'
+							onClick={onAddCourse}
+						>
+							{user ? 'Добавить курс' : 'Войдите, чтобы добавить курс'}
 						</button>
 					</div>
 

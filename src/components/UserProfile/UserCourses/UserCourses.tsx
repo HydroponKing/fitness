@@ -1,11 +1,33 @@
+import { useEffect, useMemo } from 'react'
+import { useAppDispatch, useAppSelector } from '../../../store/store'
 import { useModal } from '../../../hooks/useModal'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../../../../firebaseConfig'
+import { getUserCoursesData } from '../../../store/features/userSlice'
 import CourseCard from './CourseCard'
 import ModalWrapper from '../../ModalWrapper/ModalWrapper'
 import SelectWorkout from '../../Modals/SelectWorkout/SelectWorkout'
 import ScrollBtn from '../../Button/ScrollBtn'
 
 export default function UserCourses() {
+	const dispatch = useAppDispatch()
 	const { dialogRef, openModal, closeModal } = useModal()
+	const { courses, userCourses } = useAppSelector(state => state.user)
+	const [user] = useAuthState(auth)
+
+	// Фильтр всех курсов и получение нового массива курсов пользователя
+	const userFilteredCourses = useMemo(
+		() =>
+			courses.filter(course => {
+				return userCourses.some(userCourse => course._id === userCourse.id)
+			}),
+		[courses, userCourses],
+	)
+
+	useEffect(() => {
+		//получаем коллекцию пользователя и сохраняем в Redux
+		dispatch(getUserCoursesData(user?.uid))
+	}, [dispatch, user?.uid])
 
 	return (
 		<div>
@@ -21,10 +43,14 @@ export default function UserCourses() {
 				className='flex flex-wrap gap-11 mt-10
 				mobile:flex-col mobile:items-center mobile:gap-6 mobile:mt-6'
 			>
-				<CourseCard openModal={openModal} />
-				{/* <CourseCard />
-				<CourseCard />
-				<CourseCard /> */}
+				{userFilteredCourses.map(course => (
+					<CourseCard
+						key={course._id}
+						course={course}
+						user={user!}
+						openModal={openModal}
+					/>
+				))}
 			</div>
 			{/* Select workout modal */}
 			<ModalWrapper

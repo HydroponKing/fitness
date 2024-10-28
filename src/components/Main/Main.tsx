@@ -1,23 +1,20 @@
-import { useEffect, useState } from 'react'
-import { Outlet } from 'react-router-dom'
-import { getCourses } from '../../api/api'
-import { courseType } from '../../api/types'
+import { useEffect, useMemo } from 'react'
+import { Outlet, Link } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../store/store'
+import { getCoursesData } from '../../store/features/userSlice'
 import Header from '../Header/Header'
 import CourseItem from './CourseItem/CourseItem'
+import SkeletonCourseCard from '../SkeletonLoader/SkeletonCourseCard'
 import ScrollBtn from '../Button/ScrollBtn'
-import { Link } from 'react-router-dom'
 
 export default function Main() {
-	const [courses, setCourses] = useState<courseType[]>([]) // для получения курсов с бека
+	const dispatch = useAppDispatch()
+	const { courses, isLoading } = useAppSelector(state => state.user)
+
 	useEffect(() => {
-		const getData = async () => {
-			const res = await getCourses()
-			setCourses(res)
-		}
-		getData()
-	}, [])
-	console.log(courses)
-	const sortedCourses = [...courses].sort((a, b) => a.order - b.order) // для сортировки курсов по порядку
+		//сохраняем данные курсов в Redux
+		dispatch(getCoursesData())
+	}, [dispatch])
 
 	return (
 		<main>
@@ -55,11 +52,26 @@ export default function Main() {
 				className='flex flex-wrap gap-11
 				mobile:flex-col mobile:items-center mobile:gap-6'
 			>
-				{sortedCourses.map(course => (
-					<Link to={`/coursepage/${course._id}`} key={course._id}>
-					<CourseItem course={course} key={course._id} />
-					</Link>
-				))}
+				{/* Оптимизируем рендер */}
+				{useMemo(
+					() =>
+						courses.map(course => (
+							<Link to={`/coursepage/${course._id}`} key={course._id}>
+								<CourseItem course={course} />
+							</Link>
+						)),
+					[courses],
+				)}
+				{/* Пока идет загрузка с Api, показываем скелетоны карточки курса */}
+				{isLoading && (
+					<>
+						<SkeletonCourseCard />
+						<SkeletonCourseCard />
+						<SkeletonCourseCard />
+						<SkeletonCourseCard />
+						<SkeletonCourseCard />
+					</>
+				)}
 			</div>
 
 			<ScrollBtn

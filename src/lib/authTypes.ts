@@ -34,3 +34,23 @@ export type ResetPassType = {
 	}>
 	logout: () => void
 }
+
+// Типы для получения коллекции курсов пользователя
+export type UserCoursesType = {
+	id: string
+	isCompleted: boolean
+	workouts: string[]
+}
+
+// Типы для добавления курса
+export type AddCourseType = {
+	auth: User
+	userId: string | undefined
+	courseId: string
+}
+
+// Типы для удаления курса
+export type DeleteCourseType = {
+	userId: string | undefined
+	courseId: string
+}

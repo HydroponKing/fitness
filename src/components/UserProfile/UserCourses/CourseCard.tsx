@@ -1,11 +1,27 @@
+import { useCallback } from 'react'
+import { useAppDispatch } from '../../../store/store'
+import { User } from 'firebase/auth'
+import { getUserCoursesData } from '../../../store/features/userSlice'
+import { deleteUserCourse } from '../../../api/api'
+import { courseType } from '../../../api/types'
 import Button from '../../Button/Button'
 import Progress from '../../Progress/Progress'
 
 type Props = {
+	user: User
+	course: courseType
 	openModal: () => void
 }
 
-export default function CourseCard({ openModal }: Props) {
+export default function CourseCard({ user, course, openModal }: Props) {
+	const dispatch = useAppDispatch()
+	const { _id, nameRU, srcSmall } = course
+
+	const onDeleteCourse = useCallback(() => {
+		deleteUserCourse({ userId: user?.uid, courseId: _id })
+		dispatch(getUserCoursesData(user?.uid))
+	}, [_id, dispatch, user?.uid])
+
 	return (
 		<div
 			className='relative flex flex-col gap-[24px] w-[360px]
@@ -14,18 +30,25 @@ export default function CourseCard({ openModal }: Props) {
 		>
 			<div className='h-[325px] overflow-hidden rounded-[30px]'>
 				<img
-					className='h-[175%] rounded-[30px] object-cover object-yoga'
-					src='/src/assets/img/yoga.jpg'
-					alt='yoga'
+					className='rounded-[30px] object-cover'
+					src={srcSmall}
+					alt='course-poster'
 				/>
+
+				{/* Delete user course button */}
+				<div title='Удалить курс'>
+					<svg
+						className='absolute w-[32px] h-[32px]
+						top-[20px] right-[20px] cursor-pointer'
+						onClick={onDeleteCourse}
+					>
+						<use
+							xlinkHref='/src/assets/img/icon/
+						sprite.svg#delete_course_circle'
+						/>
+					</svg>
+				</div>
 			</div>
-			{/* Delete user course button */}
-			<svg
-				className='absolute w-[27px] h-[27px]
-				top-[20px] right-[20px] cursor-pointer'
-			>
-				<use xlinkHref='/src/assets/img/icon/sprite.svg#delete_course_circle' />
-			</svg>
 
 			<div
 				className='flex flex-col gap-[20px] px-[30px]
@@ -35,7 +58,7 @@ export default function CourseCard({ openModal }: Props) {
 					className='text-[32px] font-medium leading-[35px]
 					mobile:text-[24px] mobile:leading-[26px]'
 				>
-					Йога
+					{nameRU}
 				</h2>
 
 				<div className='flex flex-wrap gap-[6px]'>

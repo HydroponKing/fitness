@@ -1,6 +1,11 @@
-import { child, get, ref } from 'firebase/database'
+import { child, get, ref, remove, set } from 'firebase/database'
 import { db } from '../../firebaseConfig'
 import { courseType, WorkoutType } from './types'
+import {
+	AddCourseType,
+	DeleteCourseType,
+	UserCoursesType,
+} from '../lib/authTypes'
 
 export const getCourses = async (): Promise<courseType[]> => {
 	let courses: courseType[] = []
@@ -90,4 +95,82 @@ export const getVideo = async (workoutId: string) => {
 	}
 
 	return result?.video
+}
+
+// Получение коллекции курсов пользователя по uid
+export const getUserCourses = async (
+	userId: string | undefined,
+): Promise<UserCoursesType[]> => {
+	let data: UserCoursesType[] = []
+
+	//ссылка на коллекцию курсов пользователей
+	const userCoursesRef = ref(db, `users/${userId}/courses`)
+
+	//запрос на сервер...
+	try {
+		//проверяем наличие данных по снимку(snapshot)
+		const snapshot = await get(userCoursesRef)
+		if (snapshot.exists()) {
+			data = Object.values(snapshot.val())
+		}
+	} catch (error) {
+		console.error(error)
+	}
+
+	//возвращаем результат
+	return data
+}
+
+// Добавление курса пользователю
+export const addCourseToUser = async ({
+	auth,
+	userId,
+	courseId,
+}: AddCourseType) => {
+	//проверяем авторизацию пользователя
+	if (!auth) {
+		alert('Добавить курс, могут только авторизованные пользователи')
+		return
+	}
+
+	//ссылка на коллекцию курсов пользователя
+	const userCoursesRef = ref(db, `users/${userId}/courses/${courseId}`)
+	//получаем данные курсов пользователя с сервера
+	const userCoursesData = await getUserCourses(userId)
+
+	//проверяем, есть ли курс у пользователя
+	const alreadyAdded = userCoursesData?.some(course => course.id === courseId)
+	if (alreadyAdded) {
+		alert('Данный курс уже приобретен')
+		return
+	}
+
+	//запрос на сервер...
+	try {
+		await set(userCoursesRef, {
+			id: courseId,
+			isCompleted: false,
+			workouts: [courseId],
+		})
+		alert('Курс успешно добавлен')
+	} catch (error) {
+		console.error(error)
+	}
+}
+
+// Удаление курса пользователя
+export const deleteUserCourse = async ({
+	userId,
+	courseId,
+}: DeleteCourseType) => {
+	//ссылка на коллекцию курсов пользователя
+	const userCoursesRef = ref(db, `users/${userId}/courses/${courseId}`)
+
+	//запрос на сервер...
+	try {
+		await remove(userCoursesRef)
+		alert('Курс успешно удален')
+	} catch (error) {
+		console.error(error)
+	}
 }

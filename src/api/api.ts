@@ -80,23 +80,6 @@ export const getUserWorkouts = async (userId: string, courseId: string) => {
 	}
 }
 
-// export const getVideo = async (workoutId: string) => {
-// 	// для подучения "воркаутов с видео" в Firebase
-// 	let result: WorkoutType | null = null
-
-// 	try {
-// 		const snapshot = await get(child(ref(db), `workouts/${workoutId}`))
-
-// 		if (snapshot.exists()) {
-// 			result = snapshot.val()
-// 		}
-// 	} catch (e) {
-// 		console.error(e)
-// 	}
-
-// 	return result?.video
-// }
-
 // Получение коллекции курсов пользователя по uid
 export const getUserCourses = async (
 	userId: string | undefined,

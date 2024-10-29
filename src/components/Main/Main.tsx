@@ -56,7 +56,7 @@ export default function Main() {
 				{useMemo(
 					() =>
 						courses.map(course => (
-							<Link to={`/coursepage/${course._id}`} key={course._id}>
+							<Link to={`/courses/${course._id}`} key={course._id}>
 								<CourseItem course={course} />
 							</Link>
 						)),

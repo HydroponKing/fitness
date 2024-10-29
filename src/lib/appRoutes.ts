@@ -1,8 +1,9 @@
 export const AppRoutes = {
 	MAIN: '/',
-	COURSEPAGE: '/coursepage/:id',
+	COURSES: 'courses',
+	COURSEPAGE: ':id',
 	PROFILE: '/user',
-	WORKOUT: '/course/workout',
+	WORKOUT: '/courses/:courseId/workouts/:workoutId',
 	REGISTER: '/signup',
 	LOGIN: '/signin',
 	NOT_FOUND: '*',

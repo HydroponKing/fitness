@@ -5,9 +5,32 @@ import Progress from '../Progress/Progress'
 import Button from '../Button/Button'
 import ModalWrapper from '../ModalWrapper/ModalWrapper'
 import ProgressCount from '../Modals/ProgressCount/ProgressCount'
+import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { courseType, WorkoutType } from '../../api/types'
+import { getCourse, getWorkout } from '../../api/api'
 
 export default function CourseWorkout() {
+	const { courseId, workoutId } = useParams()
+	const [courseData, setCourseData] = useState<courseType | null>(null)
+	const [workoutData, setWorkoutData] = useState<WorkoutType | null>(null)
+	const [dayIndex, setDayIndex] = useState(0)
 	const { dialogRef, openModal, closeModal } = useModal()
+
+	useEffect(() => {
+		if (courseId && workoutId) {
+			Promise.all([getCourse(courseId), getWorkout(workoutId, "", courseId)])
+				.then(([courseData, workoutData]) => {
+					setCourseData(courseData)
+					setWorkoutData(workoutData)
+					setDayIndex((courseData?.workouts.indexOf(workoutId || "") || 0) + 1)
+
+					console.log("courseData:", courseData)
+					console.log(workoutData)
+				})
+				.catch((error) => console.error(error))
+		}
+	}, [courseId, workoutId])
 
 	return (
 		<div>
@@ -21,7 +44,7 @@ export default function CourseWorkout() {
 					className='text-6xl font-medium
 					mobile:text-[24px] mobile:leading-[26px]'
 				>
-					Йога
+					{courseData?.nameRU}
 				</h1>
 
 				{/* Breadcrumbs */}
@@ -36,17 +59,30 @@ export default function CourseWorkout() {
 						<span className='line-b'>Красота и здоровье</span>
 					</li>
 					<li>
-						<span className='line-b'>Йога на каждый день</span>
+						<span className='line-b'>{courseData?.nameRU} на каждый день</span>
 					</li>
 					<li>
-						<span className='line-b'>2 день</span>
+						<span className='line-b'>{dayIndex} день</span>
 					</li>
 				</ol>
+				{
+					<p
+						className='flex text-[32px] leading-9
+					[&_.line-b]:border-b [&_.line-b]:mobile:border-0
+						[&>:not(:last-child)]:after:content-["_/"]
+						[&>:not(:last-child)]:after:pr-1
+						mobile:flex-wrap mobile:text-[18px] mobile:leading-5'
+					>{workoutData?.name}</p>
+				}
 			</div>
 
 			{/* Video player */}
 			<div className='my-10 mobile:my-6'>
-				<YoutubePlayer videoUrl='https://www.youtube.com/embed/oqe98Dxivns' />
+				{
+					(workoutData && workoutData.video)
+					  ? <YoutubePlayer videoUrl={workoutData?.video} />
+					  : null
+				}
 			</div>
 
 			<div
@@ -54,14 +90,24 @@ export default function CourseWorkout() {
 				shadow-shadow_primary mobile:mb-[84px] mobile:p-[30px]'
 			>
 				<h3 className='text-[32px] leading-9 font-medium'>
-					Упражнения тренировки 2
+					Упражнения тренировки {dayIndex}
 				</h3>
 
 				<div
 					className='flex flex-wrap justify-between gap-y-5 mt-5 mb-10
 				  mobile:flex-col mobile:flex-nowrap mobile:gap-6'
 				>
-					<Progress
+					{workoutData?.exercises.map((exersice, index) => (
+						<Progress
+						    key={index}
+							width='w-[320px]'
+							mobile='mobile:w-full'
+							percentValue='50'
+							value='50'
+							title={exersice.name}
+						/>
+					))}
+					{/* <Progress
 						width='w-[320px]'
 						mobile='mobile:w-full'
 						percentValue='50'
@@ -123,7 +169,7 @@ export default function CourseWorkout() {
 						percentValue='50'
 						value='50'
 						title='Наклоны вперед'
-					/>
+					/> */}
 				</div>
 
 				<Button

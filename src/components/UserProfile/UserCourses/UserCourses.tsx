@@ -1,9 +1,9 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../store/store'
 import { useModal } from '../../../hooks/useModal'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../../../firebaseConfig'
-import { getUserCoursesData } from '../../../store/features/userSlice'
+import { getCoursesData, getCourseWorkouts, getUserCoursesData, setCourses } from '../../../store/features/userSlice'
 import CourseCard from './CourseCard'
 import ModalWrapper from '../../ModalWrapper/ModalWrapper'
 import SelectWorkout from '../../Modals/SelectWorkout/SelectWorkout'
@@ -11,8 +11,11 @@ import ScrollBtn from '../../Button/ScrollBtn'
 
 export default function UserCourses() {
 	const dispatch = useAppDispatch()
+	// const { courceWorkouts } = useAppSelector((state) => state.user)
 	const { dialogRef, openModal, closeModal } = useModal()
 	const { courses, userCourses } = useAppSelector(state => state.user)
+	const [selectedCourseId, setSelectedCourseId] = useState("")
+	// const [workouts, setWorkouts] = useState<Record<string, WorkoutType[]>>({})
 	const [user] = useAuthState(auth)
 
 	// Фильтр всех курсов и получение нового массива курсов пользователя
@@ -23,6 +26,27 @@ export default function UserCourses() {
 			}),
 		[courses, userCourses],
 	)
+
+	useEffect(() => {
+		if (!courses || ! courses.length)
+			dispatch(getCoursesData())
+	}, [courses])
+
+	// useEffect(() => {
+	// 	if (courses && courses.length) {
+	// 		Promise.all(courses.map((course) => getWorkouts(course._id)))
+	// 			.then((dataArray) => {
+	// 				const result = {...workouts}
+	// 				dataArray.forEach((workouts) => {
+	// 					result[workouts[0].courseId] = workouts
+	// 				})
+	// 				setWorkouts(result)
+	// 				console.log(result);
+					
+	// 			})
+	// 			.catch()
+	// 	}
+	// }, [courses])
 
 	useEffect(() => {
 		//получаем коллекцию пользователя и сохраняем в Redux
@@ -48,7 +72,10 @@ export default function UserCourses() {
 						key={course._id}
 						course={course}
 						user={user!}
-						openModal={openModal}
+						openModal={() => {
+							setSelectedCourseId(course._id)
+							openModal()
+						}}
 					/>
 				))}
 			</div>
@@ -58,7 +85,10 @@ export default function UserCourses() {
 				onClick={closeModal}
 				media='mobile:p-[30px]'
 			>
-				<SelectWorkout />
+				{
+					Boolean(selectedCourseId)
+					  && <SelectWorkout courseId={selectedCourseId} />
+				}
 			</ModalWrapper>
 
 			<ScrollBtn

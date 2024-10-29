@@ -3,32 +3,54 @@ import { AppRoutes } from '../../../lib/appRoutes'
 import WorkoutList from './WorkoutList/WorkoutList'
 import Button from '../../Button/Button'
 import { useEffect, useState } from 'react'
-import { getWorkout } from '../../../api/api' // импортируем функцию для получения данных тренировки
+import { getCourses, getWorkout, getWorkouts } from '../../../api/api' // импортируем функцию для получения данных тренировки
+import { WorkoutType } from '../../../api/types'
+import { useAppDispatch, useAppSelector } from '../../../store/store'
+import { setCourses } from '../../../store/features/userSlice'
 
-export default function SelectWorkout() {
+type Props = {
+	courseId: string
+}
+
+export default function SelectWorkout({ courseId }: Props) {
 	const navigate = useNavigate()
-	const [workoutData, setWorkoutData] = useState(null) // Состояние для хранения данных тренировки
+	const dispatch = useAppDispatch()
+	const { courses } = useAppSelector(state => state.user)
+	const [workoutsData, setWorkoutsData] = useState<WorkoutType[]>([]) // Состояние для хранения данных тренировки
 	const [selectedWorkouts, setSelectedWorkouts] = useState({}) // Состояние для выбранных тренировок
+
 	// Функция загрузки данных тренировки при монтировании компонента
+	// useEffect(() => {
+		// async function fetchWorkout() {
+		// 	const data = await getWorkout('3yvozj', '5ZRgci39ceW6xc43eaxT0tDIKHv1', 'ab1c3f') // Загружаем тренировку с ID "3yvozj"
+		// 	setWorkoutData(data) // Сохраняем данные тренировки в состояние
+		// 	setSelectedWorkouts((prev) => ({ ...prev, [data._id]: false })) // Добавляем тренировку в состояние выбранных
+		// }
+		// fetchWorkout()
+	// }, [])
+
 	useEffect(() => {
-		async function fetchWorkout() {
-			const data = await getWorkout('3yvozj', '5ZRgci39ceW6xc43eaxT0tDIKHv1', 'ab1c3f') // Загружаем тренировку с ID "3yvozj"
-			setWorkoutData(data) // Сохраняем данные тренировки в состояние
-			setSelectedWorkouts((prev) => ({ ...prev, [data._id]: false })) // Добавляем тренировку в состояние выбранных
+		if (courseId) {
+			getWorkouts(courseId)
+				.then((workoutsData) => {
+					setWorkoutsData(workoutsData)
+					console.log(workoutsData);
+				})
+				.catch((error) => console.error(error))
 		}
-		fetchWorkout()
-	}, [])
+	}, [courseId])
+
 	// Обработчик нажатия на тренировку
 	function handleInput(e) {
 		const workoutId = e.target.name
-		setSelectedWorkouts((prev) => {
-			const updatedWorkouts = {
-				...prev,
-				[workoutId]: !prev[workoutId], // Инвертируем значение выбранной тренировки
-			}
-			console.log("Выбранные тренировки:", updatedWorkouts) // Лог текущего состояния выбранных тренировок
-			return updatedWorkouts
-		})
+		// setSelectedWorkouts((prev) => {
+		// 	const updatedWorkouts = {
+		// 		...prev,
+		// 		[workoutId]: !prev[workoutId], // Инвертируем значение выбранной тренировки
+		// 	}
+		// 	console.log("Выбранные тренировки:", updatedWorkouts) // Лог текущего состояния выбранных тренировок
+		// 	return updatedWorkouts
+		// })
 	}
 
 	// Функция для фильтрации только выбранных тренировок
@@ -39,7 +61,7 @@ export default function SelectWorkout() {
 			.map(([workoutId]) => workoutId) // Получаем только ID выбранных тренировок
 	}
 	// Проверяем, есть ли данные тренировки, перед тем как отобразить страницу
-	if (!workoutData) {
+	if (!workoutsData || !workoutsData.length) {
 		return <p>Загрузка...</p> // Показать сообщение о загрузке
 	}
 
@@ -55,14 +77,17 @@ export default function SelectWorkout() {
 				[&::-webkit-scrollbar-thumb]:rounded-[10px]
 				mobile:mt-[34px]"
 			>
-				{/* Передаем нужные пропсы в WorkoutList */}
-				<WorkoutList
-					handleInput={handleInput}
-					quality={selectedWorkouts[workoutData._id]} // Получаем статус выбранной тренировки из состояния
-					inputName={workoutData._id} // Устанавливаем ID тренировки в качестве имени инпута
-					title={workoutData.name} // Используем загруженное название тренировки
-					subtitle={workoutData.subtitle} // Используем загруженный подзаголовок
-				/>
+				{workoutsData.map((workout) => (
+					<WorkoutList
+						key={workout._id}
+						handleInput={handleInput}
+						quality={""}
+						// quality={selectedWorkouts[workoutData._id]} // Получаем статус выбранной тренировки из состояния
+						inputName={workout._id} // Устанавливаем ID тренировки в качестве имени инпута
+						title={workout.name} // Используем загруженное название тренировки
+						subtitle={workout.subtitle} // Используем загруженный подзаголовок
+					/>
+				))}
 			</div>
 
 			<Button
@@ -74,7 +99,7 @@ export default function SelectWorkout() {
 				onClick={() => {
 					const selectedWorkoutsList = getSelectedWorkouts() // Получаем отфильтрованный список
 					console.log("Список выбранных тренировок:", selectedWorkoutsList) // Выводим выбранные тренировки в консоль
-					navigate(`/courses/${"ab1c3f"}/workouts/${workoutData._id}`) // !!!
+					navigate(`/courses/${courseId}/workouts/${workoutsData[0]._id}`) // !!!
 					// navigate(`/courses/${courseId}/workouts/${workoutData._id}`)
 				}}
 				title="Начать"

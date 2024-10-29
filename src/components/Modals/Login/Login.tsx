@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useSafeNavigate } from '../../../hooks/useSafeNavigate'
 import { signIn } from '../../../api/auth'
 import { AppRoutes } from '../../../lib/appRoutes'
 import { signInSchema, TSignInSchema } from '../../../lib/validateSchemes'
@@ -8,7 +8,7 @@ import Button from '../../Button/Button'
 import ErrorMsg from '../../ErrorMsg/ErrorMsg'
 
 export default function Login() {
-	const navigate = useNavigate()
+	const navigate = useSafeNavigate()
 
 	const {
 		register,

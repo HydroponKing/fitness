@@ -1,14 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
 import { signUp } from '../../../api/auth'
 import { AppRoutes } from '../../../lib/appRoutes'
 import { signUpSchema, TSignUpSchema } from '../../../lib/validateSchemes'
 import Button from '../../Button/Button'
 import ErrorMsg from '../../ErrorMsg/ErrorMsg'
+import {useSafeNavigate} from "../../../hooks/useSafeNavigate.ts";
 
 export default function Register() {
-	const navigate = useNavigate()
+	const navigate = useSafeNavigate()
 
 	const {
 		register,

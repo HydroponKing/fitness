@@ -39,62 +39,45 @@ export const getCourse = async (courseId: string) => {
 	}
 }
 
-export const getUserWorkouts = async (userId: string, courseId: string) => {
-	try {
-		const workoutIdsSnapshot = await get(
-			child(ref(db), `courses/${courseId}/workouts`),
-		)
-
-		if (workoutIdsSnapshot.exists()) {
-			const workoutIds = workoutIdsSnapshot.val()
-			let workouts = []
-
-			for (let id of workoutIds) {
-				const workoutDataSnapshot = await get(
-					child(ref(db), `workouts/${id}/name`),
-				)
-
-				if (workoutDataSnapshot.exists()) {
-					const progressSnapshot = await get(
-						child(ref(db), `users/${userId}/${courseId}/${id}/done`),
-					)
-
-					if (progressSnapshot.exists()) {
-						workouts.push({
-							name: workoutDataSnapshot.val(),
-
-							id,
-							progress: progressSnapshot.val(),
-						})
-					}
-				}
-			}
-
-			return workouts // Возвращаем готовый массив тренировок
-		}
-
-		return [] // Возвращаем пустой массив, если workoutIds не существует
-	} catch (e) {
-		console.error(e)
-		return [] // Возвращаем пустой массив в случае ошибки
-	}
-}
-
-// export const getVideo = async (workoutId: string) => {
-// 	// для подучения "воркаутов с видео" в Firebase
-// 	let result: WorkoutType | null = null
-
+// export const getUserWorkouts = async (userId: string, courseId: string) => {
 // 	try {
-// 		const snapshot = await get(child(ref(db), `workouts/${workoutId}`))
+// 		const workoutIdsSnapshot = await get(
+// 			child(ref(db), `courses/${courseId}/workouts`),
+// 		)
 
-// 		if (snapshot.exists()) {
-// 			result = snapshot.val()
+// 		if (workoutIdsSnapshot.exists()) {
+// 			const workoutIds = workoutIdsSnapshot.val()
+// 			let workouts = []
+
+// 			for (let id of workoutIds) {
+// 				const workoutDataSnapshot = await get(
+// 					child(ref(db), `workouts/${id}/name`),
+// 				)
+
+// 				if (workoutDataSnapshot.exists()) {
+// 					const progressSnapshot = await get(
+// 						child(ref(db), `users/${userId}/${courseId}/${id}/done`),
+// 					)
+
+// 					if (progressSnapshot.exists()) {
+// 						workouts.push({
+// 							name: workoutDataSnapshot.val(),
+
+// 							id,
+// 							progress: progressSnapshot.val(),
+// 						})
+// 					}
+// 				}
+// 			}
+
+// 			return workouts // Возвращаем готовый массив тренировок
 // 		}
+
+// 		return [] // Возвращаем пустой массив, если workoutIds не существует
 // 	} catch (e) {
 // 		console.error(e)
+// 		return [] // Возвращаем пустой массив в случае ошибки
 // 	}
-
-// 	return result?.video
 // }
 
 // Получение коллекции курсов пользователя по uid
@@ -195,6 +178,8 @@ export const getWorkout = async (
 	courseId: string,
 ): Promise<WorkoutType | null> => {
 	try {
+		// const courseData = await getCourse(courseId)
+
 		const snapshot = await get(child(ref(db), `workouts/${workoutId}`))
 		if (snapshot.exists()) {
 			const data = snapshot.val()
@@ -205,7 +190,7 @@ export const getWorkout = async (
 				))
 				if (snapshot.exists()) {
 					const userData = snapshot.val()
-					userData.exercises.forEach(exercise => {
+					userData.exercises.forEach((exercise) => {
 						data.exercises[exercise.index].progress = exercise.progress
 					})
 				}
@@ -228,4 +213,49 @@ async function getData(path: string) {
 		return snapshot.val()
 	else
 		return "hren'"
+}
+
+export const getWorkouts = async (
+	// workoutId: string,
+	// userId: string,
+	courseId: string,
+): Promise<WorkoutType[]> => {
+	try {
+		console.log("start");
+		
+		const courseData = await getCourse(courseId)
+
+		const snapshot = await get(child(ref(db), `workouts`))
+		if (snapshot.exists()) {
+			const workoutsData = Object.values(snapshot.val())
+
+			const courseWorkouts = courseData.workouts.map((workoutId) => workoutsData.find((workout) => workout._id === workoutId))
+
+			// courseWorkouts.forEach((workout) => {
+			// 	workout.courseId = courseId
+			// });
+			
+			// {
+			// 	const snapshot = await get(
+			// 		ref(db,
+			// 		`/users/${userId}/courses/${courseId}/workouts/${workoutId}`,
+			// 	))
+			// 	if (snapshot.exists()) {
+			// 		const userData = snapshot.val()
+			// 		userData.exercises.forEach(exercise => {
+			// 			data.exercises[exercise.index].progress = exercise.progress
+			// 		})
+			// 	}
+			// }
+			return courseWorkouts // Возвращаем данные тренировки
+		} else {
+			console.log('Workout not found')
+			return []
+		}
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error('Error fetching workout:', error.message)
+		}
+		return []
+	}
 }

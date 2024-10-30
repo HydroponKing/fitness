@@ -11,12 +11,14 @@ export type courseType = {
 	timeaday: string
 	level: string
 	order: number
+	workouts: string[]
 }
 // Типы для запросов, ключи курсов
 
 export type WorkoutType = {
 	name: string
 	_id: string
+	courseNameRu: string
 	exercises: ExerciseType[]
 	video: string
 }

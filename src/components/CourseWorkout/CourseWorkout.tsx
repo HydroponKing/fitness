@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../../firebaseConfig'
 import { courseType, WorkoutType } from '../../api/types'
-import { getCourse, getCoursesWithProgress, getWorkout } from '../../api/api'
+import { getCoursesWithProgress, getWorkout } from '../../api/api'
 import { getPercent } from '../../lib/math'
 
 export default function CourseWorkout() {
@@ -25,18 +25,21 @@ export default function CourseWorkout() {
 
 	useEffect(() => {
 		if (user && user.uid && courseId && workoutId) {
-			Promise.all([getCoursesWithProgress(courseId), getWorkout(user.uid, courseId, workoutId)])
-				.then(([coursesData, workoutData]) => {
-					if (!courseData)
-						return
-				
-					setCourseData(courseData[0])
-					setWorkoutData(workoutData)
-					setDayIndex((courseData[0]?.workouts.indexOf(workoutId || "") || 0) + 1)
-				})
-				.catch((error) => console.error(error))
+		  Promise.all([getCoursesWithProgress(courseId), getWorkout(user.uid, courseId, workoutId)])
+			.then(([coursesData, workoutData]) => {
+			  // Проверка, если данные курса вернулись как массив
+			  if (Array.isArray(coursesData) && coursesData.length > 0) {
+				const firstCourse = coursesData[0]; // Предполагаем, что это нужный курс
+	  
+				setCourseData(firstCourse);
+				setWorkoutData(workoutData);
+				setDayIndex((firstCourse.workouts.indexOf(workoutId || "") || 0) + 1);
+			  }
+			})
+			.catch((error) => console.error(error));
 		}
-	}, [user, user?.uid, courseId, workoutId])
+	  }, [user, user?.uid, courseId, workoutId]);
+	  
 
 	return (
 		<div>

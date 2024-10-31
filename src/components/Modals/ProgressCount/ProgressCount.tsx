@@ -89,6 +89,7 @@ export default function ProgressCount() {
 				onClick={() => {
 					handleSaveProgress()
 					openModal()
+					setTimeout( ()=> {navigate(AppRoutes.PROFILE)}, 1500)
 				}}
 				title='Сохранить'
 			/>

@@ -1,15 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../store/store'
-import { useModal } from '../../../hooks/useModal'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../../../firebaseConfig'
-import { getUserCoursesData } from '../../../store/features/userSlice'
-import CourseCard from './CourseCard'
-import ModalWrapper from '../../ModalWrapper/ModalWrapper'
-import SelectWorkout from '../../Modals/SelectWorkout/SelectWorkout'
-import ScrollBtn from '../../Button/ScrollBtn'
 import { getCoursesWithProgress } from '../../../api/api'
 import { courseType } from '../../../api/types'
+import { useModal } from '../../../hooks/useModal'
+import { getUserCoursesData } from '../../../store/features/userSlice'
+import { useAppDispatch, useAppSelector } from '../../../store/store'
+import ScrollBtn from '../../Button/ScrollBtn'
+import ModalWrapper from '../../ModalWrapper/ModalWrapper'
+import SelectWorkout from '../../Modals/SelectWorkout/SelectWorkout'
+import CourseCard from './CourseCard'
 
 export default function UserCourses() {
 	const dispatch = useAppDispatch()
@@ -17,7 +17,7 @@ export default function UserCourses() {
 	const { dialogRef, openModal, closeModal } = useModal()
 	const { userCourses } = useAppSelector(state => state.user)
 	const [coursesData, setCoursesData] = useState<courseType[]>([])
-	const [selectedCourseId, setSelectedCourseId] = useState("")
+	const [selectedCourseId, setSelectedCourseId] = useState('')
 	// const [workouts, setWorkouts] = useState<Record<string, WorkoutType[]>>({})
 	const [user] = useAuthState(auth)
 
@@ -34,13 +34,12 @@ export default function UserCourses() {
 	useEffect(() => {
 		if (user && user.uid) {
 			getCoursesWithProgress(user!.uid)
-				.then((coursesData) => {
-					if (!coursesData || !coursesData.length)
-						return
-				
+				.then(coursesData => {
+					if (!coursesData || !coursesData.length) return
+
 					setCoursesData(coursesData)
 				})
-				.catch((error) => console.error(error))
+				.catch(error => console.error(error))
 		}
 	}, [user, user?.uid])
 
@@ -59,7 +58,7 @@ export default function UserCourses() {
 	// 				})
 	// 				setWorkouts(result)
 	// 				console.log(result);
-					
+
 	// 			})
 	// 			.catch()
 	// 	}
@@ -99,13 +98,13 @@ export default function UserCourses() {
 			{/* Select workout modal */}
 			<ModalWrapper
 				ref={dialogRef}
-				onClick={closeModal}
+				onClick={() => {
+					setSelectedCourseId('')
+					closeModal()
+				}}
 				media='mobile:p-[30px]'
 			>
-				{
-					Boolean(selectedCourseId)
-					  && <SelectWorkout courseId={selectedCourseId} />
-				}
+				<SelectWorkout courseId={selectedCourseId} />
 			</ModalWrapper>
 
 			<ScrollBtn

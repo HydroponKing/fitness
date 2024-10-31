@@ -1,11 +1,11 @@
 import { child, get, ref, remove, set, update } from 'firebase/database'
 import { db } from '../../firebaseConfig'
-import { courseType, ExerciseType, WorkoutType } from './types'
 import {
 	AddCourseType,
 	DeleteCourseType,
 	UserCoursesType,
 } from '../lib/authTypes'
+import { courseType, ExerciseType, WorkoutType } from './types'
 
 export const getCourses = async (): Promise<courseType[]> => {
 	let courses: courseType[] = []
@@ -26,13 +26,12 @@ export const getCourses = async (): Promise<courseType[]> => {
 
 export const getCoursesWithProgress = async (
 	userId: string,
-	courseId?: string
+	courseId?: string,
 ): Promise<courseType[]> => {
 	try {
 		const courseData = courseId ? await getCourse(courseId) : null
 
-		if (courseId && !courseData)
-			return []
+		if (courseId && !courseData) return []
 
 		const coursesData = courseId ? Array.of(courseData!) : await getCourses()
 
@@ -62,10 +61,12 @@ export const getCoursesWithProgress = async (
 									// each exercise
 
 									workout.exercises.forEach((exercise, index) => {
-										userWorkout.exercises.forEach((userExercise: ExerciseType) => {
-											if (index === userExercise.index)
-												exercise.progress = userExercise.progress
-										})
+										userWorkout.exercises.forEach(
+											(userExercise: ExerciseType) => {
+												if (index === userExercise.index)
+													exercise.progress = userExercise.progress
+											},
+										)
 									})
 
 									// each workout inside current course
@@ -78,7 +79,6 @@ export const getCoursesWithProgress = async (
 
 									course.progress += value
 									workout.progress = value
-									
 								} else {
 									workout.progress = 0
 								}
@@ -88,11 +88,9 @@ export const getCoursesWithProgress = async (
 									0,
 								)
 
-								
 								course.quantity += value
 								workout.quantity = value
 								console.log(value, workout._id)
-
 							} else {
 								const userWorkout = userData[workout._id]
 
@@ -265,13 +263,31 @@ export const updateExercises = async (
 	userId: string,
 	courseId: string,
 	workoutId: string,
+	workoutProgress: number,
 	exercises: ExerciseType[],
 ) => {
-	const quantityRef = ref(
-		db,
-		`users/${userId}/courses/${courseId}/workouts/${workoutId}`,
-	)
-	await update(quantityRef, { _id: workoutId, exercises: exercises.map((exercise, index) => ({index, progress: exercise.progress})) })
+	if (workoutProgress) {
+		const quantityRef = ref(
+			db,
+			`users/${userId}/courses/${courseId}/workouts/${workoutId}`,
+		)
+		await update(quantityRef, {
+			_id: workoutId,
+			progress: workoutProgress.progress,
+		})
+	} else {
+		const quantityRef = ref(
+			db,
+			`users/${userId}/courses/${courseId}/workouts/${workoutId}`,
+		)
+		await update(quantityRef, {
+			_id: workoutId,
+			exercises: exercises.map((exercise, index) => ({
+				index,
+				progress: exercise.progress,
+			})),
+		})
+	}
 }
 
 // Функция для получения данных конкретной тренировки
@@ -371,10 +387,14 @@ export const getWorkouts = async (
 							workout.progress = 0
 						}
 
-						workout.quantity = workout.exercises.reduce(
-							(acc, exercise) => acc + exercise.quantity,
-							0,
-						)
+						if (workout.exercises) {
+							workout.quantity = workout.exercises.reduce(
+								(acc, exercise) => acc + exercise.quantity,
+								0,
+							)
+						} else {
+							workout.quantity = 1
+						}
 					}
 				}
 			}

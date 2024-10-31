@@ -20,7 +20,7 @@ export default function WorkoutQuantityTimes({ exercise, progress, quantity, han
 				type='number'
 				min='0'
 				max={quantity}
-				value={progress}
+				value={progress || 0}
 				onChange={handleInput}
 			/>
 		</label>

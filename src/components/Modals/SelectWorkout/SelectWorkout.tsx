@@ -1,12 +1,12 @@
-import { useNavigate } from 'react-router-dom'
-import WorkoutList from './WorkoutList/WorkoutList'
-import Button from '../../Button/Button'
 import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { useNavigate } from 'react-router-dom'
 import { auth } from '../../../../firebaseConfig'
 import { getWorkouts } from '../../../api/api' // импортируем функцию для получения данных тренировки
 import type { WorkoutType } from '../../../api/types'
 import { useAppSelector } from '../../../store/store'
+import Button from '../../Button/Button'
+import WorkoutList from './WorkoutList/WorkoutList'
 
 type Props = {
 	courseId: string
@@ -27,7 +27,12 @@ export default function SelectWorkout({ courseId }: Props) {
 				})
 				.catch(error => console.error(error))
 		}
-	}, [courseId])
+	}, [courseId, user, user?.uid])
+
+	if (!courseId) {
+		if (workoutsData && workoutsData.length) setWorkoutsData([])
+		return null
+	}
 
 	// Проверяем, есть ли данные тренировки, перед тем как отобразить страницу
 	if (!workoutsData || !workoutsData.length) {

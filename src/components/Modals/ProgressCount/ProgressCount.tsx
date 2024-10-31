@@ -1,48 +1,51 @@
+import { ChangeEvent, useEffect, useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { useNavigate, useParams } from 'react-router-dom'
+import { auth } from '../../../../firebaseConfig'
+import { getWorkout, updateExercises } from '../../../api/api'
+import type { ExerciseType } from '../../../api/types'
 import { useModal } from '../../../hooks/useModal'
-import WorkoutQuantityTimes from './WorkoutQuantityTimes/WorkoutQuantityTimes'
+import { AppRoutes } from '../../../lib/appRoutes'
 import Button from '../../Button/Button'
 import ModalWrapper from '../../ModalWrapper/ModalWrapper'
 import ProgressAccepted from '../ProgressAccepted/ProgressAccepted'
-import { ChangeEvent, useEffect, useState } from 'react'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from '../../../../firebaseConfig'
-import type { ExerciseType } from '../../../api/types'
-import { getWorkout, updateExercises } from '../../../api/api'
-import { useNavigate, useParams } from 'react-router-dom'
-import { AppRoutes } from '../../../lib/appRoutes'
+import WorkoutQuantityTimes from './WorkoutQuantityTimes/WorkoutQuantityTimes'
 
-export default function ProgressCount() {
+
+type Props = {
+	exercises: ExerciseType[]
+}
+
+export default function ProgressCount({ exercises }: Props) {
 	const { courseId, workoutId } = useParams()
 	const navigate = useNavigate()
 	const { dialogRef, openModal, closeModal } = useModal();
 	const [user] = useAuthState(auth)
-	const [exercisesData, setExercisesData] = useState<ExerciseType[]>([]);
+	const [exercisesData, setExercisesData] = useState<ExerciseType[]>(exercises);
 	//const [workoutData, setWorkoutData] = useState<WorkoutType | null>(null) // Состояние для хранения данных тренировки
 	//const [selectedWorkouts, setSelectedWorkouts] = useState({}) // Состояние для выбранных тренировок
 	// Функция загрузки данных тренировки при монтировании компонента
 
 	console.log("test");
 
-	useEffect(() => {
-		async function fetchWorkout() {
-			if (!user || !user.uid)
-				return
+	// useEffect(() => {
+	// 	async function fetchWorkout() {
+	// 		if (!user || !user.uid)
+	// 			return
 
-			const data = await getWorkout(user!.uid, courseId!, workoutId!) // Загружаем тренировку с ID "3yvozj"
+	// 		const workoutData = await getWorkout(user!.uid, courseId!, workoutId!)
 
-			if (data) {
-				//setWorkoutData(data) // Сохраняем данные тренировки в состояние
-				//setSelectedWorkouts((prev) => ({ ...prev, [data._id]: false })) // Добавляем тренировку в состояние выбранных
-				setExercisesData([...data.exercises])
-			}
-		}
+	// 		if (workoutData) {
+	// 			setExercisesData([...workoutData.exercises])
+	// 		}
+	// 	}
 
-		fetchWorkout()
-	}, [user, user?.uid])
+	// 	fetchWorkout()
+	// }, [user, user?.uid])
 	
 	async function handleSaveProgress() {
 		try {
-			await updateExercises(user!.uid, courseId!, workoutId!, exercisesData);
+			await updateExercises(user!.uid, courseId!, workoutId!, 0, exercisesData);
 			openModal(); // Открываем модальное окно при успешном сохранении
 		} catch (error) {
 			console.error('Ошибка при сохранении прогресса:', error);

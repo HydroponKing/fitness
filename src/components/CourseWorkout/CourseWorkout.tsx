@@ -1,17 +1,18 @@
-import { useModal } from '../../hooks/useModal'
-import Header from '../Header/Header'
-import YoutubePlayer from './YoutubePlayer/YoutubePlayer'
-import Progress from '../Progress/Progress'
-import Button from '../Button/Button'
-import ModalWrapper from '../ModalWrapper/ModalWrapper'
-import ProgressCount from '../Modals/ProgressCount/ProgressCount'
-import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { useParams } from 'react-router-dom'
 import { auth } from '../../../firebaseConfig'
+import { getCoursesWithProgress, getWorkout, updateExercises } from '../../api/api'
 import { courseType, WorkoutType } from '../../api/types'
-import { getCoursesWithProgress, getWorkout } from '../../api/api'
+import { useModal } from '../../hooks/useModal'
 import { getPercent } from '../../lib/math'
+import Button from '../Button/Button'
+import Header from '../Header/Header'
+import ModalWrapper from '../ModalWrapper/ModalWrapper'
+import ProgressCount from '../Modals/ProgressCount/ProgressCount'
+import Progress from '../Progress/Progress'
+import YoutubePlayer from './YoutubePlayer/YoutubePlayer'
+import { AppRoutes } from '../../lib/appRoutes'
 
 export default function CourseWorkout() {
 	const { courseId, workoutId } = useParams()
@@ -21,25 +22,31 @@ export default function CourseWorkout() {
 	const [dayIndex, setDayIndex] = useState(0)
 	const { dialogRef, openModal, closeModal } = useModal()
 
-	console.log("test course");
+	console.log('test course')
 
 	useEffect(() => {
 		if (user && user.uid && courseId && workoutId) {
-		  Promise.all([getCoursesWithProgress(courseId), getWorkout(user.uid, courseId, workoutId)])
-			.then(([coursesData, workoutData]) => {
-			  // Проверка, если данные курса вернулись как массив
-			  if (Array.isArray(coursesData) && coursesData.length > 0) {
-				const firstCourse = coursesData[0]; // Предполагаем, что это нужный курс
-	  
-				setCourseData(firstCourse);
-				setWorkoutData(workoutData);
-				setDayIndex((firstCourse.workouts.indexOf(workoutId || "") || 0) + 1);
-			  }
-			})
-			.catch((error) => console.error(error));
+			Promise.all([
+				getCoursesWithProgress(courseId),
+				getWorkout(user.uid, courseId, workoutId),
+			])
+				.then(([coursesData, workoutData]) => {
+					// Проверка, если данные курса вернулись как массив
+					if (Array.isArray(coursesData) && coursesData.length > 0) {
+						const courseData = coursesData.find(
+							course => course._id === courseId,
+						) // Предполагаем, что это нужный курс
+
+						if (!courseData) return
+
+						setCourseData(courseData)
+						setWorkoutData(workoutData)
+						setDayIndex((courseData.workouts.indexOf(workoutId || '') || 0) + 1)
+					}
+				})
+				.catch(error => console.error(error))
 		}
-	  }, [user, user?.uid, courseId, workoutId]);
-	  
+	}, [user, user?.uid, courseId, workoutId])
 
 	return (
 		<div>
@@ -81,17 +88,17 @@ export default function CourseWorkout() {
 						[&>:not(:last-child)]:after:content-["_/"]
 						[&>:not(:last-child)]:after:pr-1
 						mobile:flex-wrap mobile:text-[18px] mobile:leading-5'
-					>{workoutData?.name}</p>
+					>
+						{workoutData?.name}
+					</p>
 				}
 			</div>
 
 			{/* Video player */}
 			<div className='my-10 mobile:my-6'>
-				{
-					(workoutData && workoutData.video)
-					  ? <YoutubePlayer videoUrl={workoutData?.video} />
-					  : null
-				}
+				{workoutData && workoutData.video ? (
+					<YoutubePlayer videoUrl={workoutData?.video} />
+				) : null}
 			</div>
 
 			<div
@@ -106,18 +113,25 @@ export default function CourseWorkout() {
 					className='flex flex-wrap justify-between gap-y-5 mt-5 mb-10
 				  mobile:flex-col mobile:flex-nowrap mobile:gap-6'
 				>
-					{ workoutData && workoutData.exercises
-						? workoutData.exercises.map((exersice, index) => (
+					{workoutData &&
+						(workoutData.exercises ? (
+							workoutData.exercises.map((exersice, index) => (
+								<Progress
+									key={index}
+									width='w-[320px]'
+									mobile='mobile:w-full'
+									percent={getPercent(exersice.progress, exersice.quantity)}
+									title={exersice.name}
+								/>
+							))
+						) : (
 							<Progress
-								key={index}
 								width='w-[320px]'
 								mobile='mobile:w-full'
-								percent={getPercent(exersice.progress, exersice.quantity)}
-								title={exersice.name}
+								percent={getPercent(workoutData.progress, workoutData.quantity)}
+								title={'Текущий день'}
 							/>
-						))
-						: null
-					}
+						))}
 				</div>
 
 				<Button
@@ -126,12 +140,22 @@ export default function CourseWorkout() {
 					hover='hover:bg-hover'
 					active='active:bg-active active:text-white'
 					media='mobile:w-full'
-					onClick={openModal}
-					title='Заполнить свой прогресс'
+					onClick={async () => {
+						if (workoutData?.exercises) {
+							openModal()
+					  } else {
+							await updateExercises(user!.uid, courseId!, workoutId!, 1, [])
+							setTimeout( ()=> {navigate(AppRoutes.PROFILE)}, 1500)
+						}
+					}}
+					title={workoutData?.exercises ? 'Заполнить свой прогресс' : 'Завершить тренировку'}
 				/>
 				{/* Progress count modal */}
 				<ModalWrapper ref={dialogRef} onClick={closeModal}>
-					<ProgressCount />
+					{
+						workoutData && workoutData.exercises
+						 && <ProgressCount exercises={[...workoutData.exercises]} />
+					}
 				</ModalWrapper>
 			</div>
 		</div>

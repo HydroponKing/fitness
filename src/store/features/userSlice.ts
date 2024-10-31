@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { getCourses, getUserCourses, getWorkouts } from '../../api/api'
+import { getCourses, getCoursesWithProgress, getUserCourses, getWorkouts } from '../../api/api'
 import { courseType, WorkoutType } from '../../api/types'
 import { UserCoursesType } from '../../lib/authTypes'
 
 export const getCoursesData = createAsyncThunk(
 	'courses/getAllCourses',
 	async () => {
-		const data = await getCourses()
+		const data = await getCoursesWithProgress()
 		return data
 	},
 )

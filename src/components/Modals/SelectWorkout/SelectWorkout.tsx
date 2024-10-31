@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom'
-import { AppRoutes } from '../../../lib/appRoutes'
 import WorkoutList from './WorkoutList/WorkoutList'
 import Button from '../../Button/Button'
 import { useEffect, useState } from 'react'
-import { getCourses, getWorkout, getWorkouts } from '../../../api/api' // импортируем функцию для получения данных тренировки
-import { WorkoutType } from '../../../api/types'
-import { useAppDispatch, useAppSelector } from '../../../store/store'
-import { setCourses } from '../../../store/features/userSlice'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../../../../firebaseConfig'
+import { getWorkouts } from '../../../api/api' // импортируем функцию для получения данных тренировки
+import type { WorkoutType } from '../../../api/types'
+import { useAppSelector } from '../../../store/store'
+
 
 type Props = {
 	courseId: string
@@ -14,52 +15,20 @@ type Props = {
 
 export default function SelectWorkout({ courseId }: Props) {
 	const navigate = useNavigate()
-	const dispatch = useAppDispatch()
 	const { courses } = useAppSelector(state => state.user)
+	const [user] = useAuthState(auth)
 	const [workoutsData, setWorkoutsData] = useState<WorkoutType[]>([]) // Состояние для хранения данных тренировки
-	const [selectedWorkouts, setSelectedWorkouts] = useState({}) // Состояние для выбранных тренировок
-
-	// Функция загрузки данных тренировки при монтировании компонента
-	// useEffect(() => {
-		// async function fetchWorkout() {
-		// 	const data = await getWorkout('3yvozj', '5ZRgci39ceW6xc43eaxT0tDIKHv1', 'ab1c3f') // Загружаем тренировку с ID "3yvozj"
-		// 	setWorkoutData(data) // Сохраняем данные тренировки в состояние
-		// 	setSelectedWorkouts((prev) => ({ ...prev, [data._id]: false })) // Добавляем тренировку в состояние выбранных
-		// }
-		// fetchWorkout()
-	// }, [])
 
 	useEffect(() => {
 		if (courseId) {
-			getWorkouts(courseId)
+			getWorkouts(courseId, user!.uid)
 				.then((workoutsData) => {
 					setWorkoutsData(workoutsData)
-					console.log(workoutsData);
 				})
 				.catch((error) => console.error(error))
 		}
 	}, [courseId])
 
-	// Обработчик нажатия на тренировку
-	function handleInput(e) {
-		const workoutId = e.target.name
-		// setSelectedWorkouts((prev) => {
-		// 	const updatedWorkouts = {
-		// 		...prev,
-		// 		[workoutId]: !prev[workoutId], // Инвертируем значение выбранной тренировки
-		// 	}
-		// 	console.log("Выбранные тренировки:", updatedWorkouts) // Лог текущего состояния выбранных тренировок
-		// 	return updatedWorkouts
-		// })
-	}
-
-	// Функция для фильтрации только выбранных тренировок
-	function getSelectedWorkouts() {
-		// Преобразуем объект в массив и фильтруем только элементы с true
-		return Object.entries(selectedWorkouts)
-			.filter(([, isSelected]) => isSelected) // Отбираем только те, что имеют значение true
-			.map(([workoutId]) => workoutId) // Получаем только ID выбранных тренировок
-	}
 	// Проверяем, есть ли данные тренировки, перед тем как отобразить страницу
 	if (!workoutsData || !workoutsData.length) {
 		return <p>Загрузка...</p> // Показать сообщение о загрузке
@@ -80,8 +49,7 @@ export default function SelectWorkout({ courseId }: Props) {
 				{workoutsData.map((workout) => (
 					<WorkoutList
 						key={workout._id}
-						handleInput={handleInput}
-						quality={""}
+						quality={workout.progress >= workout.quantity}
 						// quality={selectedWorkouts[workoutData._id]} // Получаем статус выбранной тренировки из состояния
 						inputName={workout._id} // Устанавливаем ID тренировки в качестве имени инпута
 						title={workout.name} // Используем загруженное название тренировки
@@ -97,10 +65,11 @@ export default function SelectWorkout({ courseId }: Props) {
 				active="active:bg-active active:text-white"
 				media="mobile:w-full mobile:text-[16px]"
 				onClick={() => {
-					const selectedWorkoutsList = getSelectedWorkouts() // Получаем отфильтрованный список
-					console.log("Список выбранных тренировок:", selectedWorkoutsList) // Выводим выбранные тренировки в консоль
-					navigate(`/courses/${courseId}/workouts/${workoutsData[0]._id}`) // !!!
-					// navigate(`/courses/${courseId}/workouts/${workoutData._id}`)
+					for (const workout of workoutsData) {
+						if (workout.progress < workout.quantity) {
+							return navigate(`/courses/${courseId}/workouts/${workout._id}`)
+						}
+					}
 				}}
 				title="Начать"
 			/>

@@ -7,30 +7,36 @@ import ModalWrapper from '../ModalWrapper/ModalWrapper'
 import ProgressCount from '../Modals/ProgressCount/ProgressCount'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../../../firebaseConfig'
 import { courseType, WorkoutType } from '../../api/types'
-import { getCourse, getWorkout } from '../../api/api'
+import { getCourse, getCoursesWithProgress, getWorkout } from '../../api/api'
+import { getPercent } from '../../lib/math'
 
 export default function CourseWorkout() {
 	const { courseId, workoutId } = useParams()
 	const [courseData, setCourseData] = useState<courseType | null>(null)
 	const [workoutData, setWorkoutData] = useState<WorkoutType | null>(null)
+	const [user] = useAuthState(auth)
 	const [dayIndex, setDayIndex] = useState(0)
 	const { dialogRef, openModal, closeModal } = useModal()
 
-	useEffect(() => {
-		if (courseId && workoutId) {
-			Promise.all([getCourse(courseId), getWorkout(workoutId, "", courseId)])
-				.then(([courseData, workoutData]) => {
-					setCourseData(courseData)
-					setWorkoutData(workoutData)
-					setDayIndex((courseData?.workouts.indexOf(workoutId || "") || 0) + 1)
+	console.log("test course");
 
-					console.log("courseData:", courseData)
-					console.log(workoutData)
+	useEffect(() => {
+		if (user && user.uid && courseId && workoutId) {
+			Promise.all([getCoursesWithProgress(courseId), getWorkout(user.uid, courseId, workoutId)])
+				.then(([coursesData, workoutData]) => {
+					if (!courseData)
+						return
+				
+					setCourseData(courseData[0])
+					setWorkoutData(workoutData)
+					setDayIndex((courseData[0]?.workouts.indexOf(workoutId || "") || 0) + 1)
 				})
 				.catch((error) => console.error(error))
 		}
-	}, [courseId, workoutId])
+	}, [user, user?.uid, courseId, workoutId])
 
 	return (
 		<div>
@@ -97,79 +103,18 @@ export default function CourseWorkout() {
 					className='flex flex-wrap justify-between gap-y-5 mt-5 mb-10
 				  mobile:flex-col mobile:flex-nowrap mobile:gap-6'
 				>
-					{workoutData?.exercises.map((exersice, index) => (
-						<Progress
-						    key={index}
-							width='w-[320px]'
-							mobile='mobile:w-full'
-							percentValue='50'
-							value='50'
-							title={exersice.name}
-						/>
-					))}
-					{/* <Progress
-						width='w-[320px]'
-						mobile='mobile:w-full'
-						percentValue='50'
-						value='50'
-						title='Наклоны вперед'
-					/>
-					<Progress
-						width='w-[320px]'
-						mobile='mobile:w-full'
-						percentValue='50'
-						value='50'
-						title='Наклоны вперед'
-					/>
-					<Progress
-						width='w-[320px]'
-						mobile='mobile:w-full'
-						percentValue='50'
-						value='50'
-						title='Наклоны вперед'
-					/>
-					<Progress
-						width='w-[320px]'
-						mobile='mobile:w-full'
-						percentValue='50'
-						value='50'
-						title='Наклоны вперед'
-					/>
-					<Progress
-						width='w-[320px]'
-						mobile='mobile:w-full'
-						percentValue='50'
-						value='50'
-						title='Наклоны вперед'
-					/>
-					<Progress
-						width='w-[320px]'
-						mobile='mobile:w-full'
-						percentValue='50'
-						value='50'
-						title='Наклоны вперед'
-					/>
-					<Progress
-						width='w-[320px]'
-						mobile='mobile:w-full'
-						percentValue='50'
-						value='50'
-						title='Наклоны вперед'
-					/>
-					<Progress
-						width='w-[320px]'
-						mobile='mobile:w-full'
-						percentValue='50'
-						value='50'
-						title='Наклоны вперед'
-					/>
-					<Progress
-						width='w-[320px]'
-						mobile='mobile:w-full'
-						percentValue='50'
-						value='50'
-						title='Наклоны вперед'
-					/> */}
+					{ workoutData && workoutData.exercises
+						? workoutData.exercises.map((exersice, index) => (
+							<Progress
+								key={index}
+								width='w-[320px]'
+								mobile='mobile:w-full'
+								percent={getPercent(exersice.progress, exersice.quantity)}
+								title={exersice.name}
+							/>
+						))
+						: null
+					}
 				</div>
 
 				<Button

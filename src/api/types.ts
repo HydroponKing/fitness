@@ -12,6 +12,11 @@ export type courseType = {
 	level: string
 	order: number
 	workouts: string[]
+	// useful data to be closer
+	workoutsData: WorkoutType[]
+	// user data
+	progress: number
+	quantity: number
 }
 // Типы для запросов, ключи курсов
 
@@ -21,6 +26,9 @@ export type WorkoutType = {
 	courseNameRu: string
 	exercises: ExerciseType[]
 	video: string
+	// user data
+	progress: number
+	quantity: number
 }
 
 export type ProgressWorkoutType = {
@@ -30,8 +38,8 @@ export type ProgressWorkoutType = {
 }
 
 export interface ExerciseType {
+	index: number
 	name: string
-	_id: string
 	progress: number
 	quantity: number
 }

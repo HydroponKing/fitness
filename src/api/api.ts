@@ -1,6 +1,6 @@
 import { child, get, ref, remove, set, update } from 'firebase/database'
 import { db } from '../../firebaseConfig'
-import { courseType, WorkoutType } from './types'
+import { courseType, ExerciseType, WorkoutType } from './types'
 import {
 	AddCourseType,
 	DeleteCourseType,
@@ -23,9 +23,105 @@ export const getCourses = async (): Promise<courseType[]> => {
 	}
 	return courses
 }
+
+export const getCoursesWithProgress = async (
+	userId: string,
+	courseId?: string
+): Promise<courseType[]> => {
+	try {
+		const courseData = courseId ? await getCourse(courseId) : null
+
+		if (courseId && !courseData)
+			return []
+
+		const coursesData = courseId ? Array.of(courseData!) : await getCourses()
+
+		const snapshot = await get(child(ref(db), `workouts`))
+
+		if (snapshot.exists()) {
+			const workoutsData = Object.values(snapshot.val()) as WorkoutType[]
+
+			for (const course of coursesData) {
+				const snapshot = await get(
+					ref(db, `/users/${userId}/courses/${course._id}/workouts`),
+				)
+				const userData = snapshot.exists() ? snapshot.val() : {}
+
+				course.progress = 0
+				course.quantity = course.workouts.length
+
+				course.workoutsData = course.workouts.map(workoutId => {
+					return workoutsData.find((workout: WorkoutType) => {
+						if (workout._id === workoutId) {
+							const userWorkout = userData[workout._id]
+
+							//course.isAdded  = Boolean(userWorkout)
+
+							if (workout.exercises) {
+								if (userWorkout && userWorkout.exercises) {
+									// each exercise
+
+									workout.exercises.forEach((exercise, index) => {
+										userWorkout.exercises.forEach((userExercise: ExerciseType) => {
+											if (index === userExercise.index)
+												exercise.progress = userExercise.progress
+										})
+									})
+
+									// each workout inside current course
+
+									const value = userWorkout.exercises.reduce(
+										(acc: number, exercise: ExerciseType) =>
+											acc + exercise.progress,
+										0,
+									)
+
+									course.progress += value
+									workout.progress = value
+								} else {
+									workout.progress = 0
+								}
+
+								const value = workout.exercises.reduce(
+									(acc, exercise) => acc + exercise.quantity,
+									0,
+								)
+								
+								course.quantity += value
+								workout.quantity = value
+							} else {
+								const userWorkout = userData[workout._id]
+
+								if (userWorkout) {
+									course.progress += userWorkout.progress
+								}
+							}
+
+							return true
+						}
+
+						return false
+					})
+				}) as WorkoutType[]
+			}
+			return coursesData // Возвращаем данные тренировки
+		} else {
+			console.log('Workout not found')
+			return []
+		}
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error('Error fetching workout:', error.message)
+		}
+		return []
+	}
+}
+
 // для получения данных о курсах из базы данных и возврата этих данных в виде массива объектов
 
-export const getCourse = async (courseId: string) => {
+export const getCourse = async (
+	courseId: string,
+): Promise<courseType | null> => {
 	//Получает данные о конкретном курсе по его ID
 
 	try {
@@ -37,6 +133,8 @@ export const getCourse = async (courseId: string) => {
 	} catch (e) {
 		console.error(e)
 	}
+
+	return null
 }
 
 // export const getUserWorkouts = async (userId: string, courseId: string) => {
@@ -81,6 +179,7 @@ export const getCourse = async (courseId: string) => {
 // }
 
 // Получение коллекции курсов пользователя по uid
+
 export const getUserCourses = async (
 	userId: string | undefined,
 ): Promise<UserCoursesType[]> => {
@@ -158,24 +257,24 @@ export const deleteUserCourse = async ({
 	}
 }
 
-export const updateValue = async (
+export const updateExercises = async (
 	userId: string,
 	courseId: string,
 	workoutId: string,
-	quantity: string,
+	exercises: ExerciseType[],
 ) => {
 	const quantityRef = ref(
 		db,
 		`users/${userId}/courses/${courseId}/workouts/${workoutId}`,
 	)
-	await update(quantityRef, { quantity })
+	await update(quantityRef, { _id: workoutId, exercises: exercises.map((exercise, index) => ({index, progress: exercise.progress})) })
 }
 
 // Функция для получения данных конкретной тренировки
 export const getWorkout = async (
-	workoutId: string,
 	userId: string,
 	courseId: string,
+	workoutId: string,
 ): Promise<WorkoutType | null> => {
 	try {
 		// const courseData = await getCourse(courseId)
@@ -185,14 +284,31 @@ export const getWorkout = async (
 			const data = snapshot.val()
 			{
 				const snapshot = await get(
-					ref(db,
-					`/users/${userId}/courses/${courseId}/workouts/${workoutId}`,
-				))
+					ref(db, `/users/${userId}/courses/${courseId}/workouts/${workoutId}`),
+				)
 				if (snapshot.exists()) {
 					const userData = snapshot.val()
-					userData.exercises.forEach((exercise) => {
-						data.exercises[exercise.index].progress = exercise.progress
-					})
+
+					data.progress = 0
+					data.quantity = 0
+
+					if (userData.exercises) {
+						userData.exercises.forEach((exercise: ExerciseType) => {
+							data.exercises[exercise.index].progress = exercise.progress
+							data.progress += exercise.progress
+						})
+						data.exercises.forEach((exercise: ExerciseType) => {
+							if (!exercise.progress) {
+								exercise.progress = 0
+							}
+
+							data.progress = data.progress || 0
+							data.quantity += exercise.quantity
+						})
+					} else {
+						data.progress = userData.progress || 0
+						data.quantity = 1
+					}
 				}
 			}
 			return data // Возвращаем данные тренировки
@@ -209,44 +325,56 @@ export const getWorkout = async (
 }
 async function getData(path: string) {
 	const snapshot = await get(ref(db, path))
-	if (snapshot.exists())
-		return snapshot.val()
-	else
-		return "hren'"
+	if (snapshot.exists()) return snapshot.val()
+	else return "hren'"
 }
 
 export const getWorkouts = async (
 	// workoutId: string,
-	// userId: string,
 	courseId: string,
+	userId: string,
 ): Promise<WorkoutType[]> => {
 	try {
-		console.log("start");
-		
 		const courseData = await getCourse(courseId)
 
 		const snapshot = await get(child(ref(db), `workouts`))
-		if (snapshot.exists()) {
-			const workoutsData = Object.values(snapshot.val())
 
-			const courseWorkouts = courseData.workouts.map((workoutId) => workoutsData.find((workout) => workout._id === workoutId))
+		if (courseData && snapshot.exists()) {
+			const workoutsData = Object.values(snapshot.val()) as WorkoutType[]
 
-			// courseWorkouts.forEach((workout) => {
-			// 	workout.courseId = courseId
-			// });
-			
-			// {
-			// 	const snapshot = await get(
-			// 		ref(db,
-			// 		`/users/${userId}/courses/${courseId}/workouts/${workoutId}`,
-			// 	))
-			// 	if (snapshot.exists()) {
-			// 		const userData = snapshot.val()
-			// 		userData.exercises.forEach(exercise => {
-			// 			data.exercises[exercise.index].progress = exercise.progress
-			// 		})
-			// 	}
-			// }
+			const courseWorkouts = courseData.workouts.map((workoutId: string) =>
+				workoutsData.find((workout: WorkoutType) => workout._id === workoutId),
+			) as WorkoutType[]
+
+			{
+				const snapshot = await get(
+					ref(db, `/users/${userId}/courses/${courseId}/workouts`),
+				)
+
+				if (snapshot.exists()) {
+					const userData = snapshot.val()
+
+					for (const workout of courseWorkouts) {
+						const userWorkout = userData[workout._id]
+
+						if (userWorkout && userWorkout.exercises) {
+							workout.progress = userWorkout.exercises.reduce(
+								(acc: number, exercise: ExerciseType) =>
+									acc + exercise.progress,
+								0,
+							)
+						} else {
+							workout.progress = 0
+						}
+
+						workout.quantity = workout.exercises.reduce(
+							(acc, exercise) => acc + exercise.quantity,
+							0,
+						)
+					}
+				}
+			}
+			// courseWorkouts[0].progress = 1000 // test
 			return courseWorkouts // Возвращаем данные тренировки
 		} else {
 			console.log('Workout not found')

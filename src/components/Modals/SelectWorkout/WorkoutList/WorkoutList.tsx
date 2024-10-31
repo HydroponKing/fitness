@@ -1,4 +1,5 @@
-export default function WorkoutList({quality, handleInput, inputName, title, subtitle}) {
+
+export default function WorkoutList({quality, inputName, title, subtitle}) {
 	return (
 		<label
 			className='flex items-center mb-2.5 pb-2.5
@@ -11,18 +12,17 @@ export default function WorkoutList({quality, handleInput, inputName, title, sub
 				mobile:w-5 mobile:h-5'
 				type='checkbox'
 				name={inputName}
-				value ={quality}
-				onChange={handleInput}
+				checked={quality}
+				onChange={()=>{}}
 			/>
 
 			<div className='flex flex-col gap-2.5'>
 				<h3
-					className='text-[24px] leading-[26px]
-					mobile:text-[18px] mobile:leading-5'
+					className='text-[24px] leading-[26px] mobile:text-lg/5'
 				>
 					{title}
 				</h3>
-				<p className='leading-[18px] mobile:text-[14px] mobile:leading-4'>
+				<p className='leading-[18px] mobile:text-sm/4'>
 					{subtitle}
 				</p>
 			</div>

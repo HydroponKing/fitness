@@ -7,6 +7,8 @@ import CourseItem from './CourseItem/CourseItem'
 import SkeletonCourseCard from '../SkeletonLoader/SkeletonCourseCard'
 import ScrollBtn from '../Button/ScrollBtn'
 
+const arrayOfSkeletons = [0, 0, 0, 0, 0]
+
 export default function Main() {
 	const dispatch = useAppDispatch()
 	const { courses, isLoading } = useAppSelector(state => state.user)
@@ -63,14 +65,14 @@ export default function Main() {
 					[courses],
 				)}
 				{/* Пока идет загрузка с Api, показываем скелетоны карточки курса */}
-				{isLoading && (
-					<>
-						<SkeletonCourseCard />
-						<SkeletonCourseCard />
-						<SkeletonCourseCard />
-						<SkeletonCourseCard />
-						<SkeletonCourseCard />
-					</>
+				{isLoading && [...Array(5).keys()].map((_, index) =>
+					// <>
+						<SkeletonCourseCard key={index} />
+					// 	<SkeletonCourseCard />
+					// 	<SkeletonCourseCard />
+					// 	<SkeletonCourseCard />
+					// 	<SkeletonCourseCard />
+					// </>
 				)}
 			</div>
 

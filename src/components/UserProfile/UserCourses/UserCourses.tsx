@@ -8,12 +8,15 @@ import CourseCard from './CourseCard'
 import ModalWrapper from '../../ModalWrapper/ModalWrapper'
 import SelectWorkout from '../../Modals/SelectWorkout/SelectWorkout'
 import ScrollBtn from '../../Button/ScrollBtn'
+import { getCoursesWithProgress } from '../../../api/api'
+import { courseType } from '../../../api/types'
 
 export default function UserCourses() {
 	const dispatch = useAppDispatch()
 	// const { courceWorkouts } = useAppSelector((state) => state.user)
 	const { dialogRef, openModal, closeModal } = useModal()
-	const { courses, userCourses } = useAppSelector(state => state.user)
+	const { userCourses } = useAppSelector(state => state.user)
+	const [coursesData, setCoursesData] = useState<courseType[]>([])
 	const [selectedCourseId, setSelectedCourseId] = useState("")
 	// const [workouts, setWorkouts] = useState<Record<string, WorkoutType[]>>({})
 	const [user] = useAuthState(auth)
@@ -21,16 +24,30 @@ export default function UserCourses() {
 	// Фильтр всех курсов и получение нового массива курсов пользователя
 	const userFilteredCourses = useMemo(
 		() =>
-			courses.filter(course => {
+			//coursesData.filter((course) => course.isAdded)
+			coursesData.filter(course => {
 				return userCourses.some(userCourse => course._id === userCourse.id)
 			}),
-		[courses, userCourses],
+		[coursesData, userCourses],
 	)
 
 	useEffect(() => {
-		if (!courses || ! courses.length)
-			dispatch(getCoursesData())
-	}, [courses])
+		if (user && user.uid) {
+			getCoursesWithProgress(user!.uid)
+				.then((coursesData) => {
+					if (!coursesData || !coursesData.length)
+						return
+				
+					setCoursesData(coursesData)
+				})
+				.catch((error) => console.error(error))
+		}
+	}, [user, user?.uid])
+
+	// useEffect(() => {
+	// 	if (!coursesData || ! coursesData.length)
+	// 		dispatch(getCoursesData())
+	// }, [courcoursesDatases])
 
 	// useEffect(() => {
 	// 	if (courses && courses.length) {

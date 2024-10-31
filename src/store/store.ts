@@ -7,16 +7,18 @@ import {
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { userReducer } from './features/userSlice'
 
+const rootReducer = combineReducers({
+	user: userReducer,
+})
+
 export const makeStore = () => {
 	return configureStore({
-		reducer: combineReducers({
-			user: userReducer,
-		}),
+		reducer: rootReducer,
 	})
 }
 
+export type RootState = ReturnType<typeof rootReducer>
 export type AppStore = ReturnType<typeof makeStore>
-export type RootState = ReturnType<AppStore['getState']>
 export type AppDispatch = AppStore['dispatch']
 
 export const useAppDispatch: () => AppDispatch = useDispatch

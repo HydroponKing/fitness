@@ -6,6 +6,7 @@ import { deleteUserCourse, getWorkouts } from '../../../api/api'
 import { courseType } from '../../../api/types'
 import Button from '../../Button/Button'
 import Progress from '../../Progress/Progress'
+import { getPercent } from '../../../lib/math'
 
 type Props = {
 	user: User
@@ -96,8 +97,7 @@ export default function CourseCard({ user, course, openModal }: Props) {
 				<div className='mb-[20px]'>
 					<Progress
 						width='w-full'
-						percentValue='50'
-						value='50'
+						percent={getPercent(course.progress, course.quantity)}
 						title='Прогресс'
 					/>
 				</div>

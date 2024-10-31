@@ -4,46 +4,51 @@ import Button from '../../Button/Button'
 import ModalWrapper from '../../ModalWrapper/ModalWrapper'
 import ProgressAccepted from '../ProgressAccepted/ProgressAccepted'
 import { ChangeEvent, useEffect, useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../../../../firebaseConfig'
 import type { ExerciseType } from '../../../api/types'
-import { getWorkout, updateValue } from '../../../api/api';
+import { getWorkout, updateExercises } from '../../../api/api'
+import { useNavigate, useParams } from 'react-router-dom'
+import { AppRoutes } from '../../../lib/appRoutes'
 
 export default function ProgressCount() {
+	const { courseId, workoutId } = useParams()
+	const navigate = useNavigate()
 	const { dialogRef, openModal, closeModal } = useModal();
-	const [value, setValue] = useState<ExerciseType[]>([]);
-	const [workoutData, setWorkoutData] = useState(null) // Состояние для хранения данных тренировки
+	const [user] = useAuthState(auth)
+	const [exercisesData, setExercisesData] = useState<ExerciseType[]>([]);
+	//const [workoutData, setWorkoutData] = useState<WorkoutType | null>(null) // Состояние для хранения данных тренировки
 	//const [selectedWorkouts, setSelectedWorkouts] = useState({}) // Состояние для выбранных тренировок
 	// Функция загрузки данных тренировки при монтировании компонента
+
+	console.log("test");
+
 	useEffect(() => {
 		async function fetchWorkout() {
-			const data = await getWorkout('3yvozj', '5ZRgci39ceW6xc43eaxT0tDIKHv1', 'ab1c3f') // Загружаем тренировку с ID "3yvozj"
-			setWorkoutData(data) // Сохраняем данные тренировки в состояние
-			//setSelectedWorkouts((prev) => ({ ...prev, [data._id]: false })) // Добавляем тренировку в состояние выбранных
-			setValue([...data.exercises])
+			if (!user || !user.uid)
+				return
+
+			const data = await getWorkout(user!.uid, courseId!, workoutId!) // Загружаем тренировку с ID "3yvozj"
+
+			if (data) {
+				//setWorkoutData(data) // Сохраняем данные тренировки в состояние
+				//setSelectedWorkouts((prev) => ({ ...prev, [data._id]: false })) // Добавляем тренировку в состояние выбранных
+				setExercisesData([...data.exercises])
+			}
 		}
+
 		fetchWorkout()
-	}, [])
-	function handleInput(e: ChangeEvent<HTMLInputElement>) {
-		setValue({ ...value, [e.target.name]: e.target.value });
-	}
+	}, [user, user?.uid])
+	
 	async function handleSaveProgress() {
-		const userId = "5ZRgci39ceW6xc43eaxT0tDIKHv1"; // Укажите реальный ID пользователя
-		const courseId = "вашCourseID"; // Укажите реальный ID курса
-		const workoutId = "3yvozj"; // Укажите реальный ID тренировки
 		try {
-			await updateValue(userId, courseId, workoutId, value.question1);
+			await updateExercises(user!.uid, courseId!, workoutId!, exercisesData);
 			openModal(); // Открываем модальное окно при успешном сохранении
 		} catch (error) {
 			console.error('Ошибка при сохранении прогресса:', error);
 		}
 	}
 
-	function handleInput (e: ChangeEvent<HTMLInputElement>) {
-		// setValue({...value, [e.target.name]:e.target.value})
-		setValue((prev) => {
-			prev[0].progress = Number(e.target.value) || 0
-			return [...prev]
-		})
-	}
 	return (
 		<div>
 			<h3 className='text-[32px] font-medium leading-9'>Мой прогресс</h3>
@@ -57,9 +62,16 @@ export default function ProgressCount() {
 				mobile:mt-[34px]'
 			>
 				{
-					value.map((exercise, index) => (
-						<WorkoutQuantityTimes key={index} exercise='Сколько раз вы сделали наклоны вперед?' name={'question1'} value={exercise.progress || 0} hadleInput={handleInput}/>
-					))
+					exercisesData.map((exercise, index) => {
+						const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+							const newData = [...exercisesData]
+							newData[index].progress = Number(e.target.value)
+							setExercisesData(newData)
+						}
+						return (
+							<WorkoutQuantityTimes key={index} exercise={exercise.name} progress={exercise.progress} quantity={exercise.quantity} handleInput={handleInput}/>
+						)
+					})
 				}
 				
 				{/* <WorkoutQuantityTimes exercise='Сколько раз вы сделали наклоны вперед?' />
@@ -74,11 +86,17 @@ export default function ProgressCount() {
 				background='bg-green_bg'
 				hover='hover:bg-hover'
 				active='active:bg-active active:text-white'
-				onClick={openModal}
+				onClick={() => {
+					handleSaveProgress()
+					openModal()
+				}}
 				title='Сохранить'
 			/>
 			{/* Success save progress modal */}
-			<ModalWrapper ref={dialogRef} onClick={closeModal}>
+			<ModalWrapper ref={dialogRef} onClick={() => {
+				closeModal()
+				navigate(AppRoutes.PROFILE)
+				}}>
 				<ProgressAccepted />
 			</ModalWrapper>
 		</div>

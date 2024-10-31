@@ -2,24 +2,22 @@ import { ChangeEvent } from 'react'
 
 type Props = {
 	title: string
-	percentValue: string
+	percent: number
 	width: string
 	mobile?: string
-	value: string
 	onChange?: (event: ChangeEvent<HTMLProgressElement>) => void
 }
 
 export default function Progress({
 	title,
-	percentValue,
+	percent,
 	width,
 	mobile,
-	value,
 	onChange,
 }: Props) {
 	return (
 		<label className='flex flex-col gap-2.5 text-[18px] leading-5'>
-			{title} {`${percentValue}%`}
+			{title} {`${percent}%`}
 			<progress
 				className={`${width} h-[6px] 
 	      [&::-webkit-progress-bar]:rounded-lg 
@@ -28,8 +26,8 @@ export default function Progress({
       [&::-webkit-progress-value]:bg-progress 
       [&::-moz-progress-bar]:bg-progress
 	      ${mobile}`}
-				value={value}
-				max='100'
+				value={percent || 1}
+				max={100}
 				onChange={onChange}
 			/>
 		</label>

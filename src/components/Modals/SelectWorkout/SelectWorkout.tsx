@@ -8,7 +8,6 @@ import { getWorkouts } from '../../../api/api' // импортируем фун�
 import type { WorkoutType } from '../../../api/types'
 import { useAppSelector } from '../../../store/store'
 
-
 type Props = {
 	courseId: string
 }
@@ -22,10 +21,11 @@ export default function SelectWorkout({ courseId }: Props) {
 	useEffect(() => {
 		if (courseId) {
 			getWorkouts(courseId, user!.uid)
-				.then((workoutsData) => {
+				.then(workoutsData => {
 					setWorkoutsData(workoutsData)
+					console.log(workoutsData)
 				})
-				.catch((error) => console.error(error))
+				.catch(error => console.error(error))
 		}
 	}, [courseId])
 
@@ -35,18 +35,18 @@ export default function SelectWorkout({ courseId }: Props) {
 	}
 
 	return (
-		<div className="flex flex-col items-center">
-			<h2 className="text-[32px] font-medium leading-9">Выберите тренировку</h2>
+		<div className='flex flex-col items-center'>
+			<h2 className='text-[32px] font-medium leading-9'>Выберите тренировку</h2>
 
 			<div
-				className="mt-12 mb-[34px] h-[360px] pr-5
+				className='mt-12 mb-[34px] h-[360px] pr-5
 				overflow-y-auto scroll-smooth [&::-webkit-scrollbar]:w-1.5
 				[&::-webkit-scrollbar]:bg-scroll [&::-webkit-scrollbar]:rounded-[10px]  
 				[&::-webkit-scrollbar-thumb]:bg-scroll_thumb 
 				[&::-webkit-scrollbar-thumb]:rounded-[10px]
-				mobile:mt-[34px]"
+				mobile:mt-[34px]'
 			>
-				{workoutsData.map((workout) => (
+				{workoutsData.map(workout => (
 					<WorkoutList
 						key={workout._id}
 						quality={workout.progress >= workout.quantity}
@@ -59,11 +59,11 @@ export default function SelectWorkout({ courseId }: Props) {
 			</div>
 
 			<Button
-				width="w-[380px]"
-				background="bg-green_bg"
-				hover="hover:bg-hover"
-				active="active:bg-active active:text-white"
-				media="mobile:w-full mobile:text-[16px]"
+				width='w-[380px]'
+				background='bg-green_bg'
+				hover='hover:bg-hover'
+				active='active:bg-active active:text-white'
+				media='mobile:w-full mobile:text-[16px]'
 				onClick={() => {
 					for (const workout of workoutsData) {
 						if (workout.progress < workout.quantity) {
@@ -71,7 +71,7 @@ export default function SelectWorkout({ courseId }: Props) {
 						}
 					}
 				}}
-				title="Начать"
+				title='Начать'
 			/>
 		</div>
 	)

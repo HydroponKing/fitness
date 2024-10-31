@@ -48,7 +48,7 @@ export const getCoursesWithProgress = async (
 				const userData = snapshot.exists() ? snapshot.val() : {}
 
 				course.progress = 0
-				course.quantity = course.workouts.length
+				course.quantity = 0
 
 				course.workoutsData = course.workouts.map(workoutId => {
 					return workoutsData.find((workout: WorkoutType) => {
@@ -78,6 +78,7 @@ export const getCoursesWithProgress = async (
 
 									course.progress += value
 									workout.progress = value
+									
 								} else {
 									workout.progress = 0
 								}
@@ -86,9 +87,12 @@ export const getCoursesWithProgress = async (
 									(acc, exercise) => acc + exercise.quantity,
 									0,
 								)
+
 								
 								course.quantity += value
 								workout.quantity = value
+								console.log(value, workout._id)
+
 							} else {
 								const userWorkout = userData[workout._id]
 

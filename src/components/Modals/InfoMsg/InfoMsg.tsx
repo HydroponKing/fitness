@@ -12,7 +12,7 @@ export default function InfoMsg({ title }: Props) {
 				{title}
 			</h2>
 			<svg className='w-[68px] h-[68px]'>
-				<use xlinkHref='/src/assets/img/icon/sprite.svg#check_success' />
+				<use xlinkHref='/img/icon/sprite.svg#check_success' />
 			</svg>
 		</div>
 	)

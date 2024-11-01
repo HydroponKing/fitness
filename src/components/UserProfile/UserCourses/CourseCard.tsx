@@ -53,7 +53,7 @@ export default function CourseCard({ user, course, selectCourseId }: Props) {
 						onClick={onDeleteCourse}
 					>
 						<use
-							xlinkHref='/src/assets/img/icon/
+							xlinkHref='/img/icon/
 						sprite.svg#delete_course_circle'
 						/>
 					</svg>
@@ -81,7 +81,7 @@ export default function CourseCard({ user, course, selectCourseId }: Props) {
 						bg-gray_bg p-[10px] rounded-[50px]'
 					>
 						<svg className='w-[18px] h-[18px]'>
-							<use xlinkHref='/src/assets/img/icon/sprite.svg#calendar' />
+							<use xlinkHref='/img/icon/sprite.svg#calendar' />
 						</svg>
 						<p>25 дней</p>
 					</div>
@@ -91,7 +91,7 @@ export default function CourseCard({ user, course, selectCourseId }: Props) {
 						p-[10px] rounded-[50px]'
 					>
 						<svg className='w-[18px] h-[18px]'>
-							<use xlinkHref='/src/assets/img/icon/sprite.svg#time' />
+							<use xlinkHref='/img/icon/sprite.svg#time' />
 						</svg>
 						<p>20-50 мин/день</p>
 					</div>
@@ -101,7 +101,7 @@ export default function CourseCard({ user, course, selectCourseId }: Props) {
 						p-[10px] rounded-[50px]'
 					>
 						<svg className='w-[18px] h-[18px]'>
-							<use xlinkHref='/src/assets/img/icon/sprite.svg#difficulty_signal' />
+							<use xlinkHref='/img/icon/sprite.svg#difficulty_signal' />
 						</svg>
 						<p>Сложность</p>
 					</div>

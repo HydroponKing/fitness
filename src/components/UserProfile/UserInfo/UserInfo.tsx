@@ -34,7 +34,7 @@ export default function UserInfo() {
 				mobile:flex-col mobile:items-center mobile:mt-6'
 			>
 				<svg className='w-[197px] h-[197px] mobile:w-[141px] mobile:h-[141px]'>
-					<use xlinkHref='/src/assets/img/icon/sprite.svg#avatar_square' />
+					<use xlinkHref='/img/icon/sprite.svg#avatar_square' />
 				</svg>
 
 				<div className='flex flex-col gap-[44px] mobile:gap-5'>

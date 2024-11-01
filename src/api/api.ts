@@ -47,7 +47,7 @@ export const getCoursesWithProgress = async (
 				const userData = snapshot.exists() ? snapshot.val() : {}
 
 				course.progress = 0
-				course.quantity = 0
+				course.quantity = course.workouts.length
 
 				course.workoutsData = course.workouts.map(workoutId => {
 					return workoutsData.find((workout: WorkoutType) => {
@@ -77,27 +77,28 @@ export const getCoursesWithProgress = async (
 										0,
 									)
 
-									course.progress += value
 									workout.progress = value
 								} else {
 									workout.progress = 0
 								}
-
+								
 								const value = workout.exercises.reduce(
 									(acc, exercise) => acc + exercise.quantity,
 									0,
 								)
-
-								course.quantity += value
+								
 								workout.quantity = value
 							} else {
 								const userWorkout = userData[workout._id]
-
+								
 								if (userWorkout) {
 									course.progress += userWorkout.progress
 								}
 							}
-
+							
+							if (workout.progress >= workout.quantity)
+								++course.progress
+							
 							return true
 						}
 
@@ -204,7 +205,7 @@ export const updateExercises = async (
 		)
 		await update(quantityRef, {
 			_id: workoutId,
-			progress: workoutProgress.progress,
+			progress: workoutProgress,
 		})
 	} else {
 		const quantityRef = ref(
@@ -303,12 +304,16 @@ export const getWorkouts = async (
 					for (const workout of courseWorkouts) {
 						const userWorkout = userData[workout._id]
 
-						if (userWorkout && userWorkout.exercises) {
-							workout.progress = userWorkout.exercises.reduce(
-								(acc: number, exercise: ExerciseType) =>
-									acc + exercise.progress,
-								0,
-							)
+						if (userWorkout) {
+							if (userWorkout.exercises) {
+								workout.progress = userWorkout.exercises.reduce(
+									(acc: number, exercise: ExerciseType) =>
+										acc + exercise.progress,
+									0,
+								)
+							} else {
+								workout.progress = userWorkout.progress
+							}
 						} else {
 							workout.progress = 0
 						}

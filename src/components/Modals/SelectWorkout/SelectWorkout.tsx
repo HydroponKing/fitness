@@ -57,6 +57,7 @@ export default function SelectWorkout({ courseId }: Props) {
 						inputName={workout._id} // Устанавливаем ID тренировки в качестве имени инпута
 						title={workout.name} // Используем загруженное название тренировки
 						subtitle={workout.subtitle} // Используем загруженный подзаголовок
+						workoutLink={`/courses/${courseId}/workouts/${workout._id}`}
 					/>
 				))}
 			</div>

@@ -24,7 +24,7 @@ export default function Header() {
 				<div>
 					<img
 						className='cursor-pointer'
-						src='/src/assets/img/logo.png'
+						src='/img/logo.png'
 						alt='logo'
 						onClick={() => navigate(AppRoutes.MAIN)}
 					/>

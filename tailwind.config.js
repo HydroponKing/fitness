@@ -27,7 +27,7 @@ export default {
 				//Gradient background set for recommend blocks
 				black_bg: 'linear-gradient(115.81deg, #151720 34.98%, #1E212E 91.5%)',
 				//Check success background set for select workout modal
-				'check-success': "url('/src/assets/img/icon/check_success.svg')",
+				'check-success': "url('/img/icon/check_success.svg')",
 			},
 			objectPosition: {
 				//Course card custom img positions

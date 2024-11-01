@@ -11,7 +11,7 @@ export default function UserNav({ user, isOpen, toggleOpen }: Props) {
 	return (
 		<div className='flex gap-[16px] mobile:gap-[13px]'>
 			<svg className='w-[42px] h-[42px] mobile:w-[30px] mobile:h-[30px]'>
-				<use xlinkHref='/src/assets/img/icon/sprite.svg#avatar_circle' />
+				<use xlinkHref='/img/icon/sprite.svg#avatar_circle' />
 			</svg>
 
 			<div
@@ -25,7 +25,7 @@ export default function UserNav({ user, isOpen, toggleOpen }: Props) {
 					className={`w-[12px] h-[12px] mt-[2px] transition-transform 
 				${isOpen && 'animate-rotation'}`}
 				>
-					<use xlinkHref='/src/assets/img/icon/sprite.svg#dropdown_arrow' />
+					<use xlinkHref='/img/icon/sprite.svg#dropdown_arrow' />
 				</svg>
 			</div>
 

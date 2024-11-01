@@ -32,7 +32,7 @@ export default function Login() {
 		<div className='flex flex-col items-center'>
 			<img
 				className='w-[220px] h-[35px]'
-				src='/src/assets/img/logo.png'
+				src='/img/logo.png'
 				alt='logo'
 			/>
 

@@ -42,7 +42,7 @@ export default function Main() {
 					</h2>
 					<img
 						className='absolute top-[85%] left-[41%]'
-						src='/src/assets/img/polygon.png'
+						src='/img/polygon.png'
 						alt='polygon'
 					/>
 				</div>

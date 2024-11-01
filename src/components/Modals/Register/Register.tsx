@@ -10,6 +10,7 @@ import Button from '../../Button/Button'
 import ErrorMsg from '../../ErrorMsg/ErrorMsg'
 import ModalWrapper from '../../ModalWrapper/ModalWrapper.tsx'
 import InfoMsg from '../InfoMsg/InfoMsg.tsx'
+import { FormEvent } from 'react'
 
 export default function Register() {
 	const navigate = useSafeNavigate()
@@ -31,14 +32,14 @@ export default function Register() {
 			setError,
 		})
 		//открываем инфо-модалку и переходим на страницу авторизации
-		modalHandler({ openModal, closeModal, navigate, route: AppRoutes.LOGIN })
+		modalHandler({ openModal, closeModal, navigate, route: '/signin' })
 	}
 
 	return (
 		<div className='flex flex-col items-center'>
 			<img
 				className='w-[220px] h-[35px]'
-				src='/src/assets/img/logo.png'
+				src='/img/logo.png'
 				alt='logo'
 			/>
 

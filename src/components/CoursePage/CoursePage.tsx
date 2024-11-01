@@ -4,9 +4,9 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../../firebaseConfig'
 import { addCourseToUser, getCourses } from '../../api/api'
 import { courseType } from '../../api/types'
-import manImage from '/src/assets/img/man.png'
-import IconStar from '/src/assets/img/icon/star.svg'
-import lineImage from '/src/assets/img/line.png'
+import manImage from '/img/man.png'
+import IconStar from '/img/icon/star.svg'
+import lineImage from '/img/line.png'
 import Header from '../Header/Header'
 
 export default function CoursePage() {

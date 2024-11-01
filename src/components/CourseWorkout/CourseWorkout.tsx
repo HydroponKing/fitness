@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { auth } from '../../../firebaseConfig'
 import {
 	getCoursesWithProgress,
@@ -19,6 +19,7 @@ import YoutubePlayer from './YoutubePlayer/YoutubePlayer'
 import { AppRoutes } from '../../lib/appRoutes'
 
 export default function CourseWorkout() {
+	const navigate = useNavigate();
 	const { courseId, workoutId } = useParams()
 	const [courseData, setCourseData] = useState<courseType | null>(null)
 	const [workoutData, setWorkoutData] = useState<WorkoutType | null>(null)

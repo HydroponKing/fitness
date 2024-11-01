@@ -54,7 +54,7 @@ export default function CourseItem({ course }: Props) {
 						onClick={onAddCourse}
 					>
 						<use
-							xlinkHref='/src/assets/img/icon/
+							xlinkHref='/img/icon/
 						sprite.svg#add_course_circle'
 						/>
 					</svg>
@@ -82,7 +82,7 @@ export default function CourseItem({ course }: Props) {
 						bg-gray_bg p-[10px] rounded-[50px]'
 					>
 						<svg className='w-[18px] h-[18px]'>
-							<use xlinkHref='/src/assets/img/icon/sprite.svg#calendar' />
+							<use xlinkHref='/img/icon/sprite.svg#calendar' />
 						</svg>
 						<p>25 дней</p>
 					</div>
@@ -92,7 +92,7 @@ export default function CourseItem({ course }: Props) {
 						bg-gray_bg p-[10px] rounded-[50px]'
 					>
 						<svg className='w-[18px] h-[18px]'>
-							<use xlinkHref='/src/assets/img/icon/sprite.svg#time' />
+							<use xlinkHref='/img/icon/sprite.svg#time' />
 						</svg>
 						<p>20-50 мин/день</p>
 					</div>
@@ -103,8 +103,7 @@ export default function CourseItem({ course }: Props) {
 					>
 						<svg className='w-[18px] h-[18px]'>
 							<use
-								xlinkHref='/src/assets/img/icon/
-								sprite.svg#difficulty_signal'
+								xlinkHref='/img/icon/sprite.svg#difficulty_signal'
 							/>
 						</svg>
 						<p>Сложность</p>

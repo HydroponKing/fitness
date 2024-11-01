@@ -7,7 +7,7 @@ export default function NotFoundError() {
 
 	return (
 		<div className='h-screen flex items-center'>
-			<img src='/src/assets/img/404.png' alt='error' />
+			<img src='/img/404.png' alt='error' />
 
 			<div
 				className='fixed flex gap-3.5 flex-col justify-end

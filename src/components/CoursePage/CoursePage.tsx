@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../../firebaseConfig'
 import { addCourseToUser, getCourses } from '../../api/api'
@@ -8,18 +8,24 @@ import manImage from '/img/man.png'
 import IconStar from '/img/icon/star.svg'
 import lineImage from '/img/line.png'
 import Header from '../Header/Header'
+import { AppRoutes } from '../../lib/appRoutes'
 
 export default function CoursePage() {
 	const { id } = useParams() // Получаем id курса из URL
 	const [course, setCourse] = useState<courseType | null>(null) // Состояние для хранения данных курса
 	const [user] = useAuthState(auth) // Получаем пользователя из хука
+	const navigate = useNavigate()
 
 	const onAddCourse = () => {
-		addCourseToUser({
-			auth: user!,
-			userId: user?.uid,
-			courseId: id!,
-		})
+		if (user) {
+			addCourseToUser({
+				auth: user!,
+				userId: user?.uid,
+				courseId: id!,
+			})
+		}else {
+			navigate(AppRoutes.LOGIN)
+		}
 	}
 
 	useEffect(() => {
@@ -171,6 +177,8 @@ export default function CoursePage() {
 					</div>
 				</div>
 			</div>
+
+			<Outlet/>
 		</div>
 	)
 }

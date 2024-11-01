@@ -18,12 +18,14 @@ export default function Login() {
 	} = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) })
 
 	const onSubmit = async (data: TSignInSchema) => {
+		//fetch...
 		await signIn({
 			login: data.login,
 			password: data.password,
 			setError,
-			navigate,
 		})
+		//navigate user to main page
+		navigate(AppRoutes.MAIN)
 	}
 
 	return (

@@ -90,7 +90,6 @@ export const getCoursesWithProgress = async (
 
 								course.quantity += value
 								workout.quantity = value
-								console.log(value, workout._id)
 							} else {
 								const userWorkout = userData[workout._id]
 
@@ -139,57 +138,13 @@ export const getCourse = async (
 	return null
 }
 
-// export const getUserWorkouts = async (userId: string, courseId: string) => {
-// 	try {
-// 		const workoutIdsSnapshot = await get(
-// 			child(ref(db), `courses/${courseId}/workouts`),
-// 		)
-
-// 		if (workoutIdsSnapshot.exists()) {
-// 			const workoutIds = workoutIdsSnapshot.val()
-// 			let workouts = []
-
-// 			for (let id of workoutIds) {
-// 				const workoutDataSnapshot = await get(
-// 					child(ref(db), `workouts/${id}/name`),
-// 				)
-
-// 				if (workoutDataSnapshot.exists()) {
-// 					const progressSnapshot = await get(
-// 						child(ref(db), `users/${userId}/${courseId}/${id}/done`),
-// 					)
-
-// 					if (progressSnapshot.exists()) {
-// 						workouts.push({
-// 							name: workoutDataSnapshot.val(),
-
-// 							id,
-// 							progress: progressSnapshot.val(),
-// 						})
-// 					}
-// 				}
-// 			}
-
-// 			return workouts // Возвращаем готовый массив тренировок
-// 		}
-
-// 		return [] // Возвращаем пустой массив, если workoutIds не существует
-// 	} catch (e) {
-// 		console.error(e)
-// 		return [] // Возвращаем пустой массив в случае ошибки
-// 	}
-// }
-
 // Получение коллекции курсов пользователя по uid
-
 export const getUserCourses = async (
 	userId: string | undefined,
 ): Promise<UserCoursesType[]> => {
 	let data: UserCoursesType[] = []
-
 	//ссылка на коллекцию курсов пользователей
 	const userCoursesRef = ref(db, `users/${userId}/courses`)
-
 	//запрос на сервер...
 	try {
 		//проверяем наличие данных по снимку(snapshot)
@@ -200,35 +155,14 @@ export const getUserCourses = async (
 	} catch (error) {
 		console.error(error)
 	}
-
 	//возвращаем результат
 	return data
 }
 
 // Добавление курса пользователю
-export const addCourseToUser = async ({
-	auth,
-	userId,
-	courseId,
-}: AddCourseType) => {
-	//проверяем авторизацию пользователя
-	if (!auth) {
-		alert('Добавить курс, могут только авторизованные пользователи')
-		return
-	}
-
+export const addCourseToUser = async ({ userId, courseId }: AddCourseType) => {
 	//ссылка на коллекцию курсов пользователя
 	const userCoursesRef = ref(db, `users/${userId}/courses/${courseId}`)
-	//получаем данные курсов пользователя с сервера
-	const userCoursesData = await getUserCourses(userId)
-
-	//проверяем, есть ли курс у пользователя
-	const alreadyAdded = userCoursesData?.some(course => course.id === courseId)
-	if (alreadyAdded) {
-		alert('Данный курс уже приобретен')
-		return
-	}
-
 	//запрос на сервер...
 	try {
 		await set(userCoursesRef, {
@@ -236,7 +170,6 @@ export const addCourseToUser = async ({
 			isCompleted: false,
 			workouts: [courseId],
 		})
-		alert('Курс успешно добавлен')
 	} catch (error) {
 		console.error(error)
 	}
@@ -249,11 +182,9 @@ export const deleteUserCourse = async ({
 }: DeleteCourseType) => {
 	//ссылка на коллекцию курсов пользователя
 	const userCoursesRef = ref(db, `users/${userId}/courses/${courseId}`)
-
 	//запрос на сервер...
 	try {
 		await remove(userCoursesRef)
-		alert('Курс успешно удален')
 	} catch (error) {
 		console.error(error)
 	}
@@ -342,11 +273,6 @@ export const getWorkout = async (
 		}
 		return null
 	}
-}
-async function getData(path: string) {
-	const snapshot = await get(ref(db, path))
-	if (snapshot.exists()) return snapshot.val()
-	else return "hren'"
 }
 
 export const getWorkouts = async (

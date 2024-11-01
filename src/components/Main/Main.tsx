@@ -1,17 +1,15 @@
 import { useEffect, useMemo } from 'react'
-import { Outlet, Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
+import { getCoursesData } from '../../store/slices/courseSlice'
 import { useAppDispatch, useAppSelector } from '../../store/store'
-import { getCoursesData } from '../../store/features/userSlice'
-import Header from '../Header/Header'
-import CourseItem from './CourseItem/CourseItem'
-import SkeletonCourseCard from '../SkeletonLoader/SkeletonCourseCard'
 import ScrollBtn from '../Button/ScrollBtn'
-
-const arrayOfSkeletons = [0, 0, 0, 0, 0]
+import Header from '../Header/Header'
+import SkeletonCourseCard from '../SkeletonLoader/SkeletonCourseCard'
+import CourseItem from './CourseItem/CourseItem'
 
 export default function Main() {
 	const dispatch = useAppDispatch()
-	const { courses, isLoading } = useAppSelector(state => state.user)
+	const { courses, isLoading } = useAppSelector(state => state.course)
 
 	useEffect(() => {
 		//сохраняем данные курсов в Redux
@@ -54,7 +52,10 @@ export default function Main() {
 				className='flex flex-wrap gap-11
 				mobile:flex-col mobile:items-center mobile:gap-6'
 			>
-				{/* Оптимизируем рендер */}
+				{/* Пока идет загрузка с Api, показываем скелетоны карточки курса */}
+				{isLoading &&
+					[...Array(5).keys()].map(index => <SkeletonCourseCard key={index} />)}
+				{/* Оптимизируем рендер и проходимся по всем курсам */}
 				{useMemo(
 					() =>
 						courses.map(course => (
@@ -63,16 +64,6 @@ export default function Main() {
 							</Link>
 						)),
 					[courses],
-				)}
-				{/* Пока идет загрузка с Api, показываем скелетоны карточки курса */}
-				{isLoading && [...Array(5).keys()].map((_, index) =>
-					// <>
-						<SkeletonCourseCard key={index} />
-					// 	<SkeletonCourseCard />
-					// 	<SkeletonCourseCard />
-					// 	<SkeletonCourseCard />
-					// 	<SkeletonCourseCard />
-					// </>
 				)}
 			</div>
 

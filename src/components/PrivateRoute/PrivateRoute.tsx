@@ -1,11 +1,10 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { AppRoutes } from '../../lib/appRoutes'
-import { auth } from '../../../firebaseConfig'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../../../firebaseConfig'
 
 export default function PrivateRoute() {
 	const user = useAuthState(auth)
-	console.log("private");
 
 	return user ? <Outlet /> : <Navigate to={AppRoutes.MAIN} />
 }

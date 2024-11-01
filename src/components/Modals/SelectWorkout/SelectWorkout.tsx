@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useAuthState } from 'react-firebase-hooks/auth'
 import { useNavigate } from 'react-router-dom'
+import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../../../firebaseConfig'
-import { getWorkouts } from '../../../api/api' // импортируем функцию для получения данных тренировки
+import { getWorkouts } from '../../../api/api'
 import type { WorkoutType } from '../../../api/types'
-import { useAppSelector } from '../../../store/store'
-import Button from '../../Button/Button'
 import WorkoutList from './WorkoutList/WorkoutList'
+import Button from '../../Button/Button'
 
 type Props = {
 	courseId: string
@@ -14,7 +13,6 @@ type Props = {
 
 export default function SelectWorkout({ courseId }: Props) {
 	const navigate = useNavigate()
-	const { courses } = useAppSelector(state => state.user)
 	const [user] = useAuthState(auth)
 	const [workoutsData, setWorkoutsData] = useState<WorkoutType[]>([]) // Состояние для хранения данных тренировки
 

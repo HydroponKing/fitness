@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom" 
-
+import { useNavigate } from 'react-router-dom'
 
 export function useSafeNavigate() {
-  try {
-    return useNavigate()
-  } catch (error: unknown) {
-    return () => {}
-  }
+	try {
+		return useNavigate()
+	} catch (error: unknown) {
+		console.error(error)
+		return () => {}
+	}
 }

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { getCourses, getCoursesWithProgress, getUserCourses, getWorkouts } from '../../api/api'
-import { courseType, WorkoutType } from '../../api/types'
+import { getCoursesWithProgress, getUserCourses } from '../../api/api'
+import { courseType } from '../../api/types'
 import { UserCoursesType } from '../../lib/authTypes'
 
 export const getCoursesData = createAsyncThunk(
@@ -11,14 +11,6 @@ export const getCoursesData = createAsyncThunk(
 	},
 )
 
-// export const getCourseWorkouts = createAsyncThunk(
-// 	'courses/getCourseWorkouts',
-// 	async (courseId: string) => {
-// 		const data = await getWorkouts(courseId)
-// 		return data
-// 	},
-// )
-
 export const getUserCoursesData = createAsyncThunk(
 	'userCourses/getUserCourses',
 	async (userId: string | undefined) => {
@@ -27,21 +19,19 @@ export const getUserCoursesData = createAsyncThunk(
 	},
 )
 
-type UserStateType = {
+type CourseStateType = {
 	courses: courseType[]
-	// courceWorkouts: WorkoutType[]
 	userCourses: UserCoursesType[]
 	isLoading: boolean
 }
 
-const initialState: UserStateType = {
+const initialState: CourseStateType = {
 	courses: [],
-	// courceWorkouts: [],
 	userCourses: [],
 	isLoading: true,
 }
 
-const userSlice = createSlice({
+const courseSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
@@ -55,10 +45,6 @@ const userSlice = createSlice({
 				state.courses = action.payload.sort((a, b) => a.order - b.order)
 				state.isLoading = false
 			})
-			// .addCase(getCourseWorkouts.fulfilled, (state, action) => {
-			// 	state.courceWorkouts = action.payload
-			// 	state.isLoading = false
-			// })
 			.addCase(getUserCoursesData.fulfilled, (state, action) => {
 				state.userCourses = action.payload
 				state.isLoading = false
@@ -66,5 +52,5 @@ const userSlice = createSlice({
 	},
 })
 
-export const { setCourses } = userSlice.actions
-export const userReducer = userSlice.reducer
+export const { setCourses } = courseSlice.actions
+export const courseReducer = courseSlice.reducer

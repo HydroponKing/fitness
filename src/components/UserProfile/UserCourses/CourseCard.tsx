@@ -1,27 +1,37 @@
-import { useCallback, useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../store/store'
 import { User } from 'firebase/auth'
-import { getCourseWorkouts, getUserCoursesData } from '../../../store/features/userSlice'
-import { deleteUserCourse, getWorkouts } from '../../../api/api'
+import { deleteUserCourse } from '../../../api/api'
 import { courseType } from '../../../api/types'
+import { useModal } from '../../../hooks/useModal'
+import { useAppDispatch } from '../../../store/store'
+import { getUserCoursesData } from '../../../store/slices/courseSlice'
+import { getPercent } from '../../../utils/math'
+import { modalHandler } from '../../../utils/modalHandler'
 import Button from '../../Button/Button'
+import ModalWrapper from '../../ModalWrapper/ModalWrapper'
+import InfoMsg from '../../Modals/InfoMsg/InfoMsg'
 import Progress from '../../Progress/Progress'
-import { getPercent } from '../../../lib/math'
 
 type Props = {
 	user: User
 	course: courseType
-	openModal: () => void
+	selectCourseId: () => void
 }
 
-export default function CourseCard({ user, course, openModal }: Props) {
+export default function CourseCard({ user, course, selectCourseId }: Props) {
 	const dispatch = useAppDispatch()
+	const { dialogRef, openModal, closeModal } = useModal()
 	const { _id, nameRU, srcSmall } = course
 
-	const onDeleteCourse = useCallback(() => {
-		deleteUserCourse({ userId: user?.uid, courseId: _id })
-		dispatch(getUserCoursesData(user?.uid))
-	}, [_id, dispatch, user?.uid])
+	const onDeleteCourse = async () => {
+		//запрос на сервер...
+		await deleteUserCourse({ userId: user.uid, courseId: _id })
+		//обновляем данные после удаления
+		setTimeout(() => {
+			dispatch(getUserCoursesData(user.uid))
+		}, 1500)
+		//открываем инфо-модалку на время удаления
+		modalHandler({ openModal, closeModal })
+	}
 
 	return (
 		<div
@@ -35,7 +45,6 @@ export default function CourseCard({ user, course, openModal }: Props) {
 					src={srcSmall}
 					alt='course-poster'
 				/>
-
 				{/* Delete user course button */}
 				<div title='Удалить курс'>
 					<svg
@@ -49,6 +58,10 @@ export default function CourseCard({ user, course, openModal }: Props) {
 						/>
 					</svg>
 				</div>
+				{/* Success info modal */}
+				<ModalWrapper ref={dialogRef} onClick={openModal}>
+					<InfoMsg title='Курс успешно удален' />
+				</ModalWrapper>
 			</div>
 
 			<div
@@ -108,7 +121,7 @@ export default function CourseCard({ user, course, openModal }: Props) {
 					hover='hover:bg-hover'
 					active='active:bg-active active:text-white'
 					media='mobile:text-[16px]'
-					onClick={openModal}
+					onClick={selectCourseId}
 					title='Продолжить'
 				/>
 			</div>

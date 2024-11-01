@@ -2,10 +2,14 @@ import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useParams } from 'react-router-dom'
 import { auth } from '../../../firebaseConfig'
-import { getCoursesWithProgress, getWorkout, updateExercises } from '../../api/api'
+import {
+	getCoursesWithProgress,
+	getWorkout,
+	updateExercises,
+} from '../../api/api'
 import { courseType, WorkoutType } from '../../api/types'
 import { useModal } from '../../hooks/useModal'
-import { getPercent } from '../../lib/math'
+import { getPercent } from '../../utils/math'
 import Button from '../Button/Button'
 import Header from '../Header/Header'
 import ModalWrapper from '../ModalWrapper/ModalWrapper'
@@ -143,19 +147,24 @@ export default function CourseWorkout() {
 					onClick={async () => {
 						if (workoutData?.exercises) {
 							openModal()
-					  } else {
+						} else {
 							await updateExercises(user!.uid, courseId!, workoutId!, 1, [])
-							setTimeout( ()=> {navigate(AppRoutes.PROFILE)}, 1500)
+							setTimeout(() => {
+								navigate(AppRoutes.PROFILE)
+							}, 1500)
 						}
 					}}
-					title={workoutData?.exercises ? 'Заполнить свой прогресс' : 'Завершить тренировку'}
+					title={
+						workoutData?.exercises
+							? 'Заполнить свой прогресс'
+							: 'Завершить тренировку'
+					}
 				/>
 				{/* Progress count modal */}
 				<ModalWrapper ref={dialogRef} onClick={closeModal}>
-					{
-						workoutData && workoutData.exercises
-						 && <ProgressCount exercises={[...workoutData.exercises]} />
-					}
+					{workoutData && workoutData.exercises && (
+						<ProgressCount exercises={[...workoutData.exercises]} />
+					)}
 				</ModalWrapper>
 			</div>
 		</div>

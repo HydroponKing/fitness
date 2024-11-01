@@ -1,14 +1,14 @@
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import {
 	TypedUseSelectorHook,
 	useDispatch,
 	useSelector,
 	useStore,
 } from 'react-redux'
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { userReducer } from './features/userSlice'
+import { courseReducer } from './slices/courseSlice'
 
 const rootReducer = combineReducers({
-	user: userReducer,
+	course: courseReducer,
 })
 
 export const makeStore = () => {

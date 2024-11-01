@@ -1,26 +1,41 @@
 import { MouseEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { useModal } from '../../../hooks/useModal'
 import { auth } from '../../../../firebaseConfig'
-import { addCourseToUser } from '../../../api/api'
+import { AppRoutes } from '../../../lib/appRoutes'
+import { addCourseToUser, getUserCourses } from '../../../api/api'
 import { courseType } from '../../../api/types'
+import { modalHandler } from '../../../utils/modalHandler'
+import ModalWrapper from '../../ModalWrapper/ModalWrapper'
+import InfoMsg from '../../Modals/InfoMsg/InfoMsg'
 
 type Props = {
 	course: courseType
 }
 
 export default function CourseItem({ course }: Props) {
-	const { nameRU, srcSmall, _id } = course
+	const navigate = useNavigate()
 	const [user] = useAuthState(auth)
+	const { dialogRef, openModal, closeModal } = useModal()
+	const { nameRU, srcSmall, _id } = course
 
-	const onAddCourse = (event: MouseEvent) => {
+	const onAddCourse = async (event: MouseEvent) => {
 		//отменяем переход по ссылке при клике
 		event.preventDefault()
-		//запрос на сервер
-		addCourseToUser({
-			auth: user!,
-			userId: user?.uid,
+		//проверяем авторизацию пользователя
+		if (!user) return
+		//проверяем, какие курсы есть у пользователя
+		const userCourses = await getUserCourses(user.uid)
+		const isExist = userCourses.some(userCourse => userCourse.id === course._id)
+		if (isExist) return
+		//запрос на сервер...
+		await addCourseToUser({
+			userId: user.uid,
 			courseId: _id,
 		})
+		//открываем инфо-модалку и переходим на страницу профиля
+		modalHandler({ openModal, closeModal, navigate, route: AppRoutes.PROFILE })
 	}
 
 	return (
@@ -31,7 +46,6 @@ export default function CourseItem({ course }: Props) {
 		>
 			<div>
 				<img className='rounded-[30px]' src={srcSmall} alt='course-poster' />
-
 				{/* Add course to user button */}
 				<div title='Добавить курс'>
 					<svg
@@ -45,6 +59,10 @@ export default function CourseItem({ course }: Props) {
 						/>
 					</svg>
 				</div>
+				{/* Success info modal */}
+				<ModalWrapper ref={dialogRef} onClick={openModal}>
+					<InfoMsg title='Курс успешно добавлен' />
+				</ModalWrapper>
 			</div>
 
 			<div

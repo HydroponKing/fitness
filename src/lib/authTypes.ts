@@ -9,7 +9,6 @@ export type SignUpType = {
 	setError: UseFormSetError<{
 		email: string
 	}>
-	navigate: (url: string) => void
 }
 
 // Типы для авторизации пользователя
@@ -20,7 +19,6 @@ export type SignInType = {
 		login: string
 		password: string
 	}>
-	navigate: (url: string) => void
 }
 
 // Типы для обновления пароля пользователя
@@ -39,12 +37,10 @@ export type ResetPassType = {
 export type UserCoursesType = {
 	id: string
 	isCompleted: boolean
-	workouts: string[]
 }
 
 // Типы для добавления курса
 export type AddCourseType = {
-	auth: User
 	userId: string | undefined
 	courseId: string
 }

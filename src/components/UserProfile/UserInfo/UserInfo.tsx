@@ -37,7 +37,7 @@ export default function UserInfo() {
 					<use xlinkHref='/src/assets/img/icon/sprite.svg#avatar_square' />
 				</svg>
 
-				<div className='flex flex-col gap-[30px] mobile:gap-5'>
+				<div className='flex flex-col gap-[44px] mobile:gap-5'>
 					<h2
 						className='text-[32px] font-medium leading-9
 						mobile:text-2xl mobile:leading-[26px]'
@@ -47,7 +47,6 @@ export default function UserInfo() {
 
 					<div className='text-lg leading-5 mobile:text-base'>
 						<p>Логин: {user?.email}</p>
-						<p>Пароль: {user?.uid}</p>
 					</div>
 
 					<div className='flex gap-[10px] mobile:flex-col'>

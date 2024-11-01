@@ -9,82 +9,59 @@ import Profile from './pages/Profile/Profile'
 import Workout from './pages/Workout/Workout'
 import NotFound from './pages/NotFound/NotFound'
 
-
 const signingRouterData = [
-  {
-    path:    AppRoutes.LOGIN,
-    element: <SignIn />,
-  },
-  {
-    path:    AppRoutes.REGISTER,
-    element: <SignUp />,
-  },
+	{
+		path: AppRoutes.LOGIN,
+		element: <SignIn />,
+	},
+	{
+		path: AppRoutes.REGISTER,
+		element: <SignUp />,
+	},
 ]
 
 const router = createBrowserRouter([
-  {
-    path:     AppRoutes.MAIN,
-    element:  <Home />,
-    children: signingRouterData, // [...signingRouterData, choosingTrainRouterData(userContext)],
-  },
-  {
-    path:     AppRoutes.COURSES,
-    element:  <Home />,
-    children: signingRouterData, // [...signingRouterData, choosingTrainRouterData(userContext)],
-  },
-  {
-    path:    AppRoutes.COURSEPAGE,
-    element: <CoursePage />,
-    children: signingRouterData, // [...signingRouterData, choosingTrainRouterData(userContext)],
-  },
-  {
-    element:  <PrivateRoute />,
-    children: [
-      {
-        path:    AppRoutes.WORKOUT,
-        element: <Workout />,
-        // children: [{
-        //   path:    pages.WRITE,
-        //   element: <WriteProgressPage />,
-        // }],
-      },
-      {
-        path:    AppRoutes.PROFILE,
-        element: <Profile />,
-        // children: [choosingTrainRouterData(userContext)],
-      },
-    ],
-  },
-  {
-    path:    AppRoutes.NOT_FOUND,
-    element: <NotFound />,
-  },
+	{
+		path: AppRoutes.MAIN,
+		element: <Home />,
+		children: signingRouterData, // [...signingRouterData, choosingTrainRouterData(userContext)],
+	},
+	{
+		path: AppRoutes.COURSES,
+		element: <Home />,
+		children: signingRouterData, // [...signingRouterData, choosingTrainRouterData(userContext)],
+	},
+	{
+		path: AppRoutes.COURSEPAGE,
+		element: <CoursePage />,
+		children: signingRouterData, // [...signingRouterData, choosingTrainRouterData(userContext)],
+	},
+	{
+		element: <PrivateRoute />,
+		children: [
+			{
+				path: AppRoutes.WORKOUT,
+				element: <Workout />,
+				// children: [{
+				//   path:    pages.WRITE,
+				//   element: <WriteProgressPage />,
+				// }],
+			},
+			{
+				path: AppRoutes.PROFILE,
+				element: <Profile />,
+				// children: [choosingTrainRouterData(userContext)],
+			},
+		],
+	},
+	{
+		path: AppRoutes.NOT_FOUND,
+		element: <NotFound />,
+	},
 ])
 
 function App() {
-	return (
-		<RouterProvider router={router} />
-		// <BrowserRouter>
-		// 	<Routes>
-		// 		{/* <Route path={"/"} element={<Home />} children={<><Route path={"sign-in/"} element={SignIn()} /><Route path={"sing-up/"} element={SignUp()} /></>} />
-		// 		<Route path={"/courses/"} element={<Home />} />
-		// 		<Route path={"/courses/:id/"} element={<CoursePage />} />
-		// 		<Route path={"/courses/:id/workouts/"} element={<CoursePage />} /> */}
-		// 		<Route path={AppRoutes.MAIN} element={<Home />}>
-		// 			<Route path={AppRoutes.COURSES} element={<Outlet />}>
-		// 				<Route path={AppRoutes.COURSEPAGE} element={<CoursePage />} />
-		// 			</Route>
-		// 			<Route element={<PrivateRoute />}>
-		// 				<Route path={AppRoutes.PROFILE} element={<Profile />} />
-		// 				<Route path={AppRoutes.WORKOUT} element={<Workout />} />
-		// 			</Route>
-		// 			<Route path={AppRoutes.REGISTER} element={<SignUp />} />
-		// 			<Route path={AppRoutes.LOGIN} element={<SignIn />} />
-		// 		</Route>
-		// 		{/* if user auth, open children routes */}
-		// 		<Route path={AppRoutes.NOT_FOUND} element={<NotFound />} />
-		// 	</Routes>
-		// </BrowserRouter>
-	)
+	return <RouterProvider router={router} />
 }
-export default App;
+
+export default App

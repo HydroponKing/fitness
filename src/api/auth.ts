@@ -9,7 +9,6 @@ import {
 import { auth, db } from '../../firebaseConfig'
 import { ref, set } from 'firebase/database'
 import { SignUpType, SignInType, ResetPassType } from '../lib/authTypes'
-import { AppRoutes } from '../lib/appRoutes'
 
 // Регистрация пользователя
 export const signUp = async ({
@@ -17,25 +16,20 @@ export const signUp = async ({
 	email,
 	password,
 	setError,
-	navigate,
 }: SignUpType) => {
 	try {
+		//fetch...
 		await createUserWithEmailAndPassword(auth, email, password).then(
 			({ user }) => {
 				//set user in 'users' database collection
 				set(ref(db, 'users/' + user.uid), {
 					username,
 					email,
-					password,
 				})
 				//add username to auth firebase state
 				updateProfile(user, { displayName: username })
 			},
 		)
-		//navigate user to login page
-		navigate(AppRoutes.LOGIN)
-		//user info message
-		alert('Пользователь успешно зарегистрирован!')
 	} catch (error) {
 		console.error(error)
 		//set error message from api to react-hook-form state
@@ -47,22 +41,16 @@ export const signUp = async ({
 }
 
 // Авторизация пользователя
-export const signIn = async ({
-	login,
-	password,
-	setError,
-	navigate,
-}: SignInType) => {
+export const signIn = async ({ login, password, setError }: SignInType) => {
 	try {
+		//fetch...
 		await signInWithEmailAndPassword(auth, login, password)
-		//navigate user to main page
-		navigate(AppRoutes.MAIN)
 	} catch (error) {
 		console.error(error)
 		//set error message from api to react-hook-form state
 		setError('password', {
 			type: 'server',
-			message: 'Пароль введен неверно, попробуйте еще раз.',
+			message: 'Неверный логин или пароль, попробуйте еще раз.',
 		})
 	}
 }

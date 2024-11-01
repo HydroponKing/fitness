@@ -3,12 +3,17 @@ import { useForm } from 'react-hook-form'
 import { signUp } from '../../../api/auth'
 import { AppRoutes } from '../../../lib/appRoutes'
 import { signUpSchema, TSignUpSchema } from '../../../lib/validateSchemes'
+import { useSafeNavigate } from '../../../hooks/useSafeNavigate.ts'
+import { useModal } from '../../../hooks/useModal.ts'
+import { modalHandler } from '../../../utils/modalHandler.ts'
 import Button from '../../Button/Button'
 import ErrorMsg from '../../ErrorMsg/ErrorMsg'
-import {useSafeNavigate} from "../../../hooks/useSafeNavigate.ts";
+import ModalWrapper from '../../ModalWrapper/ModalWrapper.tsx'
+import InfoMsg from '../InfoMsg/InfoMsg.tsx'
 
 export default function Register() {
 	const navigate = useSafeNavigate()
+	const { dialogRef, openModal, closeModal } = useModal()
 
 	const {
 		register,
@@ -18,13 +23,15 @@ export default function Register() {
 	} = useForm<TSignUpSchema>({ resolver: zodResolver(signUpSchema) })
 
 	const onSubmit = async (data: TSignUpSchema) => {
+		//запрос на сервер...
 		await signUp({
 			username: data.username,
 			email: data.email,
 			password: data.password,
 			setError,
-			navigate,
 		})
+		//открываем инфо-модалку и переходим на страницу авторизации
+		modalHandler({ openModal, closeModal, navigate, route: AppRoutes.LOGIN })
 	}
 
 	return (
@@ -91,6 +98,11 @@ export default function Register() {
 							disabled={isSubmitting}
 							title='Зарегистрироваться'
 						/>
+						{/* Success info modal */}
+						<ModalWrapper ref={dialogRef} onClick={openModal}>
+							<InfoMsg title='Пользователь успешно зарегистрирован' />
+						</ModalWrapper>
+
 						<Button
 							width='w-[280px]'
 							background='transparent'

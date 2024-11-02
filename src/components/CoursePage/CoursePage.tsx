@@ -2,28 +2,46 @@ import { useEffect, useState } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../../firebaseConfig'
-import { addCourseToUser, getCourses } from '../../api/api'
+import { addCourseToUser, getCourses, getUserCourses } from '../../api/api'
 import { courseType } from '../../api/types'
 import manImage from '/img/man.png'
 import IconStar from '/img/icon/star.svg'
 import lineImage from '/img/line.png'
 import Header from '../Header/Header'
 import { AppRoutes } from '../../lib/appRoutes'
+import { modalHandler } from '../../utils/modalHandler'
+import { useModal } from '../../hooks/useModal'
+import ModalWrapper from '../ModalWrapper/ModalWrapper'
+import InfoMsg from '../Modals/InfoMsg/InfoMsg'
 
 export default function CoursePage() {
+	const navigate = useNavigate()
 	const { id } = useParams() // Получаем id курса из URL
 	const [course, setCourse] = useState<courseType | null>(null) // Состояние для хранения данных курса
 	const [user] = useAuthState(auth) // Получаем пользователя из хука
-	const navigate = useNavigate()
+	const { dialogRef, openModal, closeModal } = useModal()
 
-	const onAddCourse = () => {
+	const onAddCourse = async () => {
 		if (user) {
-			addCourseToUser({
-				auth: user!,
-				userId: user?.uid,
+			//проверяем, какие курсы есть у пользователя
+			const userCourses = await getUserCourses(user.uid)
+			const isExist = userCourses.some(
+				userCourse => userCourse.id === course?._id,
+			)
+			if (isExist) return
+			//запрос на сервер...
+			await addCourseToUser({
+				userId: user.uid,
 				courseId: id!,
 			})
-		}else {
+			//открываем инфо-модалку и переходим на страницу профиля
+			modalHandler({
+				openModal,
+				closeModal,
+				navigate,
+				route: AppRoutes.PROFILE,
+			})
+		} else {
 			navigate(AppRoutes.LOGIN)
 		}
 	}
@@ -160,6 +178,10 @@ export default function CoursePage() {
 						>
 							{user ? 'Добавить курс' : 'Войдите, чтобы добавить курс'}
 						</button>
+						{/* Success info modal */}
+						<ModalWrapper ref={dialogRef} onClick={openModal}>
+							<InfoMsg title='Курс успешно добавлен' />
+						</ModalWrapper>
 					</div>
 
 					{/* Контейнер для изображения мужчины и линии */}
@@ -177,8 +199,7 @@ export default function CoursePage() {
 					</div>
 				</div>
 			</div>
-
-			<Outlet/>
+			<Outlet />
 		</div>
 	)
 }

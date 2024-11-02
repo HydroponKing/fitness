@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom"
+import type { WorkoutListProps } from '../../../../api/types'
 
-export default function WorkoutList({quality, inputName, title, subtitle, workoutLink}) {
+
+export default function WorkoutList({quality, inputName, title, subtitle, workoutLink}:WorkoutListProps) {
 	const navigate = useNavigate()
 
 	function handleClick() {
@@ -19,7 +21,7 @@ export default function WorkoutList({quality, inputName, title, subtitle, workou
 				mobile:w-5 mobile:h-5'
 				type='checkbox'
 				name={inputName}
-				checked={quality}
+				checked={!!quality}
 				onChange={()=>{}}
 			/>
 

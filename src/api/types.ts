@@ -21,6 +21,7 @@ export type courseType = {
 // Типы для запросов, ключи курсов
 
 export type WorkoutType = {
+	subtitle: string
 	name: string
 	_id: string
 	courseNameRu: string
@@ -42,4 +43,11 @@ export interface ExerciseType {
 	name: string
 	progress: number
 	quantity: number
+}
+export interface WorkoutListProps {
+	quality: number;
+	inputName: string;
+	title: string;
+	subtitle: string;
+	workoutLink: string;
 }

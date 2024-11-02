@@ -7,6 +7,7 @@ import type { WorkoutType } from '../../../api/types'
 import WorkoutList from './WorkoutList/WorkoutList'
 import Button from '../../Button/Button'
 
+
 type Props = {
 	courseId: string
 }
@@ -52,7 +53,7 @@ export default function SelectWorkout({ courseId }: Props) {
 				{workoutsData.map(workout => (
 					<WorkoutList
 						key={workout._id}
-						quality={workout.progress >= workout.quantity}
+						quality={workout.progress >= workout.quantity ? 1:0}
 						// quality={selectedWorkouts[workoutData._id]} // Получаем статус выбранной тренировки из состояния
 						inputName={workout._id} // Устанавливаем ID тренировки в качестве имени инпута
 						title={workout.name} // Используем загруженное название тренировки

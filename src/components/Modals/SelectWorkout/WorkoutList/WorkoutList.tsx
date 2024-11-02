@@ -10,7 +10,7 @@ export default function WorkoutList({quality, inputName, title, subtitle, workou
 	return (
 		<label onClick={handleClick}
 			className='flex items-center mb-2.5 pb-2.5
-			border-b border-b-[#C4C4C4] cursor-pointer hover:bg-slate-200'
+			border-b border-b-[#C4C4C4] cursor-pointer hover:bg-slate-200 rounded-xl'
 		>
 			<input
 				className='w-6 h-6 mr-2.5 appearance-none cursor-pointer

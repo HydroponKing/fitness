@@ -63,8 +63,8 @@ export default function CoursePage() {
 			</div>
 
 			{/* Подойдет для вас блок */}
-			<div className='py-10'>
-				<h2 className='md:text-[40px] text-[24px] font-semibold leading-[44px] text-left mb-6'>
+			<div className='py-[65px] md:w-[1200px] w-[343px]'>
+				<h2 className='md:text-[40px] text-[24px] font-semibold leading-[44px] text-left mb-[24px] '>
 					Подойдет для вас, если:
 				</h2>
 
@@ -104,7 +104,7 @@ export default function CoursePage() {
 
 			{/* Направления */}
 			<div className='py-8 relative'>
-				<h2 className='md:text-[40px] text-[24px] font-semibold leading-[44px] text-left mb-6'>
+				<h2 className='md:text-[40px] text-[24px] font-semibold leading-[0px] text-left mb-[63px]'>
 					Направления
 				</h2>
 				<div className='bg-green_bg rounded-[20px] p-4 grid grid-cols-1 md:grid-cols-3 gap-4'>
@@ -130,7 +130,7 @@ export default function CoursePage() {
 
 			{/* Призыв к действию */}
 
-			<div className='relative py-10 md:w-[1200px] w-[343px]  md:h-[300px] h-[377px] mt-[90px] md:mt-[102px]'>
+			<div className='relative py-10 md:w-[1200px]  md:h-[300px] h-[377px] mt-[90px] md:mt-[70px]'>
 				<div className='container mx-auto flex justify-between items-center bg-white shadow-2xl rounded-[20px] h-[490px]'>
 					<div className='md:ml-[40px] ml-[16px]'>
 						<h2 className='md:text-[60px] text-[32px] font-medium md:leading-[60px] leading-[40px] text-left text-black md:w-[420px] w-[220px]'>

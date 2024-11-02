@@ -46,7 +46,7 @@ export default function Login() {
 							${errors.login ? 'border-error' : 'border-placeholder'}`}
 						{...register('login')}
 						type='email'
-						placeholder='Логин'
+						placeholder='Эл. почта'
 					/>
 					{/* login input error message */}
 					{errors.login && <ErrorMsg error={errors.login.message} />}
@@ -72,6 +72,7 @@ export default function Login() {
 							title='Войти'
 						/>
 						<Button
+							type='button'
 							width='w-[280px]'
 							background='transparent'
 							border='border'

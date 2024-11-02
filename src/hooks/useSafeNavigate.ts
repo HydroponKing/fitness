@@ -4,7 +4,6 @@ export function useSafeNavigate() {
 	try {
 		return useNavigate()
 	} catch (error: unknown) {
-		console.error(error)
 		return () => {}
 	}
 }

@@ -10,7 +10,6 @@ import Button from '../../Button/Button'
 import ErrorMsg from '../../ErrorMsg/ErrorMsg'
 import ModalWrapper from '../../ModalWrapper/ModalWrapper.tsx'
 import InfoMsg from '../InfoMsg/InfoMsg.tsx'
-import { FormEvent } from 'react'
 
 export default function Register() {
 	const navigate = useSafeNavigate()

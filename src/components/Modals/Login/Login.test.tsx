@@ -10,7 +10,7 @@ describe("Успешный рендер Login с ошибками пустых �
         const submitButton = screen.getByText("Войти")
         await act(async () => submitButton.click())
         
-        expect(screen.getByPlaceholderText("Логин")).toHaveClass("border-error")
+        expect(screen.getByPlaceholderText("Эл. почта")).toHaveClass("border-error")
         expect(screen.getByPlaceholderText("Пароль")).toHaveClass("border-error")
     })
 
